@@ -3,15 +3,17 @@ gold_agg.py
 ===========
 Proyecto 2 – FHBD | Capa Gold — Task 3 del DAG
 
-Genera 5 tablas Gold desde Silver usando PySpark + Iceberg MERGE:
+Pipeline (★ = ejecutado por el DAG):
+  ★ cant_post_x_user_hist  → posts por usuario, año y tipo de post
+                             Cruza post_hist + users_hist
 
-  1. cant_post_x_user_hist  → posts por usuario por año y tipo
-  2. vote_stats_per_post    → votos positivos/negativos por post
-  3. top_tags               → ranking de etiquetas más usadas
-  4. user_engagement        → interacciones totales por usuario
-  5. badges_summary         → resumen de insignias por usuario
+Tablas adicionales disponibles para notebooks:
+  - vote_stats_per_post    → votos +/- por post
+  - top_tags               → ranking de etiquetas
+  - user_engagement        → interacciones totales por usuario
+  - badges_summary         → resumen de insignias por usuario
 
-Todas escritas en nessie.gold.* con merge/upsert.
+Todas usan MERGE/upsert en Iceberg con columna fecha_cargue.
 """
 
 import os
@@ -28,10 +30,10 @@ log = logging.getLogger(__name__)
 MINIO_ENDPOINT = os.getenv("MINIO_ENDPOINT",  "http://proyecto2-minio:9000")
 MINIO_ACCESS   = os.getenv("MINIO_ACCESS_KEY", "minioadmin")
 MINIO_SECRET   = os.getenv("MINIO_SECRET_KEY", "minioadmin123")
-NESSIE_URL     = os.getenv("NESSIE_URL", "http://proyecto2-nessie:19120/api/v1")
+NESSIE_URL     = os.getenv("NESSIE_URL",   "http://proyecto2-nessie:19120/api/v1")
 NESSIE_BRANCH  = os.getenv("NESSIE_BRANCH", "main")
 SILVER_NS      = os.getenv("SILVER_NAMESPACE", "silver")
-GOLD_NS        = os.getenv("GOLD_NAMESPACE", "gold")
+GOLD_NS        = os.getenv("GOLD_NAMESPACE",   "gold")
 FECHA_CARGUE   = datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S")
 
 
@@ -70,10 +72,7 @@ def ensure_namespace(spark, namespace: str):
 
 
 def write_gold_merge(spark, df, gold_table: str, merge_key: str):
-    """
-    Escribe una tabla Gold con MERGE.
-    Si no existe la crea; si existe hace upsert por merge_key.
-    """
+    """Crea la tabla Gold si no existe y ejecuta MERGE/upsert."""
     full_table = f"nessie.{GOLD_NS}.{gold_table}"
 
     try:
@@ -93,34 +92,34 @@ def write_gold_merge(spark, df, gold_table: str, merge_key: str):
         [f"target.{c} = source.{c}" for c in cols]
     )
 
-    merge_sql = f"""
+    spark.sql(f"""
         MERGE INTO {full_table} AS target
         USING src_{gold_table} AS source
         ON target.{merge_key} = source.{merge_key}
         WHEN MATCHED THEN
-            UPDATE SET
-                {set_clause}
+            UPDATE SET {set_clause}
         WHEN NOT MATCHED THEN
             INSERT *
-    """
-    spark.sql(merge_sql)
+    """)
 
     total = spark.sql(f"SELECT COUNT(*) as c FROM {full_table}").collect()[0]["c"]
     log.info(f"  ✅ {full_table} → {total:,} filas")
+    return total
 
 
-# ── Tabla 1: cant_post_x_user_hist ────────────────────────────────────────────
+# ── ★ Tabla pipeline: cant_post_x_user_hist ───────────────────────────────────
 def build_cant_post_x_user_hist(spark: SparkSession):
     """
-    Cantidad de posts por usuario, año y tipo de post.
+    Posts por usuario, año y tipo de post.
     Cruza post_hist + users_hist.
+    Tabla principal del pipeline Gold ★
     """
-    log.info("\n[1/5] cant_post_x_user_hist")
+    log.info("\n[★] cant_post_x_user_hist")
 
     df = spark.sql(f"""
         SELECT
             p.OwnerUserId                           AS user_id,
-            u.DisplayName                           AS display_name,
+            COALESCE(u.DisplayName, 'Unknown')      AS display_name,
             p.anio                                  AS anio,
             p.PostTypeId                            AS post_type_id,
             CASE
@@ -129,85 +128,77 @@ def build_cant_post_x_user_hist(spark: SparkSession):
                 ELSE 'Other'
             END                                     AS post_type,
             COUNT(p.Id)                             AS cant_posts,
-            SUM(p.Score)                            AS total_score,
-            AVG(p.Score)                            AS avg_score,
-            SUM(p.ViewCount)                        AS total_views,
+            COALESCE(SUM(p.Score), 0)               AS total_score,
+            ROUND(AVG(p.Score), 2)                  AS avg_score,
+            COALESCE(SUM(p.ViewCount), 0)           AS total_views,
             CAST('{FECHA_CARGUE}' AS TIMESTAMP)     AS fecha_cargue
         FROM nessie.{SILVER_NS}.post_hist p
         LEFT JOIN nessie.{SILVER_NS}.users_hist u
             ON p.OwnerUserId = u.Id
         WHERE p.OwnerUserId IS NOT NULL
         GROUP BY
-            p.OwnerUserId, u.DisplayName,
-            p.anio, p.PostTypeId
+            p.OwnerUserId,
+            u.DisplayName,
+            p.anio,
+            p.PostTypeId
     """)
 
-    # Clave compuesta como string para el merge
+    # Clave compuesta: user_id + anio + post_type_id
     df = df.withColumn(
         "merge_key",
         F.concat_ws("_",
             F.col("user_id").cast("string"),
             F.col("anio").cast("string"),
-            F.col("post_type_id").cast("string")
+            F.col("post_type_id").cast("string"),
         )
     )
 
-    write_gold_merge(spark, df, "cant_post_x_user_hist", "merge_key")
+    return write_gold_merge(spark, df, "cant_post_x_user_hist", "merge_key")
 
 
-# ── Tabla 2: vote_stats_per_post ──────────────────────────────────────────────
+# ── Tablas adicionales (disponibles para notebooks) ───────────────────────────
 def build_vote_stats_per_post(spark: SparkSession):
-    """
-    Estadísticas de votos por post: positivos, negativos, netos.
-    Cruza post_hist + votes_hist.
-    """
-    log.info("\n[2/5] vote_stats_per_post")
+    """Estadísticas de votos por post. Para notebooks."""
+    log.info("\n[extra] vote_stats_per_post")
 
     df = spark.sql(f"""
         SELECT
-            p.Id                                    AS post_id,
-            p.Title                                 AS title,
-            p.PostTypeId                            AS post_type_id,
-            p.OwnerUserId                           AS owner_user_id,
-            p.anio                                  AS anio,
-            COUNT(v.Id)                             AS total_votes,
+            p.Id                                            AS post_id,
+            COALESCE(p.Title, '')                          AS title,
+            p.PostTypeId                                    AS post_type_id,
+            p.OwnerUserId                                   AS owner_user_id,
+            p.anio                                          AS anio,
+            COUNT(v.Id)                                     AS total_votes,
             SUM(CASE WHEN v.VoteTypeId = 2 THEN 1 ELSE 0 END) AS upvotes,
             SUM(CASE WHEN v.VoteTypeId = 3 THEN 1 ELSE 0 END) AS downvotes,
-            SUM(CASE WHEN v.VoteTypeId = 2 THEN 1
-                     WHEN v.VoteTypeId = 3 THEN -1
-                     ELSE 0 END)                    AS net_votes,
-            p.Score                                 AS score,
-            p.ViewCount                             AS view_count,
-            CAST('{FECHA_CARGUE}' AS TIMESTAMP)     AS fecha_cargue
+            SUM(CASE
+                WHEN v.VoteTypeId = 2 THEN 1
+                WHEN v.VoteTypeId = 3 THEN -1
+                ELSE 0 END)                                 AS net_votes,
+            COALESCE(p.Score, 0)                            AS score,
+            COALESCE(p.ViewCount, 0)                        AS view_count,
+            CAST('{FECHA_CARGUE}' AS TIMESTAMP)             AS fecha_cargue
         FROM nessie.{SILVER_NS}.post_hist p
-        LEFT JOIN nessie.{SILVER_NS}.votes_hist v
-            ON p.Id = v.PostId
-        GROUP BY
-            p.Id, p.Title, p.PostTypeId,
-            p.OwnerUserId, p.anio, p.Score, p.ViewCount
+        LEFT JOIN nessie.{SILVER_NS}.votes_hist v ON p.Id = v.PostId
+        GROUP BY p.Id, p.Title, p.PostTypeId, p.OwnerUserId, p.anio, p.Score, p.ViewCount
     """)
 
-    write_gold_merge(spark, df, "vote_stats_per_post", "post_id")
+    return write_gold_merge(spark, df, "vote_stats_per_post", "post_id")
 
 
-# ── Tabla 3: top_tags ─────────────────────────────────────────────────────────
 def build_top_tags(spark: SparkSession):
-    """
-    Ranking de etiquetas más usadas en preguntas.
-    Solo usa post_hist (PostTypeId = 1 son preguntas).
-    """
-    log.info("\n[3/5] top_tags")
+    """Ranking de etiquetas más usadas. Para notebooks."""
+    log.info("\n[extra] top_tags")
 
-    # Explotar el campo Tags (formato: <tag1><tag2>)
     df = spark.sql(f"""
         SELECT
             trim(tag)                               AS tag,
             anio,
             COUNT(*)                                AS cant_preguntas,
-            SUM(Score)                              AS total_score,
-            AVG(Score)                              AS avg_score,
-            SUM(ViewCount)                          AS total_views,
-            SUM(AnswerCount)                        AS total_answers,
+            COALESCE(SUM(Score), 0)                 AS total_score,
+            ROUND(AVG(Score), 2)                    AS avg_score,
+            COALESCE(SUM(ViewCount), 0)             AS total_views,
+            COALESCE(SUM(AnswerCount), 0)           AS total_answers,
             CAST('{FECHA_CARGUE}' AS TIMESTAMP)     AS fecha_cargue
         FROM nessie.{SILVER_NS}.post_hist
         LATERAL VIEW explode(
@@ -226,79 +217,72 @@ def build_top_tags(spark: SparkSession):
         F.concat_ws("_", F.col("tag"), F.col("anio").cast("string"))
     )
 
-    write_gold_merge(spark, df, "top_tags", "merge_key")
+    return write_gold_merge(spark, df, "top_tags", "merge_key")
 
 
-# ── Tabla 4: user_engagement ──────────────────────────────────────────────────
 def build_user_engagement(spark: SparkSession):
-    """
-    Nivel de engagement por usuario: posts + votos recibidos + badges.
-    Cruza users_hist + post_hist + votes_hist + badges_hist.
-    """
-    log.info("\n[4/5] user_engagement")
+    """Interacciones totales por usuario. Para notebooks."""
+    log.info("\n[extra] user_engagement")
 
     df = spark.sql(f"""
         SELECT
-            u.Id                                    AS user_id,
-            u.DisplayName                           AS display_name,
-            u.Reputation                            AS reputation,
-            u.Location                              AS location,
-            COUNT(DISTINCT p.Id)                    AS total_posts,
+            u.Id                                        AS user_id,
+            COALESCE(u.DisplayName, 'Unknown')          AS display_name,
+            COALESCE(u.Reputation, 0)                   AS reputation,
+            COALESCE(u.Location, '')                    AS location,
+            COUNT(DISTINCT p.Id)                        AS total_posts,
             SUM(CASE WHEN p.PostTypeId = 1 THEN 1 ELSE 0 END) AS total_questions,
             SUM(CASE WHEN p.PostTypeId = 2 THEN 1 ELSE 0 END) AS total_answers,
-            COALESCE(SUM(p.Score), 0)               AS total_score,
-            COALESCE(SUM(p.ViewCount), 0)           AS total_views,
-            COALESCE(SUM(p.CommentCount), 0)        AS total_comments,
-            COUNT(DISTINCT v.Id)                    AS total_votes_received,
-            COUNT(DISTINCT b.Id)                    AS total_badges,
-            CAST('{FECHA_CARGUE}' AS TIMESTAMP)     AS fecha_cargue
+            COALESCE(SUM(p.Score), 0)                   AS total_score,
+            COALESCE(SUM(p.ViewCount), 0)               AS total_views,
+            COALESCE(SUM(p.CommentCount), 0)            AS total_comments,
+            COUNT(DISTINCT v.Id)                        AS total_votes_received,
+            COUNT(DISTINCT b.Id)                        AS total_badges,
+            CAST('{FECHA_CARGUE}' AS TIMESTAMP)         AS fecha_cargue
         FROM nessie.{SILVER_NS}.users_hist u
-        LEFT JOIN nessie.{SILVER_NS}.post_hist p
-            ON u.Id = p.OwnerUserId
-        LEFT JOIN nessie.{SILVER_NS}.votes_hist v
-            ON p.Id = v.PostId
-        LEFT JOIN nessie.{SILVER_NS}.badges_hist b
-            ON u.Id = b.UserId
+        LEFT JOIN nessie.{SILVER_NS}.post_hist p ON u.Id = p.OwnerUserId
+        LEFT JOIN nessie.{SILVER_NS}.votes_hist v ON p.Id = v.PostId
+        LEFT JOIN nessie.{SILVER_NS}.badges_hist b ON u.Id = b.UserId
         GROUP BY u.Id, u.DisplayName, u.Reputation, u.Location
     """)
 
-    write_gold_merge(spark, df, "user_engagement", "user_id")
+    return write_gold_merge(spark, df, "user_engagement", "user_id")
 
 
-# ── Tabla 5: badges_summary ───────────────────────────────────────────────────
 def build_badges_summary(spark: SparkSession):
-    """
-    Resumen de insignias por usuario: cantidad y tipo.
-    Cruza badges_hist + users_hist.
-    """
-    log.info("\n[5/5] badges_summary")
+    """Resumen de insignias por usuario. Para notebooks."""
+    log.info("\n[extra] badges_summary")
 
     df = spark.sql(f"""
         SELECT
-            b.UserId                                AS user_id,
-            u.DisplayName                           AS display_name,
-            u.Reputation                            AS reputation,
-            COUNT(b.Id)                             AS total_badges,
-            SUM(CASE WHEN b.Class = 1 THEN 1 ELSE 0 END) AS gold_badges,
-            SUM(CASE WHEN b.Class = 2 THEN 1 ELSE 0 END) AS silver_badges,
-            SUM(CASE WHEN b.Class = 3 THEN 1 ELSE 0 END) AS bronze_badges,
+            b.UserId                                        AS user_id,
+            COALESCE(u.DisplayName, 'Unknown')              AS display_name,
+            COALESCE(u.Reputation, 0)                       AS reputation,
+            COUNT(b.Id)                                     AS total_badges,
+            SUM(CASE WHEN b.Class = 1 THEN 1 ELSE 0 END)   AS gold_badges,
+            SUM(CASE WHEN b.Class = 2 THEN 1 ELSE 0 END)   AS silver_badges,
+            SUM(CASE WHEN b.Class = 3 THEN 1 ELSE 0 END)   AS bronze_badges,
             SUM(CASE WHEN b.TagBased = true THEN 1 ELSE 0 END) AS tag_based_badges,
-            COUNT(DISTINCT b.Name)                  AS unique_badge_types,
-            CAST('{FECHA_CARGUE}' AS TIMESTAMP)     AS fecha_cargue
+            COUNT(DISTINCT b.Name)                          AS unique_badge_types,
+            CAST('{FECHA_CARGUE}' AS TIMESTAMP)             AS fecha_cargue
         FROM nessie.{SILVER_NS}.badges_hist b
-        LEFT JOIN nessie.{SILVER_NS}.users_hist u
-            ON b.UserId = u.Id
+        LEFT JOIN nessie.{SILVER_NS}.users_hist u ON b.UserId = u.Id
         GROUP BY b.UserId, u.DisplayName, u.Reputation
     """)
 
-    write_gold_merge(spark, df, "badges_summary", "user_id")
+    return write_gold_merge(spark, df, "badges_summary", "user_id")
 
 
-# ── Main ──────────────────────────────────────────────────────────────────────
+# ── Main — solo pipeline ★ ────────────────────────────────────────────────────
 def main():
+    """
+    Ejecutado por el DAG de Airflow.
+    Solo genera cant_post_x_user_hist (tabla principal del pipeline).
+    Las tablas adicionales se generan desde gold_agg.ipynb.
+    """
     log.info("=" * 60)
-    log.info("GOLD AGG — 5 tablas")
-    log.info("Fuentes: post_hist, users_hist, votes_hist, badges_hist")
+    log.info("GOLD AGG — cant_post_x_user_hist ★")
+    log.info("Fuentes: nessie.silver.post_hist + nessie.silver.users_hist")
     log.info("=" * 60)
 
     spark = build_spark_session()
@@ -306,19 +290,13 @@ def main():
 
     ensure_namespace(spark, GOLD_NS)
 
-    build_cant_post_x_user_hist(spark)
-    build_vote_stats_per_post(spark)
-    build_top_tags(spark)
-    build_user_engagement(spark)
-    build_badges_summary(spark)
+    total = build_cant_post_x_user_hist(spark)
 
     log.info("\n" + "=" * 60)
-    log.info("✅ Gold completado. Tablas generadas:")
-    log.info(f"  nessie.{GOLD_NS}.cant_post_x_user_hist")
-    log.info(f"  nessie.{GOLD_NS}.vote_stats_per_post")
-    log.info(f"  nessie.{GOLD_NS}.top_tags")
-    log.info(f"  nessie.{GOLD_NS}.user_engagement")
-    log.info(f"  nessie.{GOLD_NS}.badges_summary")
+    log.info("✅ Gold completado.")
+    log.info(f"   nessie.{GOLD_NS}.cant_post_x_user_hist → {total:,} filas")
+    log.info("   Para generar las 4 tablas adicionales:")
+    log.info("   → Ejecutar notebooks/gold_agg.ipynb")
     log.info("=" * 60)
 
     spark.stop()

@@ -378,7 +378,8 @@ services:
     environment:
       - NESSIE_SERVER_AUTHENTICATION_ENABLED=false
       - QUARKUS_HTTP_PORT=19120
-      - NESSIE_VERSION_STORE_TYPE=IN_MEMORY
+      - NESSIE_VERSION_STORE_TYPE=ROCKSDB
+      - NESSIE_VERSION_STORE_PERSIST_ROCKS_DB_DATABASE_PATH=/nessie/data
       - NESSIE_CATALOG_DEFAULT_WAREHOUSE=warehouse
       - NESSIE_CATALOG_WAREHOUSES_WAREHOUSE_LOCATION=s3://iceberg
       - NESSIE_CATALOG_SERVICE_S3_DEFAULT_OPTIONS_REGION=us-east-1
@@ -388,6 +389,8 @@ services:
       - AWS_ACCESS_KEY_ID=${MINIO_ACCESS_KEY:-minioadmin}
       - AWS_SECRET_ACCESS_KEY=${MINIO_SECRET_KEY:-minioadmin123}
       - AWS_REGION=us-east-1
+    volumes:
+      - nessie_data:/nessie/data
     healthcheck:
       test: ["CMD", "curl", "--fail", "http://localhost:19120/api/v1/config"]
       interval: 20s
@@ -511,6 +514,7 @@ services:
 volumes:
   postgres-db-volume:
   minio_data:
+  nessie_data:
   dremio_data:
 
 # ============================================================

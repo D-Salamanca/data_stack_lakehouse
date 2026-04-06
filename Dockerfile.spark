@@ -1,4 +1,4 @@
-FROM bitnami/spark:3.5.2
+FROM apache/spark:3.5.5-python3
 
 USER root
 
@@ -8,7 +8,7 @@ ARG AWS_SDK_VERSION=1.12.262
 ARG NESSIE_VERSION=0.95.0
 ARG SCALA_VERSION=2.12
 
-ENV SPARK_JARS_DIR=/opt/bitnami/spark/jars
+ENV SPARK_JARS_DIR=/opt/spark/jars
 
 # Iceberg runtime para Spark 3.5
 RUN wget -q \
@@ -32,18 +32,16 @@ RUN wget -q \
 
 # Dependencias Python para los scripts Spark
 RUN pip install --no-cache-dir \
-    pyspark==3.5.2 \
     pyiceberg==0.7.1 \
     boto3==1.35.0 \
-    pandas==2.2.0 \
-    pyarrow==17.0.0 \
+    pandas==2.0.3 \
+    pyarrow==14.0.2 \
     clickhouse-connect==0.7.19
 
 # Carpeta para scripts del pipeline
-RUN mkdir -p /opt/spark/scripts && \
-    chown -R 1001:root /opt/spark/scripts
+RUN mkdir -p /opt/spark/scripts && chmod -R 777 /opt/spark/scripts
 
 # Copiar configuración Spark por defecto
-COPY spark-defaults.conf /opt/bitnami/spark/conf/spark-defaults.conf
+COPY spark-defaults.conf /opt/spark/conf/spark-defaults.conf
 
-USER 1001
+USER spark

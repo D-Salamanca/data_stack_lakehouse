@@ -288,7 +288,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.spark
-    image: proyecto2-spark:3.5.2
+    image: proyecto2-spark:3.5.5
     container_name: proyecto2-spark-master
     command: /opt/spark/bin/spark-class org.apache.spark.deploy.master.Master --host spark-master --port 7077 --webui-port 8081
     environment:
@@ -319,7 +319,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.spark
-    image: proyecto2-spark:3.5.2
+    image: proyecto2-spark:3.5.5
     container_name: proyecto2-spark-worker
     command: /opt/spark/bin/spark-class org.apache.spark.deploy.worker.Worker spark://spark-master:7077 --webui-port 8082
     environment:

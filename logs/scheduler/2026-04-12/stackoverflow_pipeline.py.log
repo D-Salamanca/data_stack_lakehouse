@@ -3023,3 +3023,38 @@ IndentationError: unexpected indent
 [2026-04-12T23:04:43.715+0000] {logging_mixin.py:190} INFO - [2026-04-12T23:04:43.715+0000] {dag.py:3239} INFO - Sync 1 DAGs
 [2026-04-12T23:04:43.732+0000] {logging_mixin.py:190} INFO - [2026-04-12T23:04:43.732+0000] {dag.py:4180} INFO - Setting next_dagrun for stackoverflow_pipeline to None, run_after=None
 [2026-04-12T23:04:43.754+0000] {processor.py:208} INFO - Processing /opt/airflow/dags/stackoverflow_pipeline.py took 0.111 seconds
+[2026-04-12T23:05:13.970+0000] {processor.py:186} INFO - Started process (PID=1458) to work on /opt/airflow/dags/stackoverflow_pipeline.py
+[2026-04-12T23:05:13.971+0000] {processor.py:914} INFO - Processing file /opt/airflow/dags/stackoverflow_pipeline.py for tasks to queue
+[2026-04-12T23:05:13.972+0000] {logging_mixin.py:190} INFO - [2026-04-12T23:05:13.972+0000] {dagbag.py:588} INFO - Filling up the DagBag from /opt/airflow/dags/stackoverflow_pipeline.py
+[2026-04-12T23:05:14.009+0000] {processor.py:925} INFO - DAG(s) 'stackoverflow_pipeline' retrieved from /opt/airflow/dags/stackoverflow_pipeline.py
+[2026-04-12T23:05:14.029+0000] {logging_mixin.py:190} INFO - [2026-04-12T23:05:14.029+0000] {dag.py:3239} INFO - Sync 1 DAGs
+[2026-04-12T23:05:14.041+0000] {logging_mixin.py:190} INFO - [2026-04-12T23:05:14.041+0000] {dag.py:4180} INFO - Setting next_dagrun for stackoverflow_pipeline to None, run_after=None
+[2026-04-12T23:05:14.070+0000] {processor.py:208} INFO - Processing /opt/airflow/dags/stackoverflow_pipeline.py took 0.104 seconds
+[2026-04-12T23:05:44.197+0000] {processor.py:186} INFO - Started process (PID=1465) to work on /opt/airflow/dags/stackoverflow_pipeline.py
+[2026-04-12T23:05:44.200+0000] {processor.py:914} INFO - Processing file /opt/airflow/dags/stackoverflow_pipeline.py for tasks to queue
+[2026-04-12T23:05:44.202+0000] {logging_mixin.py:190} INFO - [2026-04-12T23:05:44.202+0000] {dagbag.py:588} INFO - Filling up the DagBag from /opt/airflow/dags/stackoverflow_pipeline.py
+[2026-04-12T23:05:44.224+0000] {processor.py:925} INFO - DAG(s) 'stackoverflow_pipeline' retrieved from /opt/airflow/dags/stackoverflow_pipeline.py
+[2026-04-12T23:05:44.247+0000] {logging_mixin.py:190} INFO - [2026-04-12T23:05:44.247+0000] {dag.py:3239} INFO - Sync 1 DAGs
+[2026-04-12T23:05:44.261+0000] {logging_mixin.py:190} INFO - [2026-04-12T23:05:44.260+0000] {dag.py:4180} INFO - Setting next_dagrun for stackoverflow_pipeline to None, run_after=None
+[2026-04-12T23:05:44.277+0000] {processor.py:208} INFO - Processing /opt/airflow/dags/stackoverflow_pipeline.py took 0.087 seconds
+[2026-04-12T23:06:14.457+0000] {processor.py:186} INFO - Started process (PID=1472) to work on /opt/airflow/dags/stackoverflow_pipeline.py
+[2026-04-12T23:06:14.458+0000] {processor.py:914} INFO - Processing file /opt/airflow/dags/stackoverflow_pipeline.py for tasks to queue
+[2026-04-12T23:06:14.459+0000] {logging_mixin.py:190} INFO - [2026-04-12T23:06:14.459+0000] {dagbag.py:588} INFO - Filling up the DagBag from /opt/airflow/dags/stackoverflow_pipeline.py
+[2026-04-12T23:06:14.473+0000] {processor.py:925} INFO - DAG(s) 'stackoverflow_pipeline' retrieved from /opt/airflow/dags/stackoverflow_pipeline.py
+[2026-04-12T23:06:14.492+0000] {logging_mixin.py:190} INFO - [2026-04-12T23:06:14.492+0000] {dag.py:3239} INFO - Sync 1 DAGs
+[2026-04-12T23:06:14.503+0000] {logging_mixin.py:190} INFO - [2026-04-12T23:06:14.502+0000] {dag.py:4180} INFO - Setting next_dagrun for stackoverflow_pipeline to None, run_after=None
+[2026-04-12T23:06:14.530+0000] {processor.py:208} INFO - Processing /opt/airflow/dags/stackoverflow_pipeline.py took 0.077 seconds
+[2026-04-12T23:06:44.681+0000] {processor.py:186} INFO - Started process (PID=1479) to work on /opt/airflow/dags/stackoverflow_pipeline.py
+[2026-04-12T23:06:44.682+0000] {processor.py:914} INFO - Processing file /opt/airflow/dags/stackoverflow_pipeline.py for tasks to queue
+[2026-04-12T23:06:44.683+0000] {logging_mixin.py:190} INFO - [2026-04-12T23:06:44.683+0000] {dagbag.py:588} INFO - Filling up the DagBag from /opt/airflow/dags/stackoverflow_pipeline.py
+[2026-04-12T23:06:44.698+0000] {processor.py:925} INFO - DAG(s) 'stackoverflow_pipeline' retrieved from /opt/airflow/dags/stackoverflow_pipeline.py
+[2026-04-12T23:06:44.720+0000] {logging_mixin.py:190} INFO - [2026-04-12T23:06:44.720+0000] {dag.py:3239} INFO - Sync 1 DAGs
+[2026-04-12T23:06:44.731+0000] {logging_mixin.py:190} INFO - [2026-04-12T23:06:44.731+0000] {dag.py:4180} INFO - Setting next_dagrun for stackoverflow_pipeline to None, run_after=None
+[2026-04-12T23:06:44.756+0000] {processor.py:208} INFO - Processing /opt/airflow/dags/stackoverflow_pipeline.py took 0.080 seconds
+[2026-04-12T23:07:14.977+0000] {processor.py:186} INFO - Started process (PID=1486) to work on /opt/airflow/dags/stackoverflow_pipeline.py
+[2026-04-12T23:07:14.978+0000] {processor.py:914} INFO - Processing file /opt/airflow/dags/stackoverflow_pipeline.py for tasks to queue
+[2026-04-12T23:07:14.979+0000] {logging_mixin.py:190} INFO - [2026-04-12T23:07:14.978+0000] {dagbag.py:588} INFO - Filling up the DagBag from /opt/airflow/dags/stackoverflow_pipeline.py
+[2026-04-12T23:07:14.992+0000] {processor.py:925} INFO - DAG(s) 'stackoverflow_pipeline' retrieved from /opt/airflow/dags/stackoverflow_pipeline.py
+[2026-04-12T23:07:15.011+0000] {logging_mixin.py:190} INFO - [2026-04-12T23:07:15.011+0000] {dag.py:3239} INFO - Sync 1 DAGs
+[2026-04-12T23:07:15.021+0000] {logging_mixin.py:190} INFO - [2026-04-12T23:07:15.021+0000] {dag.py:4180} INFO - Setting next_dagrun for stackoverflow_pipeline to None, run_after=None
+[2026-04-12T23:07:15.049+0000] {processor.py:208} INFO - Processing /opt/airflow/dags/stackoverflow_pipeline.py took 0.077 seconds

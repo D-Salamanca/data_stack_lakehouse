@@ -1,0 +1,104 @@
+[2026-04-12T19:04:43.531+0000] {local_task_job_runner.py:123} INFO - ::group::Pre task execution logs
+[2026-04-12T19:04:43.548+0000] {taskinstance.py:2613} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: stackoverflow_pipeline.silver_transform manual__2026-04-12T19:04:34+00:00 [queued]>
+[2026-04-12T19:04:43.561+0000] {taskinstance.py:2613} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: stackoverflow_pipeline.silver_transform manual__2026-04-12T19:04:34+00:00 [queued]>
+[2026-04-12T19:04:43.562+0000] {taskinstance.py:2866} INFO - Starting attempt 1 of 2
+[2026-04-12T19:04:43.575+0000] {taskinstance.py:2889} INFO - Executing <Task(SparkSubmitOperator): silver_transform> on 2026-04-12 19:04:34+00:00
+[2026-04-12T19:04:43.581+0000] {warnings.py:112} WARNING - /home/***/.local/lib/python3.12/site-packages/***/task/task_runner/standard_task_runner.py:70: DeprecationWarning: This process (pid=141) is multi-threaded, use of fork() may lead to deadlocks in the child.
+  pid = os.fork()
+
+[2026-04-12T19:04:43.583+0000] {standard_task_runner.py:72} INFO - Started process 142 to run task
+[2026-04-12T19:04:43.583+0000] {standard_task_runner.py:104} INFO - Running: ['***', 'tasks', 'run', 'stackoverflow_pipeline', 'silver_transform', 'manual__2026-04-12T19:04:34+00:00', '--job-id', '4', '--raw', '--subdir', 'DAGS_FOLDER/stackoverflow_pipeline.py', '--cfg-path', '/tmp/tmpatjkfdo1']
+[2026-04-12T19:04:43.584+0000] {standard_task_runner.py:105} INFO - Job 4: Subtask silver_transform
+[2026-04-12T19:04:43.632+0000] {task_command.py:467} INFO - Running <TaskInstance: stackoverflow_pipeline.silver_transform manual__2026-04-12T19:04:34+00:00 [running]> on host b4737cc55adb
+[2026-04-12T19:04:43.713+0000] {taskinstance.py:3132} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='fhbd-grupo' AIRFLOW_CTX_DAG_ID='stackoverflow_pipeline' AIRFLOW_CTX_TASK_ID='silver_transform' AIRFLOW_CTX_EXECUTION_DATE='2026-04-12T19:04:34+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2026-04-12T19:04:34+00:00'
+[2026-04-12T19:04:43.714+0000] {taskinstance.py:731} INFO - ::endgroup::
+[2026-04-12T19:04:43.736+0000] {spark_submit.py:273} INFO - Could not load connection string spark_default, defaulting to yarn
+[2026-04-12T19:04:43.739+0000] {spark_submit.py:403} INFO - Spark-Submit cmd: spark-submit --master yarn --conf spark.submit.deployMode=client --conf spark.driver.bindAddress=0.0.0.0 --conf spark.executor.instances=1 --conf spark.executor.cores=2 --conf spark.executor.memory=2g --conf spark.driver.memory=1g --conf spark.sql.extensions=org.apache.iceberg.spark.extensions.IcebergSparkSessionExtensions,org.projectnessie.spark.extensions.NessieSparkSessionExtensions --conf spark.sql.catalog.nessie=org.apache.iceberg.spark.SparkCatalog --conf spark.sql.catalog.nessie.catalog-impl=org.apache.iceberg.nessie.NessieCatalog --conf spark.sql.catalog.nessie.uri=http://proyecto2-nessie:19120/api/v1 --conf spark.sql.catalog.nessie.ref=main --conf spark.sql.catalog.nessie.authentication.type=NONE --conf spark.sql.catalog.nessie.warehouse=s3a://iceberg/ --conf spark.hadoop.fs.s3a.endpoint=http://proyecto2-minio:9000 --conf spark.hadoop.fs.s3a.access.key=minioadmin --conf spark.hadoop.fs.s3a.secret.key=****** --conf spark.hadoop.fs.s3a.path.style.access=true --conf spark.hadoop.fs.s3a.impl=org.apache.hadoop.fs.s3a.S3AFileSystem --conf spark.hadoop.fs.s3a.aws.credentials.provider=org.apache.hadoop.fs.s3a.SimpleAWSCredentialsProvider --conf spark.hadoop.fs.s3a.connection.ssl.enabled=false --conf spark.yarn.appMasterEnv.MINIO_ENDPOINT=http://proyecto2-minio:9000 --conf spark.yarn.appMasterEnv.MINIO_ACCESS_KEY=minioadmin --conf spark.yarn.appMasterEnv.MINIO_SECRET_KEY=****** --conf spark.yarn.appMasterEnv.MINIO_BUCKET_BRONZE=bronze --conf spark.yarn.appMasterEnv.MINIO_BUCKET_ICEBERG=iceberg --conf spark.yarn.appMasterEnv.NESSIE_URL=http://proyecto2-nessie:19120/api/v1 --conf spark.yarn.appMasterEnv.NESSIE_BRANCH=main --conf spark.yarn.appMasterEnv.SILVER_NAMESPACE=silver --conf spark.yarn.appMasterEnv.GOLD_NAMESPACE=gold --conf spark.yarn.appMasterEnv.CH_HOST=play.clickhouse.com --conf spark.yarn.appMasterEnv.CH_PORT=443 --conf spark.yarn.appMasterEnv.CH_USER=play --conf spark.yarn.appMasterEnv.CH_PASSWORD=****** --conf spark.yarn.appMasterEnv.CH_DB=stackoverflow --conf spark.yarn.appMasterEnv.MAX_ROWS=100000 --packages org.apache.iceberg:iceberg-spark-runtime-3.5_2.12:1.6.1,org.projectnessie.nessie-integrations:nessie-spark-extensions-3.5_2.12:0.95.0,org.apache.hadoop:hadoop-aws:3.3.4,com.amazonaws:aws-java-sdk-bundle:1.12.262 --name silver_users_hist --verbose /opt/***/scripts/silver_transform.py
+[2026-04-12T19:04:43.748+0000] {spark_submit.py:579} INFO - /opt/spark/bin/load-spark-env.sh: line 68: ps: command not found
+[2026-04-12T19:04:45.190+0000] {spark_submit.py:579} INFO - Using properties file: null
+[2026-04-12T19:04:45.327+0000] {spark_submit.py:579} INFO - Exception in thread "main" org.apache.spark.SparkException: When running with master 'yarn' either HADOOP_CONF_DIR or YARN_CONF_DIR must be set in the environment.
+[2026-04-12T19:04:45.328+0000] {spark_submit.py:579} INFO - at org.apache.spark.deploy.SparkSubmitArguments.error(SparkSubmitArguments.scala:650)
+[2026-04-12T19:04:45.328+0000] {spark_submit.py:579} INFO - at org.apache.spark.deploy.SparkSubmitArguments.validateSubmitArguments(SparkSubmitArguments.scala:281)
+[2026-04-12T19:04:45.329+0000] {spark_submit.py:579} INFO - at org.apache.spark.deploy.SparkSubmitArguments.validateArguments(SparkSubmitArguments.scala:237)
+[2026-04-12T19:04:45.330+0000] {spark_submit.py:579} INFO - at org.apache.spark.deploy.SparkSubmitArguments.<init>(SparkSubmitArguments.scala:122)
+[2026-04-12T19:04:45.330+0000] {spark_submit.py:579} INFO - at org.apache.spark.deploy.SparkSubmit$$anon$2$$anon$3.<init>(SparkSubmit.scala:1108)
+[2026-04-12T19:04:45.331+0000] {spark_submit.py:579} INFO - at org.apache.spark.deploy.SparkSubmit$$anon$2.parseArguments(SparkSubmit.scala:1108)
+[2026-04-12T19:04:45.331+0000] {spark_submit.py:579} INFO - at org.apache.spark.deploy.SparkSubmit.doSubmit(SparkSubmit.scala:86)
+[2026-04-12T19:04:45.331+0000] {spark_submit.py:579} INFO - at org.apache.spark.deploy.SparkSubmit$$anon$2.doSubmit(SparkSubmit.scala:1125)
+[2026-04-12T19:04:45.332+0000] {spark_submit.py:579} INFO - at org.apache.spark.deploy.SparkSubmit$.main(SparkSubmit.scala:1134)
+[2026-04-12T19:04:45.333+0000] {spark_submit.py:579} INFO - at org.apache.spark.deploy.SparkSubmit.main(SparkSubmit.scala)
+[2026-04-12T19:04:45.361+0000] {taskinstance.py:3311} ERROR - Task failed with exception
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 762, in _execute_task
+    result = _execute_callable(context=context, **execute_callable_kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 733, in _execute_callable
+    return ExecutionCallableRunner(
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/utils/operator_helpers.py", line 252, in run
+    return self.func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/baseoperator.py", line 417, in wrapper
+    return func(self, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/providers/apache/spark/operators/spark_submit.py", line 174, in execute
+    self._hook.submit(self.application)
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/providers/apache/spark/hooks/spark_submit.py", line 505, in submit
+    raise AirflowException(
+airflow.exceptions.AirflowException: Cannot execute: spark-submit --master yarn --conf spark.submit.deployMode=client --conf spark.driver.bindAddress=0.0.0.0 --conf spark.executor.instances=1 --conf spark.executor.cores=2 --conf spark.executor.memory=2g --conf spark.driver.memory=1g --conf spark.sql.extensions=org.apache.iceberg.spark.extensions.IcebergSparkSessionExtensions,org.projectnessie.spark.extensions.NessieSparkSessionExtensions --conf spark.sql.catalog.nessie=org.apache.iceberg.spark.SparkCatalog --conf spark.sql.catalog.nessie.catalog-impl=org.apache.iceberg.nessie.NessieCatalog --conf spark.sql.catalog.nessie.uri=http://proyecto2-nessie:19120/api/v1 --conf spark.sql.catalog.nessie.ref=main --conf spark.sql.catalog.nessie.authentication.type=NONE --conf spark.sql.catalog.nessie.warehouse=s3a://iceberg/ --conf spark.hadoop.fs.s3a.endpoint=http://proyecto2-minio:9000 --conf spark.hadoop.fs.s3a.access.key=minioadmin --conf spark.hadoop.fs.s3a.secret.key=****** --conf spark.hadoop.fs.s3a.path.style.access=true --conf spark.hadoop.fs.s3a.impl=org.apache.hadoop.fs.s3a.S3AFileSystem --conf spark.hadoop.fs.s3a.aws.credentials.provider=org.apache.hadoop.fs.s3a.SimpleAWSCredentialsProvider --conf spark.hadoop.fs.s3a.connection.ssl.enabled=false --conf spark.yarn.appMasterEnv.MINIO_ENDPOINT=http://proyecto2-minio:9000 --conf spark.yarn.appMasterEnv.MINIO_ACCESS_KEY=minioadmin --conf spark.yarn.appMasterEnv.MINIO_SECRET_KEY=****** --conf spark.yarn.appMasterEnv.MINIO_BUCKET_BRONZE=bronze --conf spark.yarn.appMasterEnv.MINIO_BUCKET_ICEBERG=iceberg --conf spark.yarn.appMasterEnv.NESSIE_URL=http://proyecto2-nessie:19120/api/v1 --conf spark.yarn.appMasterEnv.NESSIE_BRANCH=main --conf spark.yarn.appMasterEnv.SILVER_NAMESPACE=silver --conf spark.yarn.appMasterEnv.GOLD_NAMESPACE=gold --conf spark.yarn.appMasterEnv.CH_HOST=play.clickhouse.com --conf spark.yarn.appMasterEnv.CH_PORT=443 --conf spark.yarn.appMasterEnv.CH_USER=play --conf spark.yarn.appMasterEnv.CH_PASSWORD=****** --conf spark.yarn.appMasterEnv.CH_DB=stackoverflow --conf spark.yarn.appMasterEnv.MAX_ROWS=100000 --packages org.apache.iceberg:iceberg-spark-runtime-3.5_2.12:1.6.1,org.projectnessie.nessie-integrations:nessie-spark-extensions-3.5_2.12:0.95.0,org.apache.hadoop:hadoop-aws:3.3.4,com.amazonaws:aws-java-sdk-bundle:1.12.262 --name silver_users_hist --verbose /opt/***/scripts/silver_transform.py. Error code is: 1.
+[2026-04-12T19:04:45.371+0000] {taskinstance.py:1225} INFO - Marking task as UP_FOR_RETRY. dag_id=stackoverflow_pipeline, task_id=silver_transform, run_id=manual__2026-04-12T19:04:34+00:00, execution_date=20260412T190434, start_date=20260412T190443, end_date=20260412T190445
+[2026-04-12T19:04:45.394+0000] {taskinstance.py:340} INFO - ::group::Post task execution logs
+[2026-04-12T19:04:45.395+0000] {standard_task_runner.py:124} ERROR - Failed to execute job 4 for task silver_transform (Cannot execute: spark-submit --master yarn --conf spark.submit.deployMode=client --conf spark.driver.bindAddress=0.0.0.0 --conf spark.executor.instances=1 --conf spark.executor.cores=2 --conf spark.executor.memory=2g --conf spark.driver.memory=1g --conf spark.sql.extensions=org.apache.iceberg.spark.extensions.IcebergSparkSessionExtensions,org.projectnessie.spark.extensions.NessieSparkSessionExtensions --conf spark.sql.catalog.nessie=org.apache.iceberg.spark.SparkCatalog --conf spark.sql.catalog.nessie.catalog-impl=org.apache.iceberg.nessie.NessieCatalog --conf spark.sql.catalog.nessie.uri=http://proyecto2-nessie:19120/api/v1 --conf spark.sql.catalog.nessie.ref=main --conf spark.sql.catalog.nessie.authentication.type=NONE --conf spark.sql.catalog.nessie.warehouse=s3a://iceberg/ --conf spark.hadoop.fs.s3a.endpoint=http://proyecto2-minio:9000 --conf spark.hadoop.fs.s3a.access.key=minioadmin --conf spark.hadoop.fs.s3a.secret.key=****** --conf spark.hadoop.fs.s3a.path.style.access=true --conf spark.hadoop.fs.s3a.impl=org.apache.hadoop.fs.s3a.S3AFileSystem --conf spark.hadoop.fs.s3a.aws.credentials.provider=org.apache.hadoop.fs.s3a.SimpleAWSCredentialsProvider --conf spark.hadoop.fs.s3a.connection.ssl.enabled=false --conf spark.yarn.appMasterEnv.MINIO_ENDPOINT=http://proyecto2-minio:9000 --conf spark.yarn.appMasterEnv.MINIO_ACCESS_KEY=minioadmin --conf spark.yarn.appMasterEnv.MINIO_SECRET_KEY=****** --conf spark.yarn.appMasterEnv.MINIO_BUCKET_BRONZE=bronze --conf spark.yarn.appMasterEnv.MINIO_BUCKET_ICEBERG=iceberg --conf spark.yarn.appMasterEnv.NESSIE_URL=http://proyecto2-nessie:19120/api/v1 --conf spark.yarn.appMasterEnv.NESSIE_BRANCH=main --conf spark.yarn.appMasterEnv.SILVER_NAMESPACE=silver --conf spark.yarn.appMasterEnv.GOLD_NAMESPACE=gold --conf spark.yarn.appMasterEnv.CH_HOST=play.clickhouse.com --conf spark.yarn.appMasterEnv.CH_PORT=443 --conf spark.yarn.appMasterEnv.CH_USER=play --conf spark.yarn.appMasterEnv.CH_PASSWORD=****** --conf spark.yarn.appMasterEnv.CH_DB=stackoverflow --conf spark.yarn.appMasterEnv.MAX_ROWS=100000 --packages org.apache.iceberg:iceberg-spark-runtime-3.5_2.12:1.6.1,org.projectnessie.nessie-integrations:nessie-spark-extensions-3.5_2.12:0.95.0,org.apache.hadoop:hadoop-aws:3.3.4,com.amazonaws:aws-java-sdk-bundle:1.12.262 --name silver_users_hist --verbose /opt/***/scripts/silver_transform.py. Error code is: 1.; 142)
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/task/task_runner/standard_task_runner.py", line 117, in _start_by_fork
+    ret = args.func(args, dag=self.dag)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/cli/cli_config.py", line 49, in command
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/utils/cli.py", line 116, in wrapper
+    return f(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/cli/commands/task_command.py", line 483, in task_run
+    task_return_code = _run_task_by_selected_method(args, _dag, ti)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/cli/commands/task_command.py", line 256, in _run_task_by_selected_method
+    return _run_raw_task(args, ti)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/cli/commands/task_command.py", line 341, in _run_raw_task
+    return ti._run_raw_task(
+           ^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/utils/session.py", line 97, in wrapper
+    return func(*args, session=session, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 3005, in _run_raw_task
+    return _run_raw_task(
+           ^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 273, in _run_raw_task
+    TaskInstance._execute_task_with_callbacks(
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 3159, in _execute_task_with_callbacks
+    result = self._execute_task(context, task_orig)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 3183, in _execute_task
+    return _execute_task(self, context, task_orig)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 762, in _execute_task
+    result = _execute_callable(context=context, **execute_callable_kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 733, in _execute_callable
+    return ExecutionCallableRunner(
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/utils/operator_helpers.py", line 252, in run
+    return self.func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/baseoperator.py", line 417, in wrapper
+    return func(self, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/providers/apache/spark/operators/spark_submit.py", line 174, in execute
+    self._hook.submit(self.application)
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/providers/apache/spark/hooks/spark_submit.py", line 505, in submit
+    raise AirflowException(
+airflow.exceptions.AirflowException: Cannot execute: spark-submit --master yarn --conf spark.submit.deployMode=client --conf spark.driver.bindAddress=0.0.0.0 --conf spark.executor.instances=1 --conf spark.executor.cores=2 --conf spark.executor.memory=2g --conf spark.driver.memory=1g --conf spark.sql.extensions=org.apache.iceberg.spark.extensions.IcebergSparkSessionExtensions,org.projectnessie.spark.extensions.NessieSparkSessionExtensions --conf spark.sql.catalog.nessie=org.apache.iceberg.spark.SparkCatalog --conf spark.sql.catalog.nessie.catalog-impl=org.apache.iceberg.nessie.NessieCatalog --conf spark.sql.catalog.nessie.uri=http://proyecto2-nessie:19120/api/v1 --conf spark.sql.catalog.nessie.ref=main --conf spark.sql.catalog.nessie.authentication.type=NONE --conf spark.sql.catalog.nessie.warehouse=s3a://iceberg/ --conf spark.hadoop.fs.s3a.endpoint=http://proyecto2-minio:9000 --conf spark.hadoop.fs.s3a.access.key=minioadmin --conf spark.hadoop.fs.s3a.secret.key=****** --conf spark.hadoop.fs.s3a.path.style.access=true --conf spark.hadoop.fs.s3a.impl=org.apache.hadoop.fs.s3a.S3AFileSystem --conf spark.hadoop.fs.s3a.aws.credentials.provider=org.apache.hadoop.fs.s3a.SimpleAWSCredentialsProvider --conf spark.hadoop.fs.s3a.connection.ssl.enabled=false --conf spark.yarn.appMasterEnv.MINIO_ENDPOINT=http://proyecto2-minio:9000 --conf spark.yarn.appMasterEnv.MINIO_ACCESS_KEY=minioadmin --conf spark.yarn.appMasterEnv.MINIO_SECRET_KEY=****** --conf spark.yarn.appMasterEnv.MINIO_BUCKET_BRONZE=bronze --conf spark.yarn.appMasterEnv.MINIO_BUCKET_ICEBERG=iceberg --conf spark.yarn.appMasterEnv.NESSIE_URL=http://proyecto2-nessie:19120/api/v1 --conf spark.yarn.appMasterEnv.NESSIE_BRANCH=main --conf spark.yarn.appMasterEnv.SILVER_NAMESPACE=silver --conf spark.yarn.appMasterEnv.GOLD_NAMESPACE=gold --conf spark.yarn.appMasterEnv.CH_HOST=play.clickhouse.com --conf spark.yarn.appMasterEnv.CH_PORT=443 --conf spark.yarn.appMasterEnv.CH_USER=play --conf spark.yarn.appMasterEnv.CH_PASSWORD=****** --conf spark.yarn.appMasterEnv.CH_DB=stackoverflow --conf spark.yarn.appMasterEnv.MAX_ROWS=100000 --packages org.apache.iceberg:iceberg-spark-runtime-3.5_2.12:1.6.1,org.projectnessie.nessie-integrations:nessie-spark-extensions-3.5_2.12:0.95.0,org.apache.hadoop:hadoop-aws:3.3.4,com.amazonaws:aws-java-sdk-bundle:1.12.262 --name silver_users_hist --verbose /opt/***/scripts/silver_transform.py. Error code is: 1.
+[2026-04-12T19:04:45.406+0000] {local_task_job_runner.py:266} INFO - Task exited with return code 1
+[2026-04-12T19:04:45.431+0000] {taskinstance.py:3895} INFO - 0 downstream tasks scheduled from follow-on schedule check
+[2026-04-12T19:04:45.439+0000] {local_task_job_runner.py:245} INFO - ::endgroup::

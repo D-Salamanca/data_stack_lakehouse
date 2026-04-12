@@ -1,0 +1,223 @@
+- generic [ref=e1]:
+  - generic [ref=e4]:
+    - navigation [ref=e5]:
+      - list [ref=e6]:
+        - listitem [ref=e7]:
+          - link [ref=e8] [cursor=pointer]:
+            - /url: /
+            - img [ref=e12]
+        - listitem [ref=e14]:
+          - link [ref=e16] [cursor=pointer]:
+            - /url: /
+            - img [ref=e20]
+        - listitem [ref=e22]:
+          - link [ref=e24] [cursor=pointer]:
+            - /url: /new_query?context=%22%40admin%22
+            - img [ref=e28]
+        - listitem [ref=e30]:
+          - link [ref=e32] [cursor=pointer]:
+            - /url: /jobs
+            - img [ref=e36]
+      - list [ref=e38]:
+        - listitem [ref=e39]:
+          - link [ref=e41] [cursor=pointer]:
+            - /url: /settings
+            - img [ref=e45]
+        - button [ref=e48] [cursor=pointer]:
+          - generic:
+            - img
+          - generic:
+            - img
+        - button [ref=e51] [cursor=pointer]:
+          - generic: AU
+          - generic:
+            - img
+    - generic [ref=e52]:
+      - generic [ref=e58]:
+        - img [ref=e60]
+        - textbox [ref=e62]:
+          - /placeholder: Search Spaces and Datasets
+      - generic [ref=e63]:
+        - generic [ref=e64]:
+          - heading [level=3] [ref=e65]: Datasets
+          - generic [ref=e66]:
+            - list [ref=e67]:
+              - listitem [ref=e68] [cursor=pointer]:
+                - link [ref=e70]:
+                  - /url: /home
+                  - img [ref=e73]
+                  - generic [ref=e76]: admin
+            - generic [ref=e79]:
+              - heading [level=4] [ref=e80] [cursor=pointer]:
+                - link [ref=e81]:
+                  - /url: /spaces/list
+                  - button [ref=e82]:
+                    - generic:
+                      - img
+                  - generic [ref=e83]: Spaces (0)
+                  - button [ref=e85]:
+                    - generic:
+                      - img
+              - generic [ref=e260]:
+                - img [ref=e262]
+                - generic [ref=e264]: No spaces yet
+                - link [ref=e265] [cursor=pointer]:
+                  - /url: /
+                  - text: Add space
+            - generic [ref=e87]:
+              - text: Sources
+              - button [ref=e88] [cursor=pointer]:
+                - generic:
+                  - img
+            - generic [ref=e266]:
+              - img [ref=e268]
+              - generic [ref=e270]: No data sources yet
+              - link [ref=e271] [cursor=pointer]:
+                - /url: /
+                - text: Add source
+          - button [ref=e90] [cursor=pointer]:
+            - generic [ref=e91]:
+              - img [ref=e93]
+              - text: Add Source
+        - main [ref=e95]:
+          - generic [ref=e96]:
+            - heading [level=3] [ref=e98]:
+              - generic [ref=e273]:
+                - generic [ref=e275]: "@admin"
+                - button [ref=e277] [cursor=pointer]:
+                  - generic:
+                    - img
+            - generic [ref=e99]:
+              - button [ref=e101] [cursor=pointer]:
+                - generic:
+                  - img
+              - generic [ref=e279]:
+                - button [ref=e281] [cursor=pointer]:
+                  - generic:
+                    - img
+                - button [ref=e282] [cursor=pointer]:
+                  - generic:
+                    - img
+          - generic [ref=e284]:
+            - img [ref=e286]
+            - generic [ref=e288]: No items
+  - dialog [active] [ref=e243]:
+    - generic [ref=e244]:
+      - generic [ref=e245]: Add Data Source
+      - button [ref=e246] [cursor=pointer]:
+        - generic:
+          - img
+    - generic [ref=e248]:
+      - generic [ref=e249]:
+        - img [ref=e252]
+        - textbox [ref=e254]:
+          - /placeholder: Search data source
+      - generic [ref=e256]:
+        - generic [ref=e289]:
+          - generic [ref=e290]: Lakehouse Catalogs
+          - button [ref=e291] [cursor=pointer]:
+            - generic [ref=e292]:
+              - img [ref=e294]
+              - heading [level=3] [ref=e295]: AWS Glue Data Catalog
+          - button [ref=e296] [cursor=pointer]:
+            - generic [ref=e297]:
+              - img [ref=e300]
+              - heading [level=3] [ref=e302]: Hive 2.x
+          - button [ref=e303] [cursor=pointer]:
+            - generic [ref=e304]:
+              - img [ref=e307]
+              - heading [level=3] [ref=e309]: Hive 3.x
+          - button [ref=e310] [cursor=pointer]:
+            - generic [ref=e311]:
+              - img [ref=e314]
+              - heading [level=3] [ref=e316]: Nessie
+        - generic [ref=e257]:
+          - generic [ref=e258]: Object Storage
+          - button [ref=e317] [cursor=pointer]:
+            - generic [ref=e318]:
+              - img [ref=e320]
+              - heading [level=3] [ref=e321]: Amazon S3
+          - button [ref=e322] [cursor=pointer]:
+            - generic [ref=e323]:
+              - img [ref=e326]
+              - heading [level=3] [ref=e328]: Azure Storage
+          - button [ref=e329] [cursor=pointer]:
+            - generic [ref=e330]:
+              - img [ref=e332]
+              - heading [level=3] [ref=e333]: Google Cloud Storage
+          - button [ref=e334] [cursor=pointer]:
+            - generic [ref=e335]:
+              - img [ref=e338]
+              - heading [level=3] [ref=e340]: HDFS
+          - button [ref=e341] [cursor=pointer]:
+            - generic [ref=e342]:
+              - img [ref=e345]
+              - heading [level=3] [ref=e347]: NAS
+          - button [ref=e348] [cursor=pointer]:
+            - generic [ref=e349]:
+              - img [ref=e352]
+              - heading [level=3] [ref=e354]: Sample Source
+      - generic [ref=e357]:
+        - generic [ref=e358]: Databases
+        - button [ref=e359] [cursor=pointer]:
+          - generic [ref=e360]:
+            - img [ref=e362]
+            - heading [level=3] [ref=e363]: Amazon OpenSearch Service
+        - button [ref=e364] [cursor=pointer]:
+          - generic [ref=e365]:
+            - img [ref=e367]
+            - heading [level=3] [ref=e368]: Amazon Redshift
+        - button [ref=e369] [cursor=pointer]:
+          - generic [ref=e370]:
+            - img [ref=e373]
+            - heading [level=3] [ref=e375]: Dremio
+        - button [ref=e376] [cursor=pointer]:
+          - generic [ref=e377]:
+            - img [ref=e380]
+            - heading [level=3] [ref=e382]: Druid
+        - button [ref=e383] [cursor=pointer]:
+          - generic [ref=e384]:
+            - img [ref=e387]
+            - heading [level=3] [ref=e389]: Elasticsearch
+        - button [ref=e390] [cursor=pointer]:
+          - generic [ref=e391]:
+            - img [ref=e394]
+            - heading [level=3] [ref=e396]: IBM Db2
+        - button [ref=e397] [cursor=pointer]:
+          - generic [ref=e398]:
+            - img [ref=e400]
+            - heading [level=3] [ref=e401]: Microsoft Azure Data Explorer
+        - button [ref=e402] [cursor=pointer]:
+          - generic [ref=e403]:
+            - img [ref=e406]
+            - heading [level=3] [ref=e408]: Microsoft Azure Synapse Analytics
+        - button [ref=e409] [cursor=pointer]:
+          - generic [ref=e410]:
+            - img [ref=e412]
+            - heading [level=3] [ref=e413]: Microsoft SQL Server
+        - button [ref=e414] [cursor=pointer]:
+          - generic [ref=e415]:
+            - img [ref=e418]
+            - heading [level=3] [ref=e420]: MongoDB
+        - button [ref=e421] [cursor=pointer]:
+          - generic [ref=e422]:
+            - img [ref=e424]
+            - heading [level=3] [ref=e425]: MySQL
+        - button [ref=e426] [cursor=pointer]:
+          - generic [ref=e427]:
+            - img [ref=e429]
+            - heading [level=3] [ref=e430]: Oracle
+        - button [ref=e431] [cursor=pointer]:
+          - generic [ref=e432]:
+            - img [ref=e434]
+            - heading [level=3] [ref=e435]: PostgreSQL
+        - button [ref=e436] [cursor=pointer]:
+          - generic [ref=e437]:
+            - img [ref=e440]
+            - heading [level=3] [ref=e442]: Snowflake
+        - button [ref=e443] [cursor=pointer]:
+          - generic [ref=e444]:
+            - img [ref=e447]
+            - heading [level=3] [ref=e449]: Vertica
+  - iframe [ref=e450]:
+    

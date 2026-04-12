@@ -1,0 +1,26 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e3]:
+    - img "Dremio" [ref=e4]
+    - generic [ref=e5]:
+      - generic [ref=e6]:
+        - heading "Log in" [level=1] [ref=e7]
+        - generic [ref=e8]:
+          - generic [ref=e9]:
+            - generic [ref=e10]:
+              - generic [ref=e11]:
+                - generic [ref=e14]: Username
+                - textbox "Username" [ref=e15]: admin
+              - generic [ref=e16]:
+                - generic [ref=e19]: Password
+                - textbox "Password" [ref=e20]: admin
+            - button "Log In" [ref=e23] [cursor=pointer]:
+              - generic [ref=e24]: Log In
+          - generic [ref=e29]:
+            - img [ref=e31]
+            - generic [ref=e33]: Invalid username or password.
+            - img [ref=e37] [cursor=pointer]
+      - link "Privacy policy" [ref=e26] [cursor=pointer]:
+        - /url: https://www.dremio.com/legal/privacy-policy
+  - img
+  - iframe [ref=e27]:
+    

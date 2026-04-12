@@ -1,0 +1,277 @@
+[2026-04-12T18:10:41.509+0000] {local_task_job_runner.py:123} INFO - ::group::Pre task execution logs
+[2026-04-12T18:10:41.565+0000] {taskinstance.py:2613} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: stackoverflow_pipeline.bronze_ingest manual__2026-04-12T18:10:39.010075+00:00 [queued]>
+[2026-04-12T18:10:41.590+0000] {taskinstance.py:2613} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: stackoverflow_pipeline.bronze_ingest manual__2026-04-12T18:10:39.010075+00:00 [queued]>
+[2026-04-12T18:10:41.593+0000] {taskinstance.py:2866} INFO - Starting attempt 1 of 2
+[2026-04-12T18:10:41.632+0000] {taskinstance.py:2889} INFO - Executing <Task(PythonOperator): bronze_ingest> on 2026-04-12 18:10:39.010075+00:00
+[2026-04-12T18:10:41.650+0000] {warnings.py:112} WARNING - /home/***/.local/lib/python3.12/site-packages/***/task/task_runner/standard_task_runner.py:70: DeprecationWarning: This process (pid=93) is multi-threaded, use of fork() may lead to deadlocks in the child.
+  pid = os.fork()
+
+[2026-04-12T18:10:41.656+0000] {standard_task_runner.py:104} INFO - Running: ['***', 'tasks', 'run', 'stackoverflow_pipeline', 'bronze_ingest', 'manual__2026-04-12T18:10:39.010075+00:00', '--job-id', '54', '--raw', '--subdir', 'DAGS_FOLDER/stackoverflow_pipeline.py', '--cfg-path', '/tmp/tmp5cz0sd21']
+[2026-04-12T18:10:41.657+0000] {standard_task_runner.py:72} INFO - Started process 94 to run task
+[2026-04-12T18:10:41.661+0000] {standard_task_runner.py:105} INFO - Job 54: Subtask bronze_ingest
+[2026-04-12T18:10:41.815+0000] {task_command.py:467} INFO - Running <TaskInstance: stackoverflow_pipeline.bronze_ingest manual__2026-04-12T18:10:39.010075+00:00 [running]> on host 2553eacb5108
+[2026-04-12T18:10:42.053+0000] {taskinstance.py:3132} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='fhbd-grupo' AIRFLOW_CTX_DAG_ID='stackoverflow_pipeline' AIRFLOW_CTX_TASK_ID='bronze_ingest' AIRFLOW_CTX_EXECUTION_DATE='2026-04-12T18:10:39.010075+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2026-04-12T18:10:39.010075+00:00'
+[2026-04-12T18:10:42.059+0000] {taskinstance.py:731} INFO - ::endgroup::
+[2026-04-12T18:10:44.609+0000] {bronze_ingest.py:118} INFO - ============================================================
+[2026-04-12T18:10:44.611+0000] {bronze_ingest.py:119} INFO - BRONZE INGEST (DLT) — users_2021
+[2026-04-12T18:10:44.612+0000] {bronze_ingest.py:120} INFO - Fuente : ClickHouse público (stackoverflow.users)
+[2026-04-12T18:10:44.614+0000] {bronze_ingest.py:121} INFO - Destino: s3://bronze/users/2021/
+[2026-04-12T18:10:44.616+0000] {bronze_ingest.py:122} INFO - Modo   : OVERWRITE (replace)
+[2026-04-12T18:10:44.617+0000] {bronze_ingest.py:123} INFO - ============================================================
+[2026-04-12T18:10:44.667+0000] {config_providers_context.py:170} WARNING - Airflow variable 'dlt_secrets_toml' was not found. This Airflow variable is a recommended place to hold the content of secrets.toml.If you do not use Airflow variables to hold dlt configuration or use variables with other names you can ignore this warning.
+[2026-04-12T18:10:46.119+0000] {bronze_ingest.py:128} INFO - Ejecutando pipeline dlt...
+[2026-04-12T18:10:48.701+0000] {bronze_ingest.py:56} INFO - Conectando a ClickHouse: play.clickhouse.com:443
+[2026-04-12T18:10:49.649+0000] {taskinstance.py:3311} ERROR - Task failed with exception
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.12/site-packages/dlt/extract/pipe_iterator.py", line 274, in _get_source_item
+    pipe_item = next(gen)
+                ^^^^^^^^^
+  File "/opt/airflow/scripts/bronze_ingest.py", line 58, in users_2021_source
+    client = clickhouse_connect.get_client(
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/clickhouse_connect/driver/__init__.py", line 115, in create_client
+    return HttpClient(interface, host, port, username, password, database, settings=settings, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/clickhouse_connect/driver/httpclient.py", line 153, in __init__
+    super().__init__(database=database,
+  File "/home/airflow/.local/lib/python3.12/site-packages/clickhouse_connect/driver/client.py", line 91, in __init__
+    test_data = self.raw_query('SELECT 1 AS check', fmt='Native', settings={
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/clickhouse_connect/driver/httpclient.py", line 466, in raw_query
+    return self._raw_request(body, params, fields=fields).data
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/clickhouse_connect/driver/httpclient.py", line 454, in _raw_request
+    self._error_handler(response)
+  File "/home/airflow/.local/lib/python3.12/site-packages/clickhouse_connect/driver/httpclient.py", line 377, in _error_handler
+    raise OperationalError(err_str) if retried else DatabaseError(err_str) from None
+clickhouse_connect.driver.exceptions.DatabaseError: HTTPDriver for https://play.clickhouse.com:443 returned response code 404)
+ Code: 81. DB::Exception: Database stackoverflow does not exist. (UNKNOWN_DATABASE) (version 26.4.1.272 (official build))
+
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.12/site-packages/dlt/pipeline/pipeline.py", line 433, in extract
+    self._extract_source(
+  File "/home/airflow/.local/lib/python3.12/site-packages/dlt/pipeline/pipeline.py", line 1175, in _extract_source
+    load_id = extract.extract(
+              ^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/dlt/extract/extract.py", line 404, in extract
+    self._extract_single_source(
+  File "/home/airflow/.local/lib/python3.12/site-packages/dlt/extract/extract.py", line 327, in _extract_single_source
+    for pipe_item in pipes:
+                     ^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/dlt/extract/pipe_iterator.py", line 158, in __next__
+    pipe_item = self._get_source_item()
+                ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/dlt/extract/pipe_iterator.py", line 305, in _get_source_item
+    raise ResourceExtractionError(pipe.name, gen, str(ex), "generator") from ex
+dlt.extract.exceptions.ResourceExtractionError: In processing pipe users_2021: extraction of resource users_2021 in generator users_2021_source caused an exception: HTTPDriver for https://play.clickhouse.com:443 returned response code 404)
+ Code: 81. DB::Exception: Database stackoverflow does not exist. (UNKNOWN_DATABASE) (version 26.4.1.272 (official build))
+
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 767, in _execute_task
+    result = _execute_callable(context=context, **execute_callable_kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 733, in _execute_callable
+    return ExecutionCallableRunner(
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/utils/operator_helpers.py", line 252, in run
+    return self.func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/baseoperator.py", line 417, in wrapper
+    return func(self, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/operators/python.py", line 238, in execute
+    return_value = self.execute_callable()
+                   ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/operators/python.py", line 256, in execute_callable
+    return runner.run(*self.op_args, **self.op_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/utils/operator_helpers.py", line 252, in run
+    return self.func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/airflow/dags/stackoverflow_pipeline.py", line 113, in bronze_ingest_callable
+    bronze_ingest.main()
+  File "/opt/airflow/scripts/bronze_ingest.py", line 129, in main
+    load_info = pipeline.run(users_2021_source())
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/dlt/pipeline/pipeline.py", line 222, in _wrap
+    step_info = f(self, *args, **kwargs)
+                ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/dlt/pipeline/pipeline.py", line 267, in _wrap
+    return f(self, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/dlt/pipeline/pipeline.py", line 710, in run
+    self.extract(
+  File "/home/airflow/.local/lib/python3.12/site-packages/dlt/pipeline/pipeline.py", line 222, in _wrap
+    step_info = f(self, *args, **kwargs)
+                ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/dlt/pipeline/pipeline.py", line 176, in _wrap
+    rv = f(self, *args, **kwargs)
+         ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/dlt/pipeline/pipeline.py", line 162, in _wrap
+    return f(self, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/dlt/pipeline/pipeline.py", line 267, in _wrap
+    return f(self, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/dlt/pipeline/pipeline.py", line 453, in extract
+    raise PipelineStepFailed(
+dlt.pipeline.exceptions.PipelineStepFailed: Pipeline execution failed at stage extract when processing package 1776017448.162466 with exception:
+
+<class 'dlt.extract.exceptions.ResourceExtractionError'>
+In processing pipe users_2021: extraction of resource users_2021 in generator users_2021_source caused an exception: HTTPDriver for https://play.clickhouse.com:443 returned response code 404)
+ Code: 81. DB::Exception: Database stackoverflow does not exist. (UNKNOWN_DATABASE) (version 26.4.1.272 (official build))
+
+[2026-04-12T18:10:49.694+0000] {taskinstance.py:1225} INFO - Marking task as UP_FOR_RETRY. dag_id=stackoverflow_pipeline, task_id=bronze_ingest, run_id=manual__2026-04-12T18:10:39.010075+00:00, execution_date=20260412T181039, start_date=20260412T181041, end_date=20260412T181049
+[2026-04-12T18:10:49.741+0000] {taskinstance.py:340} INFO - ::group::Post task execution logs
+[2026-04-12T18:10:49.742+0000] {standard_task_runner.py:124} ERROR - Failed to execute job 54 for task bronze_ingest (Pipeline execution failed at stage extract when processing package 1776017448.162466 with exception:
+
+<class 'dlt.extract.exceptions.ResourceExtractionError'>
+In processing pipe users_2021: extraction of resource users_2021 in generator users_2021_source caused an exception: HTTPDriver for https://play.clickhouse.com:443 returned response code 404)
+ Code: 81. DB::Exception: Database stackoverflow does not exist. (UNKNOWN_DATABASE) (version 26.4.1.272 (official build))
+; 94)
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.12/site-packages/dlt/extract/pipe_iterator.py", line 274, in _get_source_item
+    pipe_item = next(gen)
+                ^^^^^^^^^
+  File "/opt/airflow/scripts/bronze_ingest.py", line 58, in users_2021_source
+    client = clickhouse_connect.get_client(
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/clickhouse_connect/driver/__init__.py", line 115, in create_client
+    return HttpClient(interface, host, port, username, password, database, settings=settings, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/clickhouse_connect/driver/httpclient.py", line 153, in __init__
+    super().__init__(database=database,
+  File "/home/airflow/.local/lib/python3.12/site-packages/clickhouse_connect/driver/client.py", line 91, in __init__
+    test_data = self.raw_query('SELECT 1 AS check', fmt='Native', settings={
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/clickhouse_connect/driver/httpclient.py", line 466, in raw_query
+    return self._raw_request(body, params, fields=fields).data
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/clickhouse_connect/driver/httpclient.py", line 454, in _raw_request
+    self._error_handler(response)
+  File "/home/airflow/.local/lib/python3.12/site-packages/clickhouse_connect/driver/httpclient.py", line 377, in _error_handler
+    raise OperationalError(err_str) if retried else DatabaseError(err_str) from None
+clickhouse_connect.driver.exceptions.DatabaseError: HTTPDriver for https://play.clickhouse.com:443 returned response code 404)
+ Code: 81. DB::Exception: Database stackoverflow does not exist. (UNKNOWN_DATABASE) (version 26.4.1.272 (official build))
+
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.12/site-packages/dlt/pipeline/pipeline.py", line 433, in extract
+    self._extract_source(
+  File "/home/airflow/.local/lib/python3.12/site-packages/dlt/pipeline/pipeline.py", line 1175, in _extract_source
+    load_id = extract.extract(
+              ^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/dlt/extract/extract.py", line 404, in extract
+    self._extract_single_source(
+  File "/home/airflow/.local/lib/python3.12/site-packages/dlt/extract/extract.py", line 327, in _extract_single_source
+    for pipe_item in pipes:
+                     ^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/dlt/extract/pipe_iterator.py", line 158, in __next__
+    pipe_item = self._get_source_item()
+                ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/dlt/extract/pipe_iterator.py", line 305, in _get_source_item
+    raise ResourceExtractionError(pipe.name, gen, str(ex), "generator") from ex
+dlt.extract.exceptions.ResourceExtractionError: In processing pipe users_2021: extraction of resource users_2021 in generator users_2021_source caused an exception: HTTPDriver for https://play.clickhouse.com:443 returned response code 404)
+ Code: 81. DB::Exception: Database stackoverflow does not exist. (UNKNOWN_DATABASE) (version 26.4.1.272 (official build))
+
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/task/task_runner/standard_task_runner.py", line 117, in _start_by_fork
+    ret = args.func(args, dag=self.dag)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/cli/cli_config.py", line 49, in command
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/utils/cli.py", line 116, in wrapper
+    return f(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/cli/commands/task_command.py", line 483, in task_run
+    task_return_code = _run_task_by_selected_method(args, _dag, ti)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/cli/commands/task_command.py", line 256, in _run_task_by_selected_method
+    return _run_raw_task(args, ti)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/cli/commands/task_command.py", line 341, in _run_raw_task
+    return ti._run_raw_task(
+           ^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/utils/session.py", line 97, in wrapper
+    return func(*args, session=session, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 3005, in _run_raw_task
+    return _run_raw_task(
+           ^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 273, in _run_raw_task
+    TaskInstance._execute_task_with_callbacks(
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 3159, in _execute_task_with_callbacks
+    result = self._execute_task(context, task_orig)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 3183, in _execute_task
+    return _execute_task(self, context, task_orig)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 767, in _execute_task
+    result = _execute_callable(context=context, **execute_callable_kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 733, in _execute_callable
+    return ExecutionCallableRunner(
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/utils/operator_helpers.py", line 252, in run
+    return self.func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/baseoperator.py", line 417, in wrapper
+    return func(self, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/operators/python.py", line 238, in execute
+    return_value = self.execute_callable()
+                   ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/operators/python.py", line 256, in execute_callable
+    return runner.run(*self.op_args, **self.op_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/utils/operator_helpers.py", line 252, in run
+    return self.func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/airflow/dags/stackoverflow_pipeline.py", line 113, in bronze_ingest_callable
+    bronze_ingest.main()
+  File "/opt/airflow/scripts/bronze_ingest.py", line 129, in main
+    load_info = pipeline.run(users_2021_source())
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/dlt/pipeline/pipeline.py", line 222, in _wrap
+    step_info = f(self, *args, **kwargs)
+                ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/dlt/pipeline/pipeline.py", line 267, in _wrap
+    return f(self, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/dlt/pipeline/pipeline.py", line 710, in run
+    self.extract(
+  File "/home/airflow/.local/lib/python3.12/site-packages/dlt/pipeline/pipeline.py", line 222, in _wrap
+    step_info = f(self, *args, **kwargs)
+                ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/dlt/pipeline/pipeline.py", line 176, in _wrap
+    rv = f(self, *args, **kwargs)
+         ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/dlt/pipeline/pipeline.py", line 162, in _wrap
+    return f(self, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/dlt/pipeline/pipeline.py", line 267, in _wrap
+    return f(self, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/dlt/pipeline/pipeline.py", line 453, in extract
+    raise PipelineStepFailed(
+dlt.pipeline.exceptions.PipelineStepFailed: Pipeline execution failed at stage extract when processing package 1776017448.162466 with exception:
+
+<class 'dlt.extract.exceptions.ResourceExtractionError'>
+In processing pipe users_2021: extraction of resource users_2021 in generator users_2021_source caused an exception: HTTPDriver for https://play.clickhouse.com:443 returned response code 404)
+ Code: 81. DB::Exception: Database stackoverflow does not exist. (UNKNOWN_DATABASE) (version 26.4.1.272 (official build))
+
+[2026-04-12T18:10:49.796+0000] {local_task_job_runner.py:266} INFO - Task exited with return code 1
+[2026-04-12T18:10:49.839+0000] {taskinstance.py:3895} INFO - 0 downstream tasks scheduled from follow-on schedule check
+[2026-04-12T18:10:49.844+0000] {local_task_job_runner.py:245} INFO - ::endgroup::

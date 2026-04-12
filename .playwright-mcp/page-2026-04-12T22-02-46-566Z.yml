@@ -1,0 +1,147 @@
+- generic [ref=e1]:
+  - generic [ref=e4]:
+    - navigation [ref=e5]:
+      - list [ref=e6]:
+        - listitem [ref=e7]:
+          - link [ref=e8] [cursor=pointer]:
+            - /url: /
+            - img [ref=e12]
+        - listitem [ref=e14]:
+          - link [ref=e16] [cursor=pointer]:
+            - /url: /
+            - img [ref=e20]
+        - listitem [ref=e22]:
+          - link [ref=e24] [cursor=pointer]:
+            - /url: /new_query?context=%22%40admin%22
+            - img [ref=e28]
+        - listitem [ref=e30]:
+          - link [ref=e32] [cursor=pointer]:
+            - /url: /jobs
+            - img [ref=e36]
+      - list [ref=e38]:
+        - listitem [ref=e39]:
+          - link [ref=e41] [cursor=pointer]:
+            - /url: /settings
+            - img [ref=e45]
+        - button [ref=e48] [cursor=pointer]:
+          - generic:
+            - img
+          - generic:
+            - img
+        - button [ref=e51] [cursor=pointer]:
+          - generic: AU
+          - generic:
+            - img
+    - generic [ref=e52]:
+      - generic [ref=e58]:
+        - img [ref=e60]
+        - textbox [ref=e62]:
+          - /placeholder: Search Spaces and Datasets
+      - generic [ref=e63]:
+        - generic [ref=e64]:
+          - heading [level=3] [ref=e65]: Datasets
+          - generic [ref=e66]:
+            - list [ref=e67]:
+              - listitem [ref=e68] [cursor=pointer]:
+                - link [ref=e70]:
+                  - /url: /home
+                  - img [ref=e73]
+                  - generic [ref=e76]: admin
+            - generic [ref=e79]:
+              - heading [level=4] [ref=e80] [cursor=pointer]:
+                - link [ref=e81]:
+                  - /url: /spaces/list
+                  - button [ref=e82]:
+                    - generic:
+                      - img
+                  - generic [ref=e83]: Spaces (0)
+                  - button [ref=e85]:
+                    - generic:
+                      - img
+              - generic [ref=e260]:
+                - img [ref=e262]
+                - generic [ref=e264]: No spaces yet
+                - link [ref=e265] [cursor=pointer]:
+                  - /url: /
+                  - text: Add space
+            - generic [ref=e87]:
+              - text: Sources
+              - button [ref=e88] [cursor=pointer]:
+                - generic:
+                  - img
+            - generic [ref=e266]:
+              - img [ref=e268]
+              - generic [ref=e270]: No data sources yet
+              - link [ref=e271] [cursor=pointer]:
+                - /url: /
+                - text: Add source
+          - button [ref=e90] [cursor=pointer]:
+            - generic [ref=e91]:
+              - img [ref=e93]
+              - text: Add Source
+        - main [ref=e95]:
+          - generic [ref=e96]:
+            - heading [level=3] [ref=e98]:
+              - generic [ref=e273]:
+                - generic [ref=e275]: "@admin"
+                - button [ref=e277] [cursor=pointer]:
+                  - generic:
+                    - img
+            - generic [ref=e99]:
+              - button [ref=e101] [cursor=pointer]:
+                - generic:
+                  - img
+              - generic [ref=e279]:
+                - button [ref=e281] [cursor=pointer]:
+                  - generic:
+                    - img
+                - button [ref=e282] [cursor=pointer]:
+                  - generic:
+                    - img
+          - generic [ref=e284]:
+            - img [ref=e286]
+            - generic [ref=e288]: No items
+  - dialog [ref=e243]:
+    - generic [ref=e244]:
+      - generic [ref=e245]: New Nessie Source
+      - button [ref=e246] [cursor=pointer]:
+        - generic:
+          - img
+    - generic [ref=e451]:
+      - generic [ref=e455]:
+        - generic [ref=e456]:
+          - generic [ref=e459] [cursor=pointer]: General
+          - generic [ref=e462] [cursor=pointer]: Storage
+          - generic [ref=e465] [cursor=pointer]: Advanced Options
+          - generic [ref=e468] [cursor=pointer]: Reflection Refresh
+        - generic [ref=e472]:
+          - generic [ref=e474]:
+            - generic [ref=e475]:
+              - img [ref=e477]
+              - generic [ref=e479]: Nessie Source
+            - generic [ref=e484]:
+              - generic [ref=e487]: Name
+              - textbox [active] [ref=e489]
+          - generic [ref=e491]:
+            - generic [ref=e495]:
+              - generic [ref=e498]: Nessie endpoint URL
+              - textbox [ref=e500]
+            - generic [ref=e503]:
+              - generic [ref=e504]: Nessie authentication type
+              - generic [ref=e505]:
+                - generic [ref=e506] [cursor=pointer]:
+                  - radio [ref=e507]
+                  - generic [ref=e509]: None
+                - generic [ref=e510] [cursor=pointer]:
+                  - radio [checked] [ref=e511]
+                  - generic [ref=e514]: Bearer
+              - generic [ref=e520]:
+                - generic [ref=e523]: Bearer token
+                - textbox [ref=e525]
+      - generic [ref=e526]:
+        - button [ref=e527] [cursor=pointer]:
+          - generic [ref=e528]: Cancel
+        - button [ref=e529] [cursor=pointer]:
+          - generic [ref=e530]: Save
+  - iframe [ref=e450]:
+    

@@ -1,0 +1,42 @@
+[2026-04-12T19:14:16.169+0000] {local_task_job_runner.py:123} INFO - ::group::Pre task execution logs
+[2026-04-12T19:14:16.190+0000] {taskinstance.py:2613} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: stackoverflow_pipeline.bronze_ingest manual__2026-04-12T19:14:14+00:00 [queued]>
+[2026-04-12T19:14:16.199+0000] {taskinstance.py:2613} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: stackoverflow_pipeline.bronze_ingest manual__2026-04-12T19:14:14+00:00 [queued]>
+[2026-04-12T19:14:16.200+0000] {taskinstance.py:2866} INFO - Starting attempt 1 of 2
+[2026-04-12T19:14:16.215+0000] {taskinstance.py:2889} INFO - Executing <Task(PythonOperator): bronze_ingest> on 2026-04-12 19:14:14+00:00
+[2026-04-12T19:14:16.222+0000] {warnings.py:112} WARNING - /home/***/.local/lib/python3.12/site-packages/***/task/task_runner/standard_task_runner.py:70: DeprecationWarning: This process (pid=1721) is multi-threaded, use of fork() may lead to deadlocks in the child.
+  pid = os.fork()
+
+[2026-04-12T19:14:16.224+0000] {standard_task_runner.py:72} INFO - Started process 1722 to run task
+[2026-04-12T19:14:16.224+0000] {standard_task_runner.py:104} INFO - Running: ['***', 'tasks', 'run', 'stackoverflow_pipeline', 'bronze_ingest', 'manual__2026-04-12T19:14:14+00:00', '--job-id', '16', '--raw', '--subdir', 'DAGS_FOLDER/stackoverflow_pipeline.py', '--cfg-path', '/tmp/tmpl_boxfr5']
+[2026-04-12T19:14:16.226+0000] {standard_task_runner.py:105} INFO - Job 16: Subtask bronze_ingest
+[2026-04-12T19:14:16.278+0000] {task_command.py:467} INFO - Running <TaskInstance: stackoverflow_pipeline.bronze_ingest manual__2026-04-12T19:14:14+00:00 [running]> on host b4737cc55adb
+[2026-04-12T19:14:16.384+0000] {taskinstance.py:3132} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='fhbd-grupo' AIRFLOW_CTX_DAG_ID='stackoverflow_pipeline' AIRFLOW_CTX_TASK_ID='bronze_ingest' AIRFLOW_CTX_EXECUTION_DATE='2026-04-12T19:14:14+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2026-04-12T19:14:14+00:00'
+[2026-04-12T19:14:16.386+0000] {taskinstance.py:731} INFO - ::endgroup::
+[2026-04-12T19:14:18.035+0000] {bronze_ingest.py:151} INFO - ============================================================
+[2026-04-12T19:14:18.035+0000] {bronze_ingest.py:152} INFO - BRONZE INGEST (DLT) — users_2021
+[2026-04-12T19:14:18.036+0000] {bronze_ingest.py:153} INFO - Destino: s3://bronze/users/2021/
+[2026-04-12T19:14:18.037+0000] {bronze_ingest.py:154} INFO - Modo   : OVERWRITE (replace)
+[2026-04-12T19:14:18.037+0000] {bronze_ingest.py:155} INFO - ============================================================
+[2026-04-12T19:14:18.057+0000] {config_providers_context.py:170} WARNING - Airflow variable 'dlt_secrets_toml' was not found. This Airflow variable is a recommended place to hold the content of secrets.toml.If you do not use Airflow variables to hold dlt configuration or use variables with other names you can ignore this warning.
+[2026-04-12T19:14:18.917+0000] {bronze_ingest.py:160} INFO - Ejecutando pipeline dlt...
+[2026-04-12T19:14:20.904+0000] {bronze_ingest.py:77} INFO - Usando datos SINTÉTICOS para users_2021
+[2026-04-12T19:14:20.955+0000] {bronze_ingest.py:79} INFO - Filas generadas: 5,000
+[2026-04-12T19:14:20.967+0000] {logging_mixin.py:190} WARNING - 2026-04-12 19:14:20,967|[WARNING]|1722|136182801495872|dlt|extractors.py|_compute_table:441|In resource: users_2021, when merging arrow schema with dlt schema, several column hints were different. dlt schema hints were kept and arrow schema and data were unmodified. It is up to destination to coerce the differences when loading. Change log level to INFO for more details.
+[2026-04-12T19:14:23.642+0000] {bronze_ingest.py:163} INFO - ------------------------------------------------------------
+[2026-04-12T19:14:23.643+0000] {bronze_ingest.py:164} INFO - Pipeline dlt completado:
+[2026-04-12T19:14:23.644+0000] {bronze_ingest.py:165} INFO - Pipeline bronze_users_2021 load step completed in 1.16 seconds
+1 load package(s) were loaded to destination filesystem and into dataset users_2021
+The filesystem destination used s3://bronze/users/2021 location to store data
+Load package 1776021260.5343854 is LOADED and contains no failed jobs
+[2026-04-12T19:14:23.980+0000] {bronze_ingest.py:229} INFO - Renombrando: users/2021/users_2021/users_2021/1776021260.5343854.b64bae20b7.parquet → users/2021/users_2021.parquet
+[2026-04-12T19:14:24.013+0000] {bronze_ingest.py:240} INFO - Archivo estandarizado: s3://bronze/users/2021/users_2021.parquet
+[2026-04-12T19:14:24.014+0000] {bronze_ingest.py:171} INFO - ============================================================
+[2026-04-12T19:14:24.014+0000] {bronze_ingest.py:172} INFO - ✅ Bronze users_2021 ingested exitosamente.
+[2026-04-12T19:14:24.015+0000] {bronze_ingest.py:173} INFO - Ruta: s3://bronze/users/2021/users_2021.parquet
+[2026-04-12T19:14:24.015+0000] {bronze_ingest.py:175} INFO - ============================================================
+[2026-04-12T19:14:24.016+0000] {python.py:240} INFO - Done. Returned value was: None
+[2026-04-12T19:14:24.029+0000] {taskinstance.py:340} INFO - ::group::Post task execution logs
+[2026-04-12T19:14:24.030+0000] {taskinstance.py:352} INFO - Marking task as SUCCESS. dag_id=stackoverflow_pipeline, task_id=bronze_ingest, run_id=manual__2026-04-12T19:14:14+00:00, execution_date=20260412T191414, start_date=20260412T191416, end_date=20260412T191424
+[2026-04-12T19:14:24.079+0000] {local_task_job_runner.py:266} INFO - Task exited with return code 0
+[2026-04-12T19:14:24.107+0000] {taskinstance.py:3895} INFO - 1 downstream tasks scheduled from follow-on schedule check
+[2026-04-12T19:14:24.119+0000] {local_task_job_runner.py:245} INFO - ::endgroup::

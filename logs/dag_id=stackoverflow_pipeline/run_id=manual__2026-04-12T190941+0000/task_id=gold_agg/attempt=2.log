@@ -1,0 +1,358 @@
+[2026-04-12T19:22:12.603+0000] {local_task_job_runner.py:123} INFO - ::group::Pre task execution logs
+[2026-04-12T19:22:12.622+0000] {taskinstance.py:2613} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: stackoverflow_pipeline.gold_agg manual__2026-04-12T19:09:41+00:00 [queued]>
+[2026-04-12T19:22:12.631+0000] {taskinstance.py:2613} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: stackoverflow_pipeline.gold_agg manual__2026-04-12T19:09:41+00:00 [queued]>
+[2026-04-12T19:22:12.632+0000] {taskinstance.py:2866} INFO - Starting attempt 2 of 2
+[2026-04-12T19:22:12.645+0000] {taskinstance.py:2889} INFO - Executing <Task(BashOperator): gold_agg> on 2026-04-12 19:09:41+00:00
+[2026-04-12T19:22:12.650+0000] {warnings.py:112} WARNING - /home/***/.local/lib/python3.12/site-packages/***/task/task_runner/standard_task_runner.py:70: DeprecationWarning: This process (pid=4453) is multi-threaded, use of fork() may lead to deadlocks in the child.
+  pid = os.fork()
+
+[2026-04-12T19:22:12.652+0000] {standard_task_runner.py:72} INFO - Started process 4454 to run task
+[2026-04-12T19:22:12.652+0000] {standard_task_runner.py:104} INFO - Running: ['***', 'tasks', 'run', 'stackoverflow_pipeline', 'gold_agg', 'manual__2026-04-12T19:09:41+00:00', '--job-id', '26', '--raw', '--subdir', 'DAGS_FOLDER/stackoverflow_pipeline.py', '--cfg-path', '/tmp/tmpa18haori']
+[2026-04-12T19:22:12.653+0000] {standard_task_runner.py:105} INFO - Job 26: Subtask gold_agg
+[2026-04-12T19:22:12.701+0000] {task_command.py:467} INFO - Running <TaskInstance: stackoverflow_pipeline.gold_agg manual__2026-04-12T19:09:41+00:00 [running]> on host b4737cc55adb
+[2026-04-12T19:22:12.784+0000] {taskinstance.py:3132} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='fhbd-grupo' AIRFLOW_CTX_DAG_ID='stackoverflow_pipeline' AIRFLOW_CTX_TASK_ID='gold_agg' AIRFLOW_CTX_EXECUTION_DATE='2026-04-12T19:09:41+00:00' AIRFLOW_CTX_TRY_NUMBER='2' AIRFLOW_CTX_DAG_RUN_ID='manual__2026-04-12T19:09:41+00:00'
+[2026-04-12T19:22:12.785+0000] {taskinstance.py:731} INFO - ::endgroup::
+[2026-04-12T19:22:12.799+0000] {subprocess.py:78} INFO - Tmp dir root location: /tmp
+[2026-04-12T19:22:12.800+0000] {subprocess.py:88} INFO - Running command: ['/usr/bin/bash', '-c', '/opt/spark/bin/spark-submit --master spark://spark-master:7077 --conf spark.submit.deployMode=client --conf spark.driver.bindAddress=0.0.0.0 --conf spark.executor.instances=1 --conf spark.executor.cores=2 --conf spark.executor.memory=2g --conf spark.driver.memory=1g --conf spark.sql.extensions=org.apache.iceberg.spark.extensions.IcebergSparkSessionExtensions,org.projectnessie.spark.extensions.NessieSparkSessionExtensions --conf spark.sql.catalog.nessie=org.apache.iceberg.spark.SparkCatalog --conf spark.sql.catalog.nessie.catalog-impl=org.apache.iceberg.nessie.NessieCatalog --conf spark.sql.catalog.nessie.uri=http://proyecto2-nessie:19120/api/v1 --conf spark.sql.catalog.nessie.ref=main --conf spark.sql.catalog.nessie.authentication.type=NONE --conf spark.sql.catalog.nessie.warehouse=s3a://iceberg/ --conf spark.hadoop.fs.s3a.endpoint=http://proyecto2-minio:9000 --conf spark.hadoop.fs.s3a.access.key=minioadmin --conf spark.hadoop.fs.s3a.secret.key=minioadmin123 --conf spark.hadoop.fs.s3a.path.style.access=true --conf spark.hadoop.fs.s3a.impl=org.apache.hadoop.fs.s3a.S3AFileSystem --conf spark.hadoop.fs.s3a.aws.credentials.provider=org.apache.hadoop.fs.s3a.SimpleAWSCredentialsProvider --conf spark.hadoop.fs.s3a.connection.ssl.enabled=false --packages org.apache.iceberg:iceberg-spark-runtime-3.5_2.12:1.6.1,org.projectnessie.nessie-integrations:nessie-spark-extensions-3.5_2.12:0.95.0,org.apache.hadoop:hadoop-aws:3.3.4,com.amazonaws:aws-java-sdk-bundle:1.12.262 --name gold_cant_post_x_user_hist --verbose /opt/***/scripts/gold_agg.py']
+[2026-04-12T19:22:12.809+0000] {subprocess.py:99} INFO - Output:
+[2026-04-12T19:22:12.817+0000] {subprocess.py:106} INFO - /opt/spark/bin/load-spark-env.sh: line 68: ps: command not found
+[2026-04-12T19:22:14.188+0000] {subprocess.py:106} INFO - Using properties file: null
+[2026-04-12T19:22:14.315+0000] {subprocess.py:106} INFO - Parsed arguments:
+[2026-04-12T19:22:14.316+0000] {subprocess.py:106} INFO -   master                  spark://spark-master:7077
+[2026-04-12T19:22:14.317+0000] {subprocess.py:106} INFO -   remote                  null
+[2026-04-12T19:22:14.318+0000] {subprocess.py:106} INFO -   deployMode              client
+[2026-04-12T19:22:14.319+0000] {subprocess.py:106} INFO -   executorMemory          2g
+[2026-04-12T19:22:14.319+0000] {subprocess.py:106} INFO -   executorCores           2
+[2026-04-12T19:22:14.320+0000] {subprocess.py:106} INFO -   totalExecutorCores      null
+[2026-04-12T19:22:14.321+0000] {subprocess.py:106} INFO -   propertiesFile          null
+[2026-04-12T19:22:14.322+0000] {subprocess.py:106} INFO -   driverMemory            1g
+[2026-04-12T19:22:14.323+0000] {subprocess.py:106} INFO -   driverCores             null
+[2026-04-12T19:22:14.324+0000] {subprocess.py:106} INFO -   driverExtraClassPath    null
+[2026-04-12T19:22:14.324+0000] {subprocess.py:106} INFO -   driverExtraLibraryPath  null
+[2026-04-12T19:22:14.325+0000] {subprocess.py:106} INFO -   driverExtraJavaOptions  null
+[2026-04-12T19:22:14.326+0000] {subprocess.py:106} INFO -   supervise               false
+[2026-04-12T19:22:14.327+0000] {subprocess.py:106} INFO -   queue                   null
+[2026-04-12T19:22:14.327+0000] {subprocess.py:106} INFO -   numExecutors            1
+[2026-04-12T19:22:14.328+0000] {subprocess.py:106} INFO -   files                   null
+[2026-04-12T19:22:14.329+0000] {subprocess.py:106} INFO -   pyFiles                 null
+[2026-04-12T19:22:14.330+0000] {subprocess.py:106} INFO -   archives                null
+[2026-04-12T19:22:14.331+0000] {subprocess.py:106} INFO -   mainClass               null
+[2026-04-12T19:22:14.331+0000] {subprocess.py:106} INFO -   primaryResource         file:/opt/***/scripts/gold_agg.py
+[2026-04-12T19:22:14.332+0000] {subprocess.py:106} INFO -   name                    gold_cant_post_x_user_hist
+[2026-04-12T19:22:14.333+0000] {subprocess.py:106} INFO -   childArgs               []
+[2026-04-12T19:22:14.334+0000] {subprocess.py:106} INFO -   jars                    null
+[2026-04-12T19:22:14.334+0000] {subprocess.py:106} INFO -   packages                org.apache.iceberg:iceberg-spark-runtime-3.5_2.12:1.6.1,org.projectnessie.nessie-integrations:nessie-spark-extensions-3.5_2.12:0.95.0,org.apache.hadoop:hadoop-aws:3.3.4,com.amazonaws:aws-java-sdk-bundle:1.12.262
+[2026-04-12T19:22:14.335+0000] {subprocess.py:106} INFO -   packagesExclusions      null
+[2026-04-12T19:22:14.336+0000] {subprocess.py:106} INFO -   repositories            null
+[2026-04-12T19:22:14.337+0000] {subprocess.py:106} INFO -   verbose                 true
+[2026-04-12T19:22:14.338+0000] {subprocess.py:106} INFO - 
+[2026-04-12T19:22:14.339+0000] {subprocess.py:106} INFO - Spark properties used, including those specified through
+[2026-04-12T19:22:14.339+0000] {subprocess.py:106} INFO -  --conf and those from the properties file null:
+[2026-04-12T19:22:14.340+0000] {subprocess.py:106} INFO -   (spark.driver.bindAddress,0.0.0.0)
+[2026-04-12T19:22:14.340+0000] {subprocess.py:106} INFO -   (spark.driver.memory,1g)
+[2026-04-12T19:22:14.341+0000] {subprocess.py:106} INFO -   (spark.executor.cores,2)
+[2026-04-12T19:22:14.342+0000] {subprocess.py:106} INFO -   (spark.executor.instances,1)
+[2026-04-12T19:22:14.342+0000] {subprocess.py:106} INFO -   (spark.executor.memory,2g)
+[2026-04-12T19:22:14.343+0000] {subprocess.py:106} INFO -   (spark.hadoop.fs.s3a.access.key,*********(redacted))
+[2026-04-12T19:22:14.344+0000] {subprocess.py:106} INFO -   (spark.hadoop.fs.s3a.aws.credentials.provider,org.apache.hadoop.fs.s3a.SimpleAWSCredentialsProvider)
+[2026-04-12T19:22:14.345+0000] {subprocess.py:106} INFO -   (spark.hadoop.fs.s3a.connection.ssl.enabled,false)
+[2026-04-12T19:22:14.345+0000] {subprocess.py:106} INFO -   (spark.hadoop.fs.s3a.endpoint,http://proyecto2-minio:9000)
+[2026-04-12T19:22:14.345+0000] {subprocess.py:106} INFO -   (spark.hadoop.fs.s3a.impl,org.apache.hadoop.fs.s3a.S3AFileSystem)
+[2026-04-12T19:22:14.346+0000] {subprocess.py:106} INFO -   (spark.hadoop.fs.s3a.path.style.access,true)
+[2026-04-12T19:22:14.346+0000] {subprocess.py:106} INFO -   (spark.hadoop.fs.s3a.secret.key,*********(redacted))
+[2026-04-12T19:22:14.347+0000] {subprocess.py:106} INFO -   (spark.sql.catalog.nessie,org.apache.iceberg.spark.SparkCatalog)
+[2026-04-12T19:22:14.348+0000] {subprocess.py:106} INFO -   (spark.sql.catalog.nessie.authentication.type,NONE)
+[2026-04-12T19:22:14.348+0000] {subprocess.py:106} INFO -   (spark.sql.catalog.nessie.catalog-impl,org.apache.iceberg.nessie.NessieCatalog)
+[2026-04-12T19:22:14.349+0000] {subprocess.py:106} INFO -   (spark.sql.catalog.nessie.ref,main)
+[2026-04-12T19:22:14.350+0000] {subprocess.py:106} INFO -   (spark.sql.catalog.nessie.uri,http://proyecto2-nessie:19120/api/v1)
+[2026-04-12T19:22:14.350+0000] {subprocess.py:106} INFO -   (spark.sql.catalog.nessie.warehouse,s3a://iceberg/)
+[2026-04-12T19:22:14.351+0000] {subprocess.py:106} INFO -   (spark.sql.extensions,org.apache.iceberg.spark.extensions.IcebergSparkSessionExtensions,org.projectnessie.spark.extensions.NessieSparkSessionExtensions)
+[2026-04-12T19:22:14.352+0000] {subprocess.py:106} INFO -   (spark.submit.deployMode,client)
+[2026-04-12T19:22:14.352+0000] {subprocess.py:106} INFO - 
+[2026-04-12T19:22:14.352+0000] {subprocess.py:106} INFO - 
+[2026-04-12T19:22:14.473+0000] {subprocess.py:106} INFO - :: loading settings :: url = jar:file:/opt/spark/jars/ivy-2.5.1.jar!/org/apache/ivy/core/settings/ivysettings.xml
+[2026-04-12T19:22:14.553+0000] {subprocess.py:106} INFO - Ivy Default Cache set to: /home/***/.ivy2/cache
+[2026-04-12T19:22:14.554+0000] {subprocess.py:106} INFO - The jars for the packages stored in: /home/***/.ivy2/jars
+[2026-04-12T19:22:14.560+0000] {subprocess.py:106} INFO - org.apache.iceberg#iceberg-spark-runtime-3.5_2.12 added as a dependency
+[2026-04-12T19:22:14.562+0000] {subprocess.py:106} INFO - org.projectnessie.nessie-integrations#nessie-spark-extensions-3.5_2.12 added as a dependency
+[2026-04-12T19:22:14.562+0000] {subprocess.py:106} INFO - org.apache.hadoop#hadoop-aws added as a dependency
+[2026-04-12T19:22:14.563+0000] {subprocess.py:106} INFO - com.amazonaws#aws-java-sdk-bundle added as a dependency
+[2026-04-12T19:22:14.564+0000] {subprocess.py:106} INFO - :: resolving dependencies :: org.apache.spark#spark-submit-parent-9116fb51-364a-4b0a-9824-913ab01556f1;1.0
+[2026-04-12T19:22:14.565+0000] {subprocess.py:106} INFO - 	confs: [default]
+[2026-04-12T19:22:14.693+0000] {subprocess.py:106} INFO - 	found org.apache.iceberg#iceberg-spark-runtime-3.5_2.12;1.6.1 in central
+[2026-04-12T19:22:14.712+0000] {subprocess.py:106} INFO - 	found org.projectnessie.nessie-integrations#nessie-spark-extensions-3.5_2.12;0.95.0 in central
+[2026-04-12T19:22:14.767+0000] {subprocess.py:106} INFO - 	found org.apache.hadoop#hadoop-aws;3.3.4 in central
+[2026-04-12T19:22:14.789+0000] {subprocess.py:106} INFO - 	found com.amazonaws#aws-java-sdk-bundle;1.12.262 in central
+[2026-04-12T19:22:14.813+0000] {subprocess.py:106} INFO - 	found org.wildfly.openssl#wildfly-openssl;1.0.7.Final in central
+[2026-04-12T19:22:14.839+0000] {subprocess.py:106} INFO - :: resolution report :: resolve 266ms :: artifacts dl 11ms
+[2026-04-12T19:22:14.840+0000] {subprocess.py:106} INFO - 	:: modules in use:
+[2026-04-12T19:22:14.842+0000] {subprocess.py:106} INFO - 	com.amazonaws#aws-java-sdk-bundle;1.12.262 from central in [default]
+[2026-04-12T19:22:14.843+0000] {subprocess.py:106} INFO - 	org.apache.hadoop#hadoop-aws;3.3.4 from central in [default]
+[2026-04-12T19:22:14.844+0000] {subprocess.py:106} INFO - 	org.apache.iceberg#iceberg-spark-runtime-3.5_2.12;1.6.1 from central in [default]
+[2026-04-12T19:22:14.845+0000] {subprocess.py:106} INFO - 	org.projectnessie.nessie-integrations#nessie-spark-extensions-3.5_2.12;0.95.0 from central in [default]
+[2026-04-12T19:22:14.846+0000] {subprocess.py:106} INFO - 	org.wildfly.openssl#wildfly-openssl;1.0.7.Final from central in [default]
+[2026-04-12T19:22:14.848+0000] {subprocess.py:106} INFO - 	---------------------------------------------------------------------
+[2026-04-12T19:22:14.849+0000] {subprocess.py:106} INFO - 	|                  |            modules            ||   artifacts   |
+[2026-04-12T19:22:14.850+0000] {subprocess.py:106} INFO - 	|       conf       | number| search|dwnlded|evicted|| number|dwnlded|
+[2026-04-12T19:22:14.851+0000] {subprocess.py:106} INFO - 	---------------------------------------------------------------------
+[2026-04-12T19:22:14.853+0000] {subprocess.py:106} INFO - 	|      default     |   5   |   0   |   0   |   0   ||   5   |   0   |
+[2026-04-12T19:22:14.854+0000] {subprocess.py:106} INFO - 	---------------------------------------------------------------------
+[2026-04-12T19:22:14.855+0000] {subprocess.py:106} INFO - :: retrieving :: org.apache.spark#spark-submit-parent-9116fb51-364a-4b0a-9824-913ab01556f1
+[2026-04-12T19:22:14.855+0000] {subprocess.py:106} INFO - 	confs: [default]
+[2026-04-12T19:22:14.856+0000] {subprocess.py:106} INFO - 	0 artifacts copied, 5 already retrieved (0kB/8ms)
+[2026-04-12T19:22:15.028+0000] {subprocess.py:106} INFO - 26/04/12 19:22:15 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+[2026-04-12T19:22:15.238+0000] {subprocess.py:106} INFO - Main class:
+[2026-04-12T19:22:15.239+0000] {subprocess.py:106} INFO - org.apache.spark.deploy.PythonRunner
+[2026-04-12T19:22:15.242+0000] {subprocess.py:106} INFO - Arguments:
+[2026-04-12T19:22:15.243+0000] {subprocess.py:106} INFO - file:/opt/***/scripts/gold_agg.py
+[2026-04-12T19:22:15.244+0000] {subprocess.py:106} INFO - file:///home/***/.ivy2/jars/org.apache.iceberg_iceberg-spark-runtime-3.5_2.12-1.6.1.jar,file:///home/***/.ivy2/jars/org.projectnessie.nessie-integrations_nessie-spark-extensions-3.5_2.12-0.95.0.jar,file:///home/***/.ivy2/jars/org.apache.hadoop_hadoop-aws-3.3.4.jar,file:///home/***/.ivy2/jars/com.amazonaws_aws-java-sdk-bundle-1.12.262.jar,file:///home/***/.ivy2/jars/org.wildfly.openssl_wildfly-openssl-1.0.7.Final.jar
+[2026-04-12T19:22:15.245+0000] {subprocess.py:106} INFO - Spark config:
+[2026-04-12T19:22:15.246+0000] {subprocess.py:106} INFO - (spark.app.name,gold_cant_post_x_user_hist)
+[2026-04-12T19:22:15.247+0000] {subprocess.py:106} INFO - (spark.app.submitTime,1776021735217)
+[2026-04-12T19:22:15.248+0000] {subprocess.py:106} INFO - (spark.driver.bindAddress,0.0.0.0)
+[2026-04-12T19:22:15.249+0000] {subprocess.py:106} INFO - (spark.driver.memory,1g)
+[2026-04-12T19:22:15.249+0000] {subprocess.py:106} INFO - (spark.executor.cores,2)
+[2026-04-12T19:22:15.250+0000] {subprocess.py:106} INFO - (spark.executor.instances,1)
+[2026-04-12T19:22:15.251+0000] {subprocess.py:106} INFO - (spark.executor.memory,2g)
+[2026-04-12T19:22:15.252+0000] {subprocess.py:106} INFO - (spark.files,file:///home/***/.ivy2/jars/org.apache.iceberg_iceberg-spark-runtime-3.5_2.12-1.6.1.jar,file:///home/***/.ivy2/jars/org.projectnessie.nessie-integrations_nessie-spark-extensions-3.5_2.12-0.95.0.jar,file:///home/***/.ivy2/jars/org.apache.hadoop_hadoop-aws-3.3.4.jar,file:///home/***/.ivy2/jars/com.amazonaws_aws-java-sdk-bundle-1.12.262.jar,file:///home/***/.ivy2/jars/org.wildfly.openssl_wildfly-openssl-1.0.7.Final.jar)
+[2026-04-12T19:22:15.253+0000] {subprocess.py:106} INFO - (spark.hadoop.fs.s3a.access.key,*********(redacted))
+[2026-04-12T19:22:15.254+0000] {subprocess.py:106} INFO - (spark.hadoop.fs.s3a.aws.credentials.provider,org.apache.hadoop.fs.s3a.SimpleAWSCredentialsProvider)
+[2026-04-12T19:22:15.255+0000] {subprocess.py:106} INFO - (spark.hadoop.fs.s3a.connection.ssl.enabled,false)
+[2026-04-12T19:22:15.255+0000] {subprocess.py:106} INFO - (spark.hadoop.fs.s3a.endpoint,http://proyecto2-minio:9000)
+[2026-04-12T19:22:15.256+0000] {subprocess.py:106} INFO - (spark.hadoop.fs.s3a.impl,org.apache.hadoop.fs.s3a.S3AFileSystem)
+[2026-04-12T19:22:15.257+0000] {subprocess.py:106} INFO - (spark.hadoop.fs.s3a.path.style.access,true)
+[2026-04-12T19:22:15.258+0000] {subprocess.py:106} INFO - (spark.hadoop.fs.s3a.secret.key,*********(redacted))
+[2026-04-12T19:22:15.258+0000] {subprocess.py:106} INFO - (spark.jars,file:///home/***/.ivy2/jars/org.apache.iceberg_iceberg-spark-runtime-3.5_2.12-1.6.1.jar,file:///home/***/.ivy2/jars/org.projectnessie.nessie-integrations_nessie-spark-extensions-3.5_2.12-0.95.0.jar,file:///home/***/.ivy2/jars/org.apache.hadoop_hadoop-aws-3.3.4.jar,file:///home/***/.ivy2/jars/com.amazonaws_aws-java-sdk-bundle-1.12.262.jar,file:///home/***/.ivy2/jars/org.wildfly.openssl_wildfly-openssl-1.0.7.Final.jar)
+[2026-04-12T19:22:15.259+0000] {subprocess.py:106} INFO - (spark.master,spark://spark-master:7077)
+[2026-04-12T19:22:15.260+0000] {subprocess.py:106} INFO - (spark.repl.local.jars,file:///home/***/.ivy2/jars/org.apache.iceberg_iceberg-spark-runtime-3.5_2.12-1.6.1.jar,file:///home/***/.ivy2/jars/org.projectnessie.nessie-integrations_nessie-spark-extensions-3.5_2.12-0.95.0.jar,file:///home/***/.ivy2/jars/org.apache.hadoop_hadoop-aws-3.3.4.jar,file:///home/***/.ivy2/jars/com.amazonaws_aws-java-sdk-bundle-1.12.262.jar,file:///home/***/.ivy2/jars/org.wildfly.openssl_wildfly-openssl-1.0.7.Final.jar)
+[2026-04-12T19:22:15.260+0000] {subprocess.py:106} INFO - (spark.sql.catalog.nessie,org.apache.iceberg.spark.SparkCatalog)
+[2026-04-12T19:22:15.261+0000] {subprocess.py:106} INFO - (spark.sql.catalog.nessie.authentication.type,NONE)
+[2026-04-12T19:22:15.262+0000] {subprocess.py:106} INFO - (spark.sql.catalog.nessie.catalog-impl,org.apache.iceberg.nessie.NessieCatalog)
+[2026-04-12T19:22:15.262+0000] {subprocess.py:106} INFO - (spark.sql.catalog.nessie.ref,main)
+[2026-04-12T19:22:15.263+0000] {subprocess.py:106} INFO - (spark.sql.catalog.nessie.uri,http://proyecto2-nessie:19120/api/v1)
+[2026-04-12T19:22:15.264+0000] {subprocess.py:106} INFO - (spark.sql.catalog.nessie.warehouse,s3a://iceberg/)
+[2026-04-12T19:22:15.265+0000] {subprocess.py:106} INFO - (spark.sql.extensions,org.apache.iceberg.spark.extensions.IcebergSparkSessionExtensions,org.projectnessie.spark.extensions.NessieSparkSessionExtensions)
+[2026-04-12T19:22:15.266+0000] {subprocess.py:106} INFO - (spark.submit.deployMode,client)
+[2026-04-12T19:22:15.267+0000] {subprocess.py:106} INFO - (spark.submit.pyFiles,/home/***/.ivy2/jars/org.apache.iceberg_iceberg-spark-runtime-3.5_2.12-1.6.1.jar,/home/***/.ivy2/jars/org.projectnessie.nessie-integrations_nessie-spark-extensions-3.5_2.12-0.95.0.jar,/home/***/.ivy2/jars/org.apache.hadoop_hadoop-aws-3.3.4.jar,/home/***/.ivy2/jars/com.amazonaws_aws-java-sdk-bundle-1.12.262.jar,/home/***/.ivy2/jars/org.wildfly.openssl_wildfly-openssl-1.0.7.Final.jar)
+[2026-04-12T19:22:15.268+0000] {subprocess.py:106} INFO - Classpath elements:
+[2026-04-12T19:22:15.268+0000] {subprocess.py:106} INFO - file:///home/***/.ivy2/jars/org.apache.iceberg_iceberg-spark-runtime-3.5_2.12-1.6.1.jar
+[2026-04-12T19:22:15.269+0000] {subprocess.py:106} INFO - file:///home/***/.ivy2/jars/org.projectnessie.nessie-integrations_nessie-spark-extensions-3.5_2.12-0.95.0.jar
+[2026-04-12T19:22:15.270+0000] {subprocess.py:106} INFO - file:///home/***/.ivy2/jars/org.apache.hadoop_hadoop-aws-3.3.4.jar
+[2026-04-12T19:22:15.270+0000] {subprocess.py:106} INFO - file:///home/***/.ivy2/jars/com.amazonaws_aws-java-sdk-bundle-1.12.262.jar
+[2026-04-12T19:22:15.271+0000] {subprocess.py:106} INFO - file:///home/***/.ivy2/jars/org.wildfly.openssl_wildfly-openssl-1.0.7.Final.jar
+[2026-04-12T19:22:15.272+0000] {subprocess.py:106} INFO - 
+[2026-04-12T19:22:15.273+0000] {subprocess.py:106} INFO - 
+[2026-04-12T19:22:15.759+0000] {subprocess.py:106} INFO - 2026-04-12 19:22:15,759 INFO ============================================================
+[2026-04-12T19:22:15.760+0000] {subprocess.py:106} INFO - 2026-04-12 19:22:15,759 INFO GOLD AGG — cant_post_x_user_hist ★
+[2026-04-12T19:22:15.761+0000] {subprocess.py:106} INFO - 2026-04-12 19:22:15,759 INFO Fuentes: nessie.silver.post_hist + nessie.silver.users_hist
+[2026-04-12T19:22:15.761+0000] {subprocess.py:106} INFO - 2026-04-12 19:22:15,759 INFO ============================================================
+[2026-04-12T19:22:15.894+0000] {subprocess.py:106} INFO - 26/04/12 19:22:15 INFO SparkContext: Running Spark version 3.5.5
+[2026-04-12T19:22:15.895+0000] {subprocess.py:106} INFO - 26/04/12 19:22:15 INFO SparkContext: OS info Linux, 6.6.87.2-microsoft-standard-WSL2, amd64
+[2026-04-12T19:22:15.900+0000] {subprocess.py:106} INFO - 26/04/12 19:22:15 INFO SparkContext: Java version 17.0.18
+[2026-04-12T19:22:15.928+0000] {subprocess.py:106} INFO - 26/04/12 19:22:15 INFO ResourceUtils: ==============================================================
+[2026-04-12T19:22:15.929+0000] {subprocess.py:106} INFO - 26/04/12 19:22:15 INFO ResourceUtils: No custom resources configured for spark.driver.
+[2026-04-12T19:22:15.930+0000] {subprocess.py:106} INFO - 26/04/12 19:22:15 INFO ResourceUtils: ==============================================================
+[2026-04-12T19:22:15.931+0000] {subprocess.py:106} INFO - 26/04/12 19:22:15 INFO SparkContext: Submitted application: gold_agg
+[2026-04-12T19:22:15.970+0000] {subprocess.py:106} INFO - 26/04/12 19:22:15 INFO ResourceProfile: Default ResourceProfile created, executor resources: Map(cores -> name: cores, amount: 2, script: , vendor: , memory -> name: memory, amount: 2048, script: , vendor: , offHeap -> name: offHeap, amount: 0, script: , vendor: ), task resources: Map(cpus -> name: cpus, amount: 1.0)
+[2026-04-12T19:22:15.983+0000] {subprocess.py:106} INFO - 26/04/12 19:22:15 INFO ResourceProfile: Limiting resource is cpus at 2 tasks per executor
+[2026-04-12T19:22:15.987+0000] {subprocess.py:106} INFO - 26/04/12 19:22:15 INFO ResourceProfileManager: Added ResourceProfile id: 0
+[2026-04-12T19:22:16.042+0000] {subprocess.py:106} INFO - 26/04/12 19:22:16 INFO SecurityManager: Changing view acls to: ***
+[2026-04-12T19:22:16.044+0000] {subprocess.py:106} INFO - 26/04/12 19:22:16 INFO SecurityManager: Changing modify acls to: ***
+[2026-04-12T19:22:16.045+0000] {subprocess.py:106} INFO - 26/04/12 19:22:16 INFO SecurityManager: Changing view acls groups to:
+[2026-04-12T19:22:16.046+0000] {subprocess.py:106} INFO - 26/04/12 19:22:16 INFO SecurityManager: Changing modify acls groups to:
+[2026-04-12T19:22:16.046+0000] {subprocess.py:106} INFO - 26/04/12 19:22:16 INFO SecurityManager: SecurityManager: authentication disabled; ui acls disabled; users with view permissions: ***; groups with view permissions: EMPTY; users with modify permissions: ***; groups with modify permissions: EMPTY
+[2026-04-12T19:22:16.247+0000] {subprocess.py:106} INFO - 26/04/12 19:22:16 INFO Utils: Successfully started service 'sparkDriver' on port 40091.
+[2026-04-12T19:22:16.280+0000] {subprocess.py:106} INFO - 26/04/12 19:22:16 INFO SparkEnv: Registering MapOutputTracker
+[2026-04-12T19:22:16.312+0000] {subprocess.py:106} INFO - 26/04/12 19:22:16 INFO SparkEnv: Registering BlockManagerMaster
+[2026-04-12T19:22:16.325+0000] {subprocess.py:106} INFO - 26/04/12 19:22:16 INFO BlockManagerMasterEndpoint: Using org.apache.spark.storage.DefaultTopologyMapper for getting topology information
+[2026-04-12T19:22:16.326+0000] {subprocess.py:106} INFO - 26/04/12 19:22:16 INFO BlockManagerMasterEndpoint: BlockManagerMasterEndpoint up
+[2026-04-12T19:22:16.329+0000] {subprocess.py:106} INFO - 26/04/12 19:22:16 INFO SparkEnv: Registering BlockManagerMasterHeartbeat
+[2026-04-12T19:22:16.343+0000] {subprocess.py:106} INFO - 26/04/12 19:22:16 INFO DiskBlockManager: Created local directory at /tmp/blockmgr-5c4211e0-8429-4ad7-9b50-5360baca9bff
+[2026-04-12T19:22:16.355+0000] {subprocess.py:106} INFO - 26/04/12 19:22:16 INFO MemoryStore: MemoryStore started with capacity 434.4 MiB
+[2026-04-12T19:22:16.369+0000] {subprocess.py:106} INFO - 26/04/12 19:22:16 INFO SparkEnv: Registering OutputCommitCoordinator
+[2026-04-12T19:22:16.467+0000] {subprocess.py:106} INFO - 26/04/12 19:22:16 INFO JettyUtils: Start Jetty 0.0.0.0:4040 for SparkUI
+[2026-04-12T19:22:16.513+0000] {subprocess.py:106} INFO - 26/04/12 19:22:16 INFO Utils: Successfully started service 'SparkUI' on port 4040.
+[2026-04-12T19:22:16.542+0000] {subprocess.py:106} INFO - 26/04/12 19:22:16 INFO SparkContext: Added JAR file:///home/***/.ivy2/jars/org.apache.iceberg_iceberg-spark-runtime-3.5_2.12-1.6.1.jar at spark://b4737cc55adb:40091/jars/org.apache.iceberg_iceberg-spark-runtime-3.5_2.12-1.6.1.jar with timestamp 1776021735886
+[2026-04-12T19:22:16.543+0000] {subprocess.py:106} INFO - 26/04/12 19:22:16 INFO SparkContext: Added JAR file:///home/***/.ivy2/jars/org.projectnessie.nessie-integrations_nessie-spark-extensions-3.5_2.12-0.95.0.jar at spark://b4737cc55adb:40091/jars/org.projectnessie.nessie-integrations_nessie-spark-extensions-3.5_2.12-0.95.0.jar with timestamp 1776021735886
+[2026-04-12T19:22:16.544+0000] {subprocess.py:106} INFO - 26/04/12 19:22:16 INFO SparkContext: Added JAR file:///home/***/.ivy2/jars/org.apache.hadoop_hadoop-aws-3.3.4.jar at spark://b4737cc55adb:40091/jars/org.apache.hadoop_hadoop-aws-3.3.4.jar with timestamp 1776021735886
+[2026-04-12T19:22:16.546+0000] {subprocess.py:106} INFO - 26/04/12 19:22:16 INFO SparkContext: Added JAR file:///home/***/.ivy2/jars/com.amazonaws_aws-java-sdk-bundle-1.12.262.jar at spark://b4737cc55adb:40091/jars/com.amazonaws_aws-java-sdk-bundle-1.12.262.jar with timestamp 1776021735886
+[2026-04-12T19:22:16.546+0000] {subprocess.py:106} INFO - 26/04/12 19:22:16 INFO SparkContext: Added JAR file:///home/***/.ivy2/jars/org.wildfly.openssl_wildfly-openssl-1.0.7.Final.jar at spark://b4737cc55adb:40091/jars/org.wildfly.openssl_wildfly-openssl-1.0.7.Final.jar with timestamp 1776021735886
+[2026-04-12T19:22:16.548+0000] {subprocess.py:106} INFO - 26/04/12 19:22:16 INFO SparkContext: Added file file:///home/***/.ivy2/jars/org.apache.iceberg_iceberg-spark-runtime-3.5_2.12-1.6.1.jar at spark://b4737cc55adb:40091/files/org.apache.iceberg_iceberg-spark-runtime-3.5_2.12-1.6.1.jar with timestamp 1776021735886
+[2026-04-12T19:22:16.549+0000] {subprocess.py:106} INFO - 26/04/12 19:22:16 INFO Utils: Copying /home/***/.ivy2/jars/org.apache.iceberg_iceberg-spark-runtime-3.5_2.12-1.6.1.jar to /tmp/spark-1092b02a-7adb-4d02-89b7-5afe7e56d8f1/userFiles-6350bead-64b2-4190-930e-00286a0f99a4/org.apache.iceberg_iceberg-spark-runtime-3.5_2.12-1.6.1.jar
+[2026-04-12T19:22:16.582+0000] {subprocess.py:106} INFO - 26/04/12 19:22:16 INFO SparkContext: Added file file:///home/***/.ivy2/jars/org.projectnessie.nessie-integrations_nessie-spark-extensions-3.5_2.12-0.95.0.jar at spark://b4737cc55adb:40091/files/org.projectnessie.nessie-integrations_nessie-spark-extensions-3.5_2.12-0.95.0.jar with timestamp 1776021735886
+[2026-04-12T19:22:16.583+0000] {subprocess.py:106} INFO - 26/04/12 19:22:16 INFO Utils: Copying /home/***/.ivy2/jars/org.projectnessie.nessie-integrations_nessie-spark-extensions-3.5_2.12-0.95.0.jar to /tmp/spark-1092b02a-7adb-4d02-89b7-5afe7e56d8f1/userFiles-6350bead-64b2-4190-930e-00286a0f99a4/org.projectnessie.nessie-integrations_nessie-spark-extensions-3.5_2.12-0.95.0.jar
+[2026-04-12T19:22:16.588+0000] {subprocess.py:106} INFO - 26/04/12 19:22:16 INFO SparkContext: Added file file:///home/***/.ivy2/jars/org.apache.hadoop_hadoop-aws-3.3.4.jar at spark://b4737cc55adb:40091/files/org.apache.hadoop_hadoop-aws-3.3.4.jar with timestamp 1776021735886
+[2026-04-12T19:22:16.589+0000] {subprocess.py:106} INFO - 26/04/12 19:22:16 INFO Utils: Copying /home/***/.ivy2/jars/org.apache.hadoop_hadoop-aws-3.3.4.jar to /tmp/spark-1092b02a-7adb-4d02-89b7-5afe7e56d8f1/userFiles-6350bead-64b2-4190-930e-00286a0f99a4/org.apache.hadoop_hadoop-aws-3.3.4.jar
+[2026-04-12T19:22:16.592+0000] {subprocess.py:106} INFO - 26/04/12 19:22:16 INFO SparkContext: Added file file:///home/***/.ivy2/jars/com.amazonaws_aws-java-sdk-bundle-1.12.262.jar at spark://b4737cc55adb:40091/files/com.amazonaws_aws-java-sdk-bundle-1.12.262.jar with timestamp 1776021735886
+[2026-04-12T19:22:16.593+0000] {subprocess.py:106} INFO - 26/04/12 19:22:16 INFO Utils: Copying /home/***/.ivy2/jars/com.amazonaws_aws-java-sdk-bundle-1.12.262.jar to /tmp/spark-1092b02a-7adb-4d02-89b7-5afe7e56d8f1/userFiles-6350bead-64b2-4190-930e-00286a0f99a4/com.amazonaws_aws-java-sdk-bundle-1.12.262.jar
+[2026-04-12T19:22:16.801+0000] {subprocess.py:106} INFO - 26/04/12 19:22:16 INFO SparkContext: Added file file:///home/***/.ivy2/jars/org.wildfly.openssl_wildfly-openssl-1.0.7.Final.jar at spark://b4737cc55adb:40091/files/org.wildfly.openssl_wildfly-openssl-1.0.7.Final.jar with timestamp 1776021735886
+[2026-04-12T19:22:16.802+0000] {subprocess.py:106} INFO - 26/04/12 19:22:16 INFO Utils: Copying /home/***/.ivy2/jars/org.wildfly.openssl_wildfly-openssl-1.0.7.Final.jar to /tmp/spark-1092b02a-7adb-4d02-89b7-5afe7e56d8f1/userFiles-6350bead-64b2-4190-930e-00286a0f99a4/org.wildfly.openssl_wildfly-openssl-1.0.7.Final.jar
+[2026-04-12T19:22:16.870+0000] {subprocess.py:106} INFO - 26/04/12 19:22:16 INFO StandaloneAppClient$ClientEndpoint: Connecting to master spark://spark-master:7077...
+[2026-04-12T19:22:16.933+0000] {subprocess.py:106} INFO - 26/04/12 19:22:16 INFO TransportClientFactory: Successfully created connection to spark-master/172.18.0.7:7077 after 47 ms (0 ms spent in bootstraps)
+[2026-04-12T19:22:17.011+0000] {subprocess.py:106} INFO - 26/04/12 19:22:17 INFO StandaloneSchedulerBackend: Connected to Spark cluster with app ID app-20260412192217-0013
+[2026-04-12T19:22:17.014+0000] {subprocess.py:106} INFO - 26/04/12 19:22:17 INFO StandaloneAppClient$ClientEndpoint: Executor added: app-20260412192217-0013/0 on worker-20260412190304-172.18.0.8-33391 (172.18.0.8:33391) with 2 core(s)
+[2026-04-12T19:22:17.017+0000] {subprocess.py:106} INFO - 26/04/12 19:22:17 INFO StandaloneSchedulerBackend: Granted executor ID app-20260412192217-0013/0 on hostPort 172.18.0.8:33391 with 2 core(s), 2.0 GiB RAM
+[2026-04-12T19:22:17.018+0000] {subprocess.py:106} INFO - 26/04/12 19:22:17 INFO StandaloneAppClient$ClientEndpoint: Executor added: app-20260412192217-0013/1 on worker-20260412190304-172.18.0.8-33391 (172.18.0.8:33391) with 2 core(s)
+[2026-04-12T19:22:17.022+0000] {subprocess.py:106} INFO - 26/04/12 19:22:17 INFO StandaloneSchedulerBackend: Granted executor ID app-20260412192217-0013/1 on hostPort 172.18.0.8:33391 with 2 core(s), 2.0 GiB RAM
+[2026-04-12T19:22:17.024+0000] {subprocess.py:106} INFO - 26/04/12 19:22:17 INFO StandaloneAppClient$ClientEndpoint: Executor added: app-20260412192217-0013/2 on worker-20260412190304-172.18.0.8-33391 (172.18.0.8:33391) with 2 core(s)
+[2026-04-12T19:22:17.025+0000] {subprocess.py:106} INFO - 26/04/12 19:22:17 INFO StandaloneSchedulerBackend: Granted executor ID app-20260412192217-0013/2 on hostPort 172.18.0.8:33391 with 2 core(s), 2.0 GiB RAM
+[2026-04-12T19:22:17.028+0000] {subprocess.py:106} INFO - 26/04/12 19:22:17 INFO StandaloneAppClient$ClientEndpoint: Executor added: app-20260412192217-0013/3 on worker-20260412190304-172.18.0.8-33391 (172.18.0.8:33391) with 2 core(s)
+[2026-04-12T19:22:17.031+0000] {subprocess.py:106} INFO - 26/04/12 19:22:17 INFO StandaloneSchedulerBackend: Granted executor ID app-20260412192217-0013/3 on hostPort 172.18.0.8:33391 with 2 core(s), 2.0 GiB RAM
+[2026-04-12T19:22:17.036+0000] {subprocess.py:106} INFO - 26/04/12 19:22:17 INFO StandaloneAppClient$ClientEndpoint: Executor added: app-20260412192217-0013/4 on worker-20260412190304-172.18.0.8-33391 (172.18.0.8:33391) with 2 core(s)
+[2026-04-12T19:22:17.037+0000] {subprocess.py:106} INFO - 26/04/12 19:22:17 INFO StandaloneSchedulerBackend: Granted executor ID app-20260412192217-0013/4 on hostPort 172.18.0.8:33391 with 2 core(s), 2.0 GiB RAM
+[2026-04-12T19:22:17.038+0000] {subprocess.py:106} INFO - 26/04/12 19:22:17 INFO StandaloneAppClient$ClientEndpoint: Executor added: app-20260412192217-0013/5 on worker-20260412190304-172.18.0.8-33391 (172.18.0.8:33391) with 2 core(s)
+[2026-04-12T19:22:17.039+0000] {subprocess.py:106} INFO - 26/04/12 19:22:17 INFO StandaloneSchedulerBackend: Granted executor ID app-20260412192217-0013/5 on hostPort 172.18.0.8:33391 with 2 core(s), 2.0 GiB RAM
+[2026-04-12T19:22:17.040+0000] {subprocess.py:106} INFO - 26/04/12 19:22:17 INFO Utils: Successfully started service 'org.apache.spark.network.netty.NettyBlockTransferService' on port 40117.
+[2026-04-12T19:22:17.042+0000] {subprocess.py:106} INFO - 26/04/12 19:22:17 INFO NettyBlockTransferService: Server created on b4737cc55adb 0.0.0.0:40117
+[2026-04-12T19:22:17.045+0000] {subprocess.py:106} INFO - 26/04/12 19:22:17 INFO BlockManager: Using org.apache.spark.storage.RandomBlockReplicationPolicy for block replication policy
+[2026-04-12T19:22:17.055+0000] {subprocess.py:106} INFO - 26/04/12 19:22:17 INFO BlockManagerMaster: Registering BlockManager BlockManagerId(driver, b4737cc55adb, 40117, None)
+[2026-04-12T19:22:17.069+0000] {subprocess.py:106} INFO - 26/04/12 19:22:17 INFO BlockManagerMasterEndpoint: Registering block manager b4737cc55adb:40117 with 434.4 MiB RAM, BlockManagerId(driver, b4737cc55adb, 40117, None)
+[2026-04-12T19:22:17.073+0000] {subprocess.py:106} INFO - 26/04/12 19:22:17 INFO BlockManagerMaster: Registered BlockManager BlockManagerId(driver, b4737cc55adb, 40117, None)
+[2026-04-12T19:22:17.079+0000] {subprocess.py:106} INFO - 26/04/12 19:22:17 INFO BlockManager: Initialized BlockManager: BlockManagerId(driver, b4737cc55adb, 40117, None)
+[2026-04-12T19:22:17.098+0000] {subprocess.py:106} INFO - 26/04/12 19:22:17 INFO StandaloneAppClient$ClientEndpoint: Executor updated: app-20260412192217-0013/2 is now RUNNING
+[2026-04-12T19:22:17.104+0000] {subprocess.py:106} INFO - 26/04/12 19:22:17 INFO StandaloneAppClient$ClientEndpoint: Executor updated: app-20260412192217-0013/3 is now RUNNING
+[2026-04-12T19:22:17.108+0000] {subprocess.py:106} INFO - 26/04/12 19:22:17 INFO StandaloneAppClient$ClientEndpoint: Executor updated: app-20260412192217-0013/4 is now RUNNING
+[2026-04-12T19:22:17.109+0000] {subprocess.py:106} INFO - 26/04/12 19:22:17 INFO StandaloneAppClient$ClientEndpoint: Executor updated: app-20260412192217-0013/0 is now RUNNING
+[2026-04-12T19:22:17.111+0000] {subprocess.py:106} INFO - 26/04/12 19:22:17 INFO StandaloneAppClient$ClientEndpoint: Executor updated: app-20260412192217-0013/1 is now RUNNING
+[2026-04-12T19:22:17.112+0000] {subprocess.py:106} INFO - 26/04/12 19:22:17 INFO StandaloneAppClient$ClientEndpoint: Executor updated: app-20260412192217-0013/5 is now RUNNING
+[2026-04-12T19:22:17.679+0000] {subprocess.py:106} INFO - 26/04/12 19:22:17 INFO StandaloneSchedulerBackend: SchedulerBackend is ready for scheduling beginning after reached minRegisteredResourcesRatio: 0.0
+[2026-04-12T19:22:18.176+0000] {subprocess.py:106} INFO - 2026-04-12 19:22:18,175 INFO Spark version: 3.5.5
+[2026-04-12T19:22:18.204+0000] {subprocess.py:106} INFO - 26/04/12 19:22:18 INFO SharedState: Setting hive.metastore.warehouse.dir ('null') to the value of spark.sql.warehouse.dir.
+[2026-04-12T19:22:18.219+0000] {subprocess.py:106} INFO - 26/04/12 19:22:18 INFO SharedState: Warehouse path is 'file:/tmp/***tmp7j0z5mdv/spark-warehouse'.
+[2026-04-12T19:22:22.602+0000] {subprocess.py:106} INFO - 26/04/12 19:22:22 INFO CatalogUtil: Loading custom FileIO implementation: org.apache.iceberg.hadoop.HadoopFileIO
+[2026-04-12T19:22:24.103+0000] {subprocess.py:106} INFO - 26/04/12 19:22:24 INFO StandaloneSchedulerBackend$StandaloneDriverEndpoint: Registered executor NettyRpcEndpointRef(spark-client://Executor) (172.18.0.8:37164) with ID 2,  ResourceProfileId 0
+[2026-04-12T19:22:24.333+0000] {subprocess.py:106} INFO - 26/04/12 19:22:24 INFO StandaloneSchedulerBackend$StandaloneDriverEndpoint: Registered executor NettyRpcEndpointRef(spark-client://Executor) (172.18.0.8:37204) with ID 0,  ResourceProfileId 0
+[2026-04-12T19:22:24.395+0000] {subprocess.py:106} INFO - 26/04/12 19:22:24 INFO BlockManagerMasterEndpoint: Registering block manager 172.18.0.8:40729 with 1048.8 MiB RAM, BlockManagerId(2, 172.18.0.8, 40729, None)
+[2026-04-12T19:22:24.413+0000] {subprocess.py:106} INFO - 26/04/12 19:22:24 INFO StandaloneSchedulerBackend$StandaloneDriverEndpoint: Registered executor NettyRpcEndpointRef(spark-client://Executor) (172.18.0.8:37216) with ID 4,  ResourceProfileId 0
+[2026-04-12T19:22:24.440+0000] {subprocess.py:106} INFO - 26/04/12 19:22:24 INFO StandaloneSchedulerBackend$StandaloneDriverEndpoint: Registered executor NettyRpcEndpointRef(spark-client://Executor) (172.18.0.8:37212) with ID 1,  ResourceProfileId 0
+[2026-04-12T19:22:24.518+0000] {subprocess.py:106} INFO - 26/04/12 19:22:24 INFO BlockManagerMasterEndpoint: Registering block manager 172.18.0.8:35225 with 1048.8 MiB RAM, BlockManagerId(0, 172.18.0.8, 35225, None)
+[2026-04-12T19:22:24.640+0000] {subprocess.py:106} INFO - 26/04/12 19:22:24 INFO BlockManagerMasterEndpoint: Registering block manager 172.18.0.8:44073 with 1048.8 MiB RAM, BlockManagerId(4, 172.18.0.8, 44073, None)
+[2026-04-12T19:22:24.665+0000] {subprocess.py:106} INFO - 26/04/12 19:22:24 INFO StandaloneSchedulerBackend$StandaloneDriverEndpoint: Registered executor NettyRpcEndpointRef(spark-client://Executor) (172.18.0.8:37222) with ID 5,  ResourceProfileId 0
+[2026-04-12T19:22:24.676+0000] {subprocess.py:106} INFO - 26/04/12 19:22:24 INFO BlockManagerMasterEndpoint: Registering block manager 172.18.0.8:33711 with 1048.8 MiB RAM, BlockManagerId(1, 172.18.0.8, 33711, None)
+[2026-04-12T19:22:24.770+0000] {subprocess.py:106} INFO - 26/04/12 19:22:24 INFO StandaloneSchedulerBackend$StandaloneDriverEndpoint: Registered executor NettyRpcEndpointRef(spark-client://Executor) (172.18.0.8:37232) with ID 3,  ResourceProfileId 0
+[2026-04-12T19:22:24.871+0000] {subprocess.py:106} INFO - 26/04/12 19:22:24 INFO BlockManagerMasterEndpoint: Registering block manager 172.18.0.8:37177 with 1048.8 MiB RAM, BlockManagerId(5, 172.18.0.8, 37177, None)
+[2026-04-12T19:22:24.941+0000] {subprocess.py:106} INFO - 26/04/12 19:22:24 INFO BlockManagerMasterEndpoint: Registering block manager 172.18.0.8:39881 with 1048.8 MiB RAM, BlockManagerId(3, 172.18.0.8, 39881, None)
+[2026-04-12T19:22:25.642+0000] {subprocess.py:106} INFO - 2026-04-12 19:22:25,641 INFO Namespace 'nessie.gold' listo.
+[2026-04-12T19:22:25.660+0000] {subprocess.py:106} INFO - 2026-04-12 19:22:25,642 INFO
+[2026-04-12T19:22:25.662+0000] {subprocess.py:106} INFO - [★] cant_post_x_user_hist
+[2026-04-12T19:22:27.112+0000] {subprocess.py:106} INFO - 26/04/12 19:22:27 INFO BaseMetastoreTableOperations: Refreshing table metadata from new version: s3a://iceberg/silver/users_hist_29ea4f81-25a2-4974-a1d5-7fcae2b69ddf/metadata/00004-7be93143-7a63-496e-b545-ad2e967da356.gz.metadata.json
+[2026-04-12T19:22:27.572+0000] {subprocess.py:106} INFO - 26/04/12 19:22:27 WARN MetricsConfig: Cannot locate configuration: tried hadoop-metrics2-s3a-file-system.properties,hadoop-metrics2.properties
+[2026-04-12T19:22:27.601+0000] {subprocess.py:106} INFO - 26/04/12 19:22:27 INFO MetricsSystemImpl: Scheduled Metric snapshot period at 10 second(s).
+[2026-04-12T19:22:27.603+0000] {subprocess.py:106} INFO - 26/04/12 19:22:27 INFO MetricsSystemImpl: s3a-file-system metrics system started
+[2026-04-12T19:22:30.791+0000] {subprocess.py:106} INFO - 26/04/12 19:22:30 INFO NessieUtil: loadTableMetadata for 'silver.users_hist' from location 's3a://iceberg/silver/users_hist_29ea4f81-25a2-4974-a1d5-7fcae2b69ddf/metadata/00004-7be93143-7a63-496e-b545-ad2e967da356.gz.metadata.json' at 'Branch{name=main, metadata=null, hash=30ea234215a480b4d20fd7771eaa862b060db5205cfc96284d315ec79cc31bf3}'
+[2026-04-12T19:22:30.824+0000] {subprocess.py:106} INFO - 26/04/12 19:22:30 INFO BaseMetastoreCatalog: Table loaded by catalog: nessie.silver.users_hist
+[2026-04-12T19:22:31.327+0000] {subprocess.py:106} INFO - Traceback (most recent call last):
+[2026-04-12T19:22:31.331+0000] {subprocess.py:106} INFO -   File "/opt/***/scripts/gold_agg.py", line 306, in <module>
+[2026-04-12T19:22:31.332+0000] {subprocess.py:106} INFO -     main()
+[2026-04-12T19:22:31.334+0000] {subprocess.py:106} INFO -   File "/opt/***/scripts/gold_agg.py", line 293, in main
+[2026-04-12T19:22:31.345+0000] {subprocess.py:106} INFO -     total = build_cant_post_x_user_hist(spark)
+[2026-04-12T19:22:31.348+0000] {subprocess.py:106} INFO -             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[2026-04-12T19:22:31.350+0000] {subprocess.py:106} INFO -   File "/opt/***/scripts/gold_agg.py", line 119, in build_cant_post_x_user_hist
+[2026-04-12T19:22:31.364+0000] {subprocess.py:106} INFO -     df = spark.sql(f"""
+[2026-04-12T19:22:31.365+0000] {subprocess.py:106} INFO -          ^^^^^^^^^^^^^^
+[2026-04-12T19:22:31.367+0000] {subprocess.py:106} INFO -   File "/opt/spark/python/lib/pyspark.zip/pyspark/sql/session.py", line 1631, in sql
+[2026-04-12T19:22:31.370+0000] {subprocess.py:106} INFO -   File "/opt/spark/python/lib/py4j-0.10.9.7-src.zip/py4j/java_gateway.py", line 1322, in __call__
+[2026-04-12T19:22:31.371+0000] {subprocess.py:106} INFO -   File "/opt/spark/python/lib/pyspark.zip/pyspark/errors/exceptions/captured.py", line 185, in deco
+[2026-04-12T19:22:31.379+0000] {subprocess.py:106} INFO - pyspark.errors.exceptions.captured.AnalysisException: [TABLE_OR_VIEW_NOT_FOUND] The table or view `nessie`.`silver`.`post_hist` cannot be found. Verify the spelling and correctness of the schema and catalog.
+[2026-04-12T19:22:31.380+0000] {subprocess.py:106} INFO - If you did not qualify the name with a schema, verify the current_schema() output, or qualify the name with the correct schema and catalog.
+[2026-04-12T19:22:31.381+0000] {subprocess.py:106} INFO - To tolerate the error on drop use DROP VIEW IF EXISTS or DROP TABLE IF EXISTS.; line 17 pos 13;
+[2026-04-12T19:22:31.382+0000] {subprocess.py:106} INFO - 'Aggregate ['p.OwnerUserId, 'u.DisplayName, 'p.anio, 'p.PostTypeId], ['p.OwnerUserId AS user_id#0, 'COALESCE('u.DisplayName, Unknown) AS display_name#1, 'p.anio AS anio#2, 'p.PostTypeId AS post_type_id#3, CASE WHEN ('p.PostTypeId = 1) THEN Question WHEN ('p.PostTypeId = 2) THEN Answer ELSE Other END AS post_type#4, 'COUNT('p.Id) AS cant_posts#5, 'COALESCE('SUM('p.Score), 0) AS total_score#6, 'ROUND('AVG('p.Score), 2) AS avg_score#7, 'COALESCE('SUM('p.ViewCount), 0) AS total_views#8, cast(2026-04-12 19:22:15 as timestamp) AS fecha_cargue#9]
+[2026-04-12T19:22:31.384+0000] {subprocess.py:106} INFO - +- 'Filter isnotnull('p.OwnerUserId)
+[2026-04-12T19:22:31.385+0000] {subprocess.py:106} INFO -    +- 'Join LeftOuter, ('p.OwnerUserId = 'u.Id)
+[2026-04-12T19:22:31.386+0000] {subprocess.py:106} INFO -       :- 'SubqueryAlias p
+[2026-04-12T19:22:31.388+0000] {subprocess.py:106} INFO -       :  +- 'UnresolvedRelation [nessie, silver, post_hist], [], false
+[2026-04-12T19:22:31.389+0000] {subprocess.py:106} INFO -       +- SubqueryAlias u
+[2026-04-12T19:22:31.390+0000] {subprocess.py:106} INFO -          +- SubqueryAlias nessie.silver.users_hist
+[2026-04-12T19:22:31.391+0000] {subprocess.py:106} INFO -             +- RelationV2[Id#10L, Reputation#11L, creation_date#12, DisplayName#13, LastAccessDate#14, Views#15L, UpVotes#16L, DownVotes#17L, location#18, AccountId#19L, anio#20, fecha_cargue#21, fuente#22] nessie.silver.users_hist nessie.silver.users_hist
+[2026-04-12T19:22:31.392+0000] {subprocess.py:106} INFO - 
+[2026-04-12T19:22:31.395+0000] {subprocess.py:106} INFO - 2026-04-12 19:22:31,379 INFO Closing down clientserver connection
+[2026-04-12T19:22:31.465+0000] {subprocess.py:106} INFO - 26/04/12 19:22:31 INFO SparkContext: Invoking stop() from shutdown hook
+[2026-04-12T19:22:31.471+0000] {subprocess.py:106} INFO - 26/04/12 19:22:31 INFO SparkContext: SparkContext is stopping with exitCode 0.
+[2026-04-12T19:22:31.485+0000] {subprocess.py:106} INFO - 26/04/12 19:22:31 INFO SparkUI: Stopped Spark web UI at http://b4737cc55adb:4040
+[2026-04-12T19:22:31.495+0000] {subprocess.py:106} INFO - 26/04/12 19:22:31 INFO StandaloneSchedulerBackend: Shutting down all executors
+[2026-04-12T19:22:31.497+0000] {subprocess.py:106} INFO - 26/04/12 19:22:31 INFO StandaloneSchedulerBackend$StandaloneDriverEndpoint: Asking each executor to shut down
+[2026-04-12T19:22:31.534+0000] {subprocess.py:106} INFO - 26/04/12 19:22:31 INFO MapOutputTrackerMasterEndpoint: MapOutputTrackerMasterEndpoint stopped!
+[2026-04-12T19:22:31.595+0000] {subprocess.py:106} INFO - 26/04/12 19:22:31 INFO MemoryStore: MemoryStore cleared
+[2026-04-12T19:22:31.598+0000] {subprocess.py:106} INFO - 26/04/12 19:22:31 INFO BlockManager: BlockManager stopped
+[2026-04-12T19:22:31.619+0000] {subprocess.py:106} INFO - 26/04/12 19:22:31 INFO BlockManagerMaster: BlockManagerMaster stopped
+[2026-04-12T19:22:31.625+0000] {subprocess.py:106} INFO - 26/04/12 19:22:31 INFO OutputCommitCoordinator$OutputCommitCoordinatorEndpoint: OutputCommitCoordinator stopped!
+[2026-04-12T19:22:31.736+0000] {subprocess.py:106} INFO - 26/04/12 19:22:31 INFO SparkContext: Successfully stopped SparkContext
+[2026-04-12T19:22:31.747+0000] {subprocess.py:106} INFO - 26/04/12 19:22:31 INFO ShutdownHookManager: Shutdown hook called
+[2026-04-12T19:22:31.749+0000] {subprocess.py:106} INFO - 26/04/12 19:22:31 INFO ShutdownHookManager: Deleting directory /tmp/spark-4f0b48b4-7599-412e-8ce8-c2c83f9274a1
+[2026-04-12T19:22:31.759+0000] {subprocess.py:106} INFO - 26/04/12 19:22:31 INFO ShutdownHookManager: Deleting directory /tmp/spark-1092b02a-7adb-4d02-89b7-5afe7e56d8f1
+[2026-04-12T19:22:31.764+0000] {subprocess.py:106} INFO - 26/04/12 19:22:31 INFO ShutdownHookManager: Deleting directory /tmp/spark-1092b02a-7adb-4d02-89b7-5afe7e56d8f1/pyspark-c75b7fda-4ef9-4ded-853d-08a266224d8d
+[2026-04-12T19:22:31.780+0000] {subprocess.py:106} INFO - 26/04/12 19:22:31 INFO MetricsSystemImpl: Stopping s3a-file-system metrics system...
+[2026-04-12T19:22:31.781+0000] {subprocess.py:106} INFO - 26/04/12 19:22:31 INFO MetricsSystemImpl: s3a-file-system metrics system stopped.
+[2026-04-12T19:22:31.783+0000] {subprocess.py:106} INFO - 26/04/12 19:22:31 INFO MetricsSystemImpl: s3a-file-system metrics system shutdown complete.
+[2026-04-12T19:22:32.150+0000] {subprocess.py:110} INFO - Command exited with return code 1
+[2026-04-12T19:22:32.163+0000] {taskinstance.py:3311} ERROR - Task failed with exception
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 762, in _execute_task
+    result = _execute_callable(context=context, **execute_callable_kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 733, in _execute_callable
+    return ExecutionCallableRunner(
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/utils/operator_helpers.py", line 252, in run
+    return self.func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/baseoperator.py", line 417, in wrapper
+    return func(self, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/operators/bash.py", line 276, in execute
+    raise AirflowException(
+airflow.exceptions.AirflowException: Bash command failed. The command returned a non-zero exit code 1.
+[2026-04-12T19:22:32.168+0000] {taskinstance.py:1225} INFO - Marking task as FAILED. dag_id=stackoverflow_pipeline, task_id=gold_agg, run_id=manual__2026-04-12T19:09:41+00:00, execution_date=20260412T190941, start_date=20260412T192212, end_date=20260412T192232
+[2026-04-12T19:22:32.183+0000] {taskinstance.py:340} INFO - ::group::Post task execution logs
+[2026-04-12T19:22:32.184+0000] {standard_task_runner.py:124} ERROR - Failed to execute job 26 for task gold_agg (Bash command failed. The command returned a non-zero exit code 1.; 4454)
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/task/task_runner/standard_task_runner.py", line 117, in _start_by_fork
+    ret = args.func(args, dag=self.dag)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/cli/cli_config.py", line 49, in command
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/utils/cli.py", line 116, in wrapper
+    return f(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/cli/commands/task_command.py", line 483, in task_run
+    task_return_code = _run_task_by_selected_method(args, _dag, ti)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/cli/commands/task_command.py", line 256, in _run_task_by_selected_method
+    return _run_raw_task(args, ti)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/cli/commands/task_command.py", line 341, in _run_raw_task
+    return ti._run_raw_task(
+           ^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/utils/session.py", line 97, in wrapper
+    return func(*args, session=session, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 3005, in _run_raw_task
+    return _run_raw_task(
+           ^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 273, in _run_raw_task
+    TaskInstance._execute_task_with_callbacks(
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 3159, in _execute_task_with_callbacks
+    result = self._execute_task(context, task_orig)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 3183, in _execute_task
+    return _execute_task(self, context, task_orig)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 762, in _execute_task
+    result = _execute_callable(context=context, **execute_callable_kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 733, in _execute_callable
+    return ExecutionCallableRunner(
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/utils/operator_helpers.py", line 252, in run
+    return self.func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/baseoperator.py", line 417, in wrapper
+    return func(self, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/operators/bash.py", line 276, in execute
+    raise AirflowException(
+airflow.exceptions.AirflowException: Bash command failed. The command returned a non-zero exit code 1.
+[2026-04-12T19:22:32.234+0000] {local_task_job_runner.py:266} INFO - Task exited with return code 1
+[2026-04-12T19:22:32.251+0000] {taskinstance.py:3895} INFO - 0 downstream tasks scheduled from follow-on schedule check
+[2026-04-12T19:22:32.254+0000] {local_task_job_runner.py:245} INFO - ::endgroup::

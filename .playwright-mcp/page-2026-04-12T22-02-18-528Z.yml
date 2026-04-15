@@ -1,0 +1,134 @@
+- generic [ref=e1]:
+  - generic [ref=e4]:
+    - navigation [ref=e5]:
+      - list [ref=e6]:
+        - listitem [ref=e7]:
+          - link [ref=e8] [cursor=pointer]:
+            - /url: /
+            - img [ref=e12]
+        - listitem [ref=e14]:
+          - link [ref=e16] [cursor=pointer]:
+            - /url: /
+            - img [ref=e20]
+        - listitem [ref=e22]:
+          - link [ref=e24] [cursor=pointer]:
+            - /url: /new_query?context=%22%40admin%22
+            - img [ref=e28]
+        - listitem [ref=e30]:
+          - link [ref=e32] [cursor=pointer]:
+            - /url: /jobs
+            - img [ref=e36]
+      - list [ref=e38]:
+        - listitem [ref=e39]:
+          - link [ref=e41] [cursor=pointer]:
+            - /url: /settings
+            - img [ref=e45]
+        - button [ref=e48] [cursor=pointer]:
+          - generic:
+            - img
+          - generic:
+            - img
+        - button [ref=e51] [cursor=pointer]:
+          - generic:
+            - img
+    - generic [ref=e52]:
+      - generic [ref=e58]:
+        - img [ref=e60]
+        - textbox [ref=e62]:
+          - /placeholder: Search Spaces and Datasets
+      - generic [ref=e63]:
+        - generic [ref=e64]:
+          - heading [level=3] [ref=e65]: Datasets
+          - generic [ref=e66]:
+            - list [ref=e67]:
+              - listitem [ref=e68] [cursor=pointer]:
+                - link [ref=e70]:
+                  - /url: /home
+                  - img [ref=e73]
+                  - generic [ref=e76]: admin
+            - heading [level=4] [ref=e80] [cursor=pointer]:
+              - link [ref=e81]:
+                - /url: /spaces/list
+                - button [ref=e82]:
+                  - generic:
+                    - img
+                - generic [ref=e83]: Spaces (0)
+                - button [ref=e85]:
+                  - generic:
+                    - img
+            - generic [ref=e87]:
+              - text: Sources
+              - button [ref=e88] [cursor=pointer]:
+                - generic:
+                  - img
+          - button [ref=e90] [cursor=pointer]:
+            - generic [ref=e91]:
+              - img [ref=e93]
+              - text: Add Source
+        - main [ref=e95]:
+          - generic [ref=e96]:
+            - heading [level=3] [ref=e98]
+            - button [ref=e101] [cursor=pointer]:
+              - generic:
+                - img
+          - table [ref=e103]:
+            - rowgroup [ref=e104]:
+              - row [ref=e105]:
+                - columnheader [ref=e106] [cursor=pointer]:
+                  - generic [ref=e107]: Name
+                - columnheader [ref=e108] [cursor=pointer]:
+                  - generic [ref=e109]: Jobs
+                - columnheader [ref=e110]
+            - rowgroup [ref=e111]:
+              - row [ref=e112]:
+                - cell [ref=e113]
+                - cell [ref=e117]
+                - cell [ref=e121]
+              - row [ref=e125]:
+                - cell [ref=e126]
+                - cell [ref=e130]
+                - cell [ref=e134]
+              - row [ref=e138]:
+                - cell [ref=e139]
+                - cell [ref=e143]
+                - cell [ref=e147]
+              - row [ref=e151]:
+                - cell [ref=e152]
+                - cell [ref=e156]
+                - cell [ref=e160]
+              - row [ref=e164]:
+                - cell [ref=e165]
+                - cell [ref=e169]
+                - cell [ref=e173]
+              - row [ref=e177]:
+                - cell [ref=e178]
+                - cell [ref=e182]
+                - cell [ref=e186]
+              - row [ref=e190]:
+                - cell [ref=e191]
+                - cell [ref=e195]
+                - cell [ref=e199]
+              - row [ref=e203]:
+                - cell [ref=e204]
+                - cell [ref=e208]
+                - cell [ref=e212]
+              - row [ref=e216]:
+                - cell [ref=e217]
+                - cell [ref=e221]
+                - cell [ref=e225]
+              - row [ref=e229]:
+                - cell [ref=e230]
+                - cell [ref=e234]
+                - cell [ref=e238]
+  - dialog [active] [ref=e243]:
+    - generic [ref=e244]:
+      - generic [ref=e245]: Add Data Source
+      - button [ref=e246] [cursor=pointer]:
+        - generic:
+          - img
+    - generic [ref=e248]:
+      - generic [ref=e249]:
+        - img [ref=e252]
+        - textbox [ref=e254]:
+          - /placeholder: Search data source
+      - generic [ref=e258]: Object Storage

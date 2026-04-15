@@ -1,0 +1,644 @@
+[2026-04-15T00:34:33.852+0000] {local_task_job_runner.py:123} INFO - ::group::Pre task execution logs
+[2026-04-15T00:34:33.877+0000] {taskinstance.py:2613} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: stackoverflow_pipeline.gold_agg manual__2026-04-14T23:12:12.535566+00:00 [queued]>
+[2026-04-15T00:34:33.889+0000] {taskinstance.py:2613} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: stackoverflow_pipeline.gold_agg manual__2026-04-14T23:12:12.535566+00:00 [queued]>
+[2026-04-15T00:34:33.890+0000] {taskinstance.py:2866} INFO - Starting attempt 9 of 10
+[2026-04-15T00:34:33.912+0000] {taskinstance.py:2889} INFO - Executing <Task(PythonOperator): gold_agg> on 2026-04-14 23:12:12.535566+00:00
+[2026-04-15T00:34:33.922+0000] {logging_mixin.py:190} WARNING - /home/***/.local/lib/python3.12/site-packages/***/task/task_runner/standard_task_runner.py:70 DeprecationWarning: This process (pid=8061) is multi-threaded, use of fork() may lead to deadlocks in the child.
+[2026-04-15T00:34:33.922+0000] {standard_task_runner.py:104} INFO - Running: ['***', 'tasks', 'run', 'stackoverflow_pipeline', 'gold_agg', 'manual__2026-04-14T23:12:12.535566+00:00', '--job-id', '15', '--raw', '--subdir', 'DAGS_FOLDER/stackoverflow_pipeline.py', '--cfg-path', '/tmp/tmpmzvnggpy']
+[2026-04-15T00:34:33.924+0000] {standard_task_runner.py:72} INFO - Started process 8062 to run task
+[2026-04-15T00:34:33.925+0000] {standard_task_runner.py:105} INFO - Job 15: Subtask gold_agg
+[2026-04-15T00:34:33.982+0000] {task_command.py:467} INFO - Running <TaskInstance: stackoverflow_pipeline.gold_agg manual__2026-04-14T23:12:12.535566+00:00 [running]> on host 853e52885e5c
+[2026-04-15T00:34:34.078+0000] {taskinstance.py:3132} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='fhbd-grupo' AIRFLOW_CTX_DAG_ID='stackoverflow_pipeline' AIRFLOW_CTX_TASK_ID='gold_agg' AIRFLOW_CTX_EXECUTION_DATE='2026-04-14T23:12:12.535566+00:00' AIRFLOW_CTX_TRY_NUMBER='9' AIRFLOW_CTX_DAG_RUN_ID='manual__2026-04-14T23:12:12.535566+00:00'
+[2026-04-15T00:34:34.079+0000] {taskinstance.py:731} INFO - ::endgroup::
+[2026-04-15T00:34:34.094+0000] {stackoverflow_pipeline.py:264} INFO - Running command: /opt/spark/bin/spark-submit --master local[1] --conf spark.submit.deployMode=client --conf spark.driver.bindAddress=0.0.0.0 --conf spark.driver.memory=1500m --conf spark.sql.shuffle.partitions=2 --conf spark.sql.extensions=org.apache.iceberg.spark.extensions.IcebergSparkSessionExtensions,org.projectnessie.spark.extensions.NessieSparkSessionExtensions --conf spark.sql.catalog.nessie=org.apache.iceberg.spark.SparkCatalog --conf spark.sql.catalog.nessie.catalog-impl=org.apache.iceberg.nessie.NessieCatalog --conf spark.sql.catalog.nessie.uri=http://proyecto2-nessie:19120/api/v1 --conf spark.sql.catalog.nessie.ref=main --conf spark.sql.catalog.nessie.authentication.type=NONE --conf spark.sql.catalog.nessie.warehouse=s3a://iceberg/ --conf spark.hadoop.fs.s3a.endpoint=http://proyecto2-minio:9000 --conf spark.hadoop.fs.s3a.access.key=minioadmin --conf spark.hadoop.fs.s3a.secret.key=minioadmin123 --conf spark.hadoop.fs.s3a.path.style.access=true --conf spark.hadoop.fs.s3a.impl=org.apache.hadoop.fs.s3a.S3AFileSystem --conf spark.hadoop.fs.s3a.aws.credentials.provider=org.apache.hadoop.fs.s3a.SimpleAWSCredentialsProvider --conf spark.hadoop.fs.s3a.connection.ssl.enabled=false --conf spark.driver.maxResultSize=512m --conf spark.memory.fraction=0.5 --conf spark.sql.iceberg.vectorization.enabled=false --conf spark.driver.extraJavaOptions=-Xss4m --packages org.apache.iceberg:iceberg-spark-runtime-3.5_2.12:1.6.1,org.projectnessie.nessie-integrations:nessie-spark-extensions-3.5_2.12:0.95.0,org.apache.hadoop:hadoop-aws:3.3.4,com.amazonaws:aws-java-sdk-bundle:1.12.262 --name gold_cant_post_x_user_hist --verbose /opt/***/scripts/gold_agg.py
+[2026-04-15T00:34:34.095+0000] {stackoverflow_pipeline.py:265} INFO - Environment vars: CH_DB=stackoverflow, CH_HOST=play.clickhouse.com, CH_PASSWORD=, CH_PORT=443, CH_USER=play, GOLD_NAMESPACE=gold, MAX_ROWS=100000, MINIO_ACCESS_KEY=minioadmin, MINIO_BUCKET_BRONZE=bronze, MINIO_BUCKET_ICEBERG=iceberg, MINIO_ENDPOINT=http://proyecto2-minio:9000, MINIO_SECRET_KEY=minioadmin123, NESSIE_BRANCH=main, NESSIE_URL=http://proyecto2-nessie:19120/api/v1, SILVER_NAMESPACE=silver
+[2026-04-15T00:35:14.088+0000] {stackoverflow_pipeline.py:270} INFO - Spark stdout:
+:: loading settings :: url = jar:file:/opt/spark/jars/ivy-2.5.1.jar!/org/apache/ivy/core/settings/ivysettings.xml
+/opt/***/scripts/gold_agg.py:37: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+  FECHA_CARGUE   = datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S")
+2026-04-15 00:34:38,954 INFO ============================================================
+2026-04-15 00:34:38,954 INFO GOLD AGG — cant_post_x_user_hist ★
+2026-04-15 00:34:38,954 INFO Fuentes: nessie.silver.post_hist + nessie.silver.users_hist
+2026-04-15 00:34:38,954 INFO ============================================================
+2026-04-15 00:34:56,159 INFO Spark version: 3.5.5
+2026-04-15 00:34:59,214 INFO Namespace 'nessie.gold' listo.
+2026-04-15 00:34:59,214 INFO 
+[★] cant_post_x_user_hist
+2026-04-15 00:35:03,735 INFO   Tabla 'nessie.gold.cant_post_x_user_hist' existe → MERGE
+2026-04-15 00:35:13,294 INFO   ✅ nessie.gold.cant_post_x_user_hist → 47,128 filas
+2026-04-15 00:35:13,294 INFO 
+============================================================
+2026-04-15 00:35:13,294 INFO ✅ Gold completado.
+2026-04-15 00:35:13,294 INFO    nessie.gold.cant_post_x_user_hist → 47,128 filas
+2026-04-15 00:35:13,294 INFO    Para generar las 4 tablas adicionales:
+2026-04-15 00:35:13,294 INFO    → Ejecutar notebooks/gold_agg.ipynb
+2026-04-15 00:35:13,294 INFO ============================================================
+2026-04-15 00:35:13,472 INFO Closing down clientserver connection
+
+[2026-04-15T00:35:14.089+0000] {stackoverflow_pipeline.py:272} ERROR - Spark stderr:
+/opt/spark/bin/load-spark-env.sh: line 68: ps: command not found
+Using properties file: null
+Parsed arguments:
+  master                  local[1]
+  remote                  null
+  deployMode              client
+  executorMemory          null
+  executorCores           null
+  totalExecutorCores      null
+  propertiesFile          null
+  driverMemory            1500m
+  driverCores             null
+  driverExtraClassPath    null
+  driverExtraLibraryPath  null
+  driverExtraJavaOptions  -Xss4m
+  supervise               false
+  queue                   null
+  numExecutors            null
+  files                   null
+  pyFiles                 null
+  archives                null
+  mainClass               null
+  primaryResource         file:/opt/***/scripts/gold_agg.py
+  name                    gold_cant_post_x_user_hist
+  childArgs               []
+  jars                    null
+  packages                org.apache.iceberg:iceberg-spark-runtime-3.5_2.12:1.6.1,org.projectnessie.nessie-integrations:nessie-spark-extensions-3.5_2.12:0.95.0,org.apache.hadoop:hadoop-aws:3.3.4,com.amazonaws:aws-java-sdk-bundle:1.12.262
+  packagesExclusions      null
+  repositories            null
+  verbose                 true
+
+Spark properties used, including those specified through
+ --conf and those from the properties file null:
+  (spark.driver.bindAddress,0.0.0.0)
+  (spark.driver.extraJavaOptions,-Xss4m)
+  (spark.driver.maxResultSize,512m)
+  (spark.driver.memory,1500m)
+  (spark.hadoop.fs.s3a.access.key,*********(redacted))
+  (spark.hadoop.fs.s3a.aws.credentials.provider,org.apache.hadoop.fs.s3a.SimpleAWSCredentialsProvider)
+  (spark.hadoop.fs.s3a.connection.ssl.enabled,false)
+  (spark.hadoop.fs.s3a.endpoint,http://proyecto2-minio:9000)
+  (spark.hadoop.fs.s3a.impl,org.apache.hadoop.fs.s3a.S3AFileSystem)
+  (spark.hadoop.fs.s3a.path.style.access,true)
+  (spark.hadoop.fs.s3a.secret.key,*********(redacted))
+  (spark.memory.fraction,0.5)
+  (spark.sql.catalog.nessie,org.apache.iceberg.spark.SparkCatalog)
+  (spark.sql.catalog.nessie.authentication.type,NONE)
+  (spark.sql.catalog.nessie.catalog-impl,org.apache.iceberg.nessie.NessieCatalog)
+  (spark.sql.catalog.nessie.ref,main)
+  (spark.sql.catalog.nessie.uri,http://proyecto2-nessie:19120/api/v1)
+  (spark.sql.catalog.nessie.warehouse,s3a://iceberg/)
+  (spark.sql.extensions,org.apache.iceberg.spark.extensions.IcebergSparkSessionExtensions,org.projectnessie.spark.extensions.NessieSparkSessionExtensions)
+  (spark.sql.iceberg.vectorization.enabled,false)
+  (spark.sql.shuffle.partitions,2)
+  (spark.submit.deployMode,client)
+
+    
+Ivy Default Cache set to: /home/***/.ivy2/cache
+The jars for the packages stored in: /home/***/.ivy2/jars
+org.apache.iceberg#iceberg-spark-runtime-3.5_2.12 added as a dependency
+org.projectnessie.nessie-integrations#nessie-spark-extensions-3.5_2.12 added as a dependency
+org.apache.hadoop#hadoop-aws added as a dependency
+com.amazonaws#aws-java-sdk-bundle added as a dependency
+:: resolving dependencies :: org.apache.spark#spark-submit-parent-9d87f8bd-aa80-4d30-a490-9d2c1592a6fd;1.0
+	confs: [default]
+	found org.apache.iceberg#iceberg-spark-runtime-3.5_2.12;1.6.1 in central
+	found org.projectnessie.nessie-integrations#nessie-spark-extensions-3.5_2.12;0.95.0 in central
+	found org.apache.hadoop#hadoop-aws;3.3.4 in central
+	found com.amazonaws#aws-java-sdk-bundle;1.12.262 in central
+	found org.wildfly.openssl#wildfly-openssl;1.0.7.Final in central
+:: resolution report :: resolve 383ms :: artifacts dl 21ms
+	:: modules in use:
+	com.amazonaws#aws-java-sdk-bundle;1.12.262 from central in [default]
+	org.apache.hadoop#hadoop-aws;3.3.4 from central in [default]
+	org.apache.iceberg#iceberg-spark-runtime-3.5_2.12;1.6.1 from central in [default]
+	org.projectnessie.nessie-integrations#nessie-spark-extensions-3.5_2.12;0.95.0 from central in [default]
+	org.wildfly.openssl#wildfly-openssl;1.0.7.Final from central in [default]
+	---------------------------------------------------------------------
+	|                  |            modules            ||   artifacts   |
+	|       conf       | number| search|dwnlded|evicted|| number|dwnlded|
+	---------------------------------------------------------------------
+	|      default     |   5   |   0   |   0   |   0   ||   5   |   0   |
+	---------------------------------------------------------------------
+:: retrieving :: org.apache.spark#spark-submit-parent-9d87f8bd-aa80-4d30-a490-9d2c1592a6fd
+	confs: [default]
+	0 artifacts copied, 5 already retrieved (0kB/10ms)
+26/04/15 00:34:37 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+Main class:
+org.apache.spark.deploy.PythonRunner
+Arguments:
+file:/opt/***/scripts/gold_agg.py
+file:///home/***/.ivy2/jars/org.apache.iceberg_iceberg-spark-runtime-3.5_2.12-1.6.1.jar,file:///home/***/.ivy2/jars/org.projectnessie.nessie-integrations_nessie-spark-extensions-3.5_2.12-0.95.0.jar,file:///home/***/.ivy2/jars/org.apache.hadoop_hadoop-aws-3.3.4.jar,file:///home/***/.ivy2/jars/com.amazonaws_aws-java-sdk-bundle-1.12.262.jar,file:///home/***/.ivy2/jars/org.wildfly.openssl_wildfly-openssl-1.0.7.Final.jar
+Spark config:
+(spark.app.name,gold_cant_post_x_user_hist)
+(spark.app.submitTime,1776213277504)
+(spark.driver.bindAddress,0.0.0.0)
+(spark.driver.extraJavaOptions,-Xss4m)
+(spark.driver.maxResultSize,512m)
+(spark.driver.memory,1500m)
+(spark.files,file:///home/***/.ivy2/jars/org.apache.iceberg_iceberg-spark-runtime-3.5_2.12-1.6.1.jar,file:///home/***/.ivy2/jars/org.projectnessie.nessie-integrations_nessie-spark-extensions-3.5_2.12-0.95.0.jar,file:///home/***/.ivy2/jars/org.apache.hadoop_hadoop-aws-3.3.4.jar,file:///home/***/.ivy2/jars/com.amazonaws_aws-java-sdk-bundle-1.12.262.jar,file:///home/***/.ivy2/jars/org.wildfly.openssl_wildfly-openssl-1.0.7.Final.jar)
+(spark.hadoop.fs.s3a.access.key,*********(redacted))
+(spark.hadoop.fs.s3a.aws.credentials.provider,org.apache.hadoop.fs.s3a.SimpleAWSCredentialsProvider)
+(spark.hadoop.fs.s3a.connection.ssl.enabled,false)
+(spark.hadoop.fs.s3a.endpoint,http://proyecto2-minio:9000)
+(spark.hadoop.fs.s3a.impl,org.apache.hadoop.fs.s3a.S3AFileSystem)
+(spark.hadoop.fs.s3a.path.style.access,true)
+(spark.hadoop.fs.s3a.secret.key,*********(redacted))
+(spark.jars,file:///home/***/.ivy2/jars/org.apache.iceberg_iceberg-spark-runtime-3.5_2.12-1.6.1.jar,file:///home/***/.ivy2/jars/org.projectnessie.nessie-integrations_nessie-spark-extensions-3.5_2.12-0.95.0.jar,file:///home/***/.ivy2/jars/org.apache.hadoop_hadoop-aws-3.3.4.jar,file:///home/***/.ivy2/jars/com.amazonaws_aws-java-sdk-bundle-1.12.262.jar,file:///home/***/.ivy2/jars/org.wildfly.openssl_wildfly-openssl-1.0.7.Final.jar)
+(spark.master,local[1])
+(spark.memory.fraction,0.5)
+(spark.repl.local.jars,file:///home/***/.ivy2/jars/org.apache.iceberg_iceberg-spark-runtime-3.5_2.12-1.6.1.jar,file:///home/***/.ivy2/jars/org.projectnessie.nessie-integrations_nessie-spark-extensions-3.5_2.12-0.95.0.jar,file:///home/***/.ivy2/jars/org.apache.hadoop_hadoop-aws-3.3.4.jar,file:///home/***/.ivy2/jars/com.amazonaws_aws-java-sdk-bundle-1.12.262.jar,file:///home/***/.ivy2/jars/org.wildfly.openssl_wildfly-openssl-1.0.7.Final.jar)
+(spark.sql.catalog.nessie,org.apache.iceberg.spark.SparkCatalog)
+(spark.sql.catalog.nessie.authentication.type,NONE)
+(spark.sql.catalog.nessie.catalog-impl,org.apache.iceberg.nessie.NessieCatalog)
+(spark.sql.catalog.nessie.ref,main)
+(spark.sql.catalog.nessie.uri,http://proyecto2-nessie:19120/api/v1)
+(spark.sql.catalog.nessie.warehouse,s3a://iceberg/)
+(spark.sql.extensions,org.apache.iceberg.spark.extensions.IcebergSparkSessionExtensions,org.projectnessie.spark.extensions.NessieSparkSessionExtensions)
+(spark.sql.iceberg.vectorization.enabled,false)
+(spark.sql.shuffle.partitions,2)
+(spark.submit.deployMode,client)
+(spark.submit.pyFiles,/home/***/.ivy2/jars/org.apache.iceberg_iceberg-spark-runtime-3.5_2.12-1.6.1.jar,/home/***/.ivy2/jars/org.projectnessie.nessie-integrations_nessie-spark-extensions-3.5_2.12-0.95.0.jar,/home/***/.ivy2/jars/org.apache.hadoop_hadoop-aws-3.3.4.jar,/home/***/.ivy2/jars/com.amazonaws_aws-java-sdk-bundle-1.12.262.jar,/home/***/.ivy2/jars/org.wildfly.openssl_wildfly-openssl-1.0.7.Final.jar)
+Classpath elements:
+file:///home/***/.ivy2/jars/org.apache.iceberg_iceberg-spark-runtime-3.5_2.12-1.6.1.jar
+file:///home/***/.ivy2/jars/org.projectnessie.nessie-integrations_nessie-spark-extensions-3.5_2.12-0.95.0.jar
+file:///home/***/.ivy2/jars/org.apache.hadoop_hadoop-aws-3.3.4.jar
+file:///home/***/.ivy2/jars/com.amazonaws_aws-java-sdk-bundle-1.12.262.jar
+file:///home/***/.ivy2/jars/org.wildfly.openssl_wildfly-openssl-1.0.7.Final.jar
+
+
+26/04/15 00:34:39 INFO SparkContext: Running Spark version 3.5.5
+26/04/15 00:34:39 INFO SparkContext: OS info Linux, 5.15.153.1-microsoft-standard-WSL2, amd64
+26/04/15 00:34:39 INFO SparkContext: Java version 17.0.18
+26/04/15 00:34:39 INFO ResourceUtils: ==============================================================
+26/04/15 00:34:39 INFO ResourceUtils: No custom resources configured for spark.driver.
+26/04/15 00:34:39 INFO ResourceUtils: ==============================================================
+26/04/15 00:34:39 INFO SparkContext: Submitted application: gold_agg
+26/04/15 00:34:39 INFO ResourceProfile: Default ResourceProfile created, executor resources: Map(cores -> name: cores, amount: 1, script: , vendor: , memory -> name: memory, amount: 1024, script: , vendor: , offHeap -> name: offHeap, amount: 0, script: , vendor: ), task resources: Map(cpus -> name: cpus, amount: 1.0)
+26/04/15 00:34:39 INFO ResourceProfile: Limiting resource is cpu
+26/04/15 00:34:39 INFO ResourceProfileManager: Added ResourceProfile id: 0
+26/04/15 00:34:39 INFO SecurityManager: Changing view acls to: ***
+26/04/15 00:34:39 INFO SecurityManager: Changing modify acls to: ***
+26/04/15 00:34:39 INFO SecurityManager: Changing view acls groups to: 
+26/04/15 00:34:39 INFO SecurityManager: Changing modify acls groups to: 
+26/04/15 00:34:39 INFO SecurityManager: SecurityManager: authentication disabled; ui acls disabled; users with view permissions: ***; groups with view permissions: EMPTY; users with modify permissions: ***; groups with modify permissions: EMPTY
+26/04/15 00:34:39 INFO Utils: Successfully started service 'sparkDriver' on port 42391.
+26/04/15 00:34:39 INFO SparkEnv: Registering MapOutputTracker
+26/04/15 00:34:39 INFO SparkEnv: Registering BlockManagerMaster
+26/04/15 00:34:39 INFO BlockManagerMasterEndpoint: Using org.apache.spark.storage.DefaultTopologyMapper for getting topology information
+26/04/15 00:34:39 INFO BlockManagerMasterEndpoint: BlockManagerMasterEndpoint up
+26/04/15 00:34:39 INFO SparkEnv: Registering BlockManagerMasterHeartbeat
+26/04/15 00:34:39 INFO DiskBlockManager: Created local directory at /tmp/blockmgr-9945d49d-53f1-4359-836f-78867a9dd0da
+26/04/15 00:34:39 INFO MemoryStore: MemoryStore started with capacity 600.0 MiB
+26/04/15 00:34:39 INFO SparkEnv: Registering OutputCommitCoordinator
+26/04/15 00:34:39 INFO JettyUtils: Start Jetty 0.0.0.0:4040 for SparkUI
+26/04/15 00:34:39 INFO Utils: Successfully started service 'SparkUI' on port 4040.
+26/04/15 00:34:40 INFO SparkContext: Added JAR file:///home/***/.ivy2/jars/org.apache.iceberg_iceberg-spark-runtime-3.5_2.12-1.6.1.jar at spark://853e52885e5c:42391/jars/org.apache.iceberg_iceberg-spark-runtime-3.5_2.12-1.6.1.jar with timestamp 1776213279126
+26/04/15 00:34:40 INFO SparkContext: Added JAR file:///home/***/.ivy2/jars/org.projectnessie.nessie-integrations_nessie-spark-extensions-3.5_2.12-0.95.0.jar at spark://853e52885e5c:42391/jars/org.projectnessie.nessie-integrations_nessie-spark-extensions-3.5_2.12-0.95.0.jar with timestamp 1776213279126
+26/04/15 00:34:40 INFO SparkContext: Added JAR file:///home/***/.ivy2/jars/org.apache.hadoop_hadoop-aws-3.3.4.jar at spark://853e52885e5c:42391/jars/org.apache.hadoop_hadoop-aws-3.3.4.jar with timestamp 1776213279126
+26/04/15 00:34:40 INFO SparkContext: Added JAR file:///home/***/.ivy2/jars/com.amazonaws_aws-java-sdk-bundle-1.12.262.jar at spark://853e52885e5c:42391/jars/com.amazonaws_aws-java-sdk-bundle-1.12.262.jar with timestamp 1776213279126
+26/04/15 00:34:40 INFO SparkContext: Added JAR file:///home/***/.ivy2/jars/org.wildfly.openssl_wildfly-openssl-1.0.7.Final.jar at spark://853e52885e5c:42391/jars/org.wildfly.openssl_wildfly-openssl-1.0.7.Final.jar with timestamp 1776213279126
+26/04/15 00:34:40 INFO SparkContext: Added file file:///home/***/.ivy2/jars/org.apache.iceberg_iceberg-spark-runtime-3.5_2.12-1.6.1.jar at file:///home/***/.ivy2/jars/org.apache.iceberg_iceberg-spark-runtime-3.5_2.12-1.6.1.jar with timestamp 1776213279126
+26/04/15 00:34:40 INFO Utils: Copying /home/***/.ivy2/jars/org.apache.iceberg_iceberg-spark-runtime-3.5_2.12-1.6.1.jar to /tmp/spark-c13e4bbc-9be4-4f2b-b383-3f8777679896/userFiles-7b1b0a43-3190-4919-8d1c-a3b71117503c/org.apache.iceberg_iceberg-spark-runtime-3.5_2.12-1.6.1.jar
+26/04/15 00:34:40 INFO SparkContext: Added file file:///home/***/.ivy2/jars/org.projectnessie.nessie-integrations_nessie-spark-extensions-3.5_2.12-0.95.0.jar at file:///home/***/.ivy2/jars/org.projectnessie.nessie-integrations_nessie-spark-extensions-3.5_2.12-0.95.0.jar with timestamp 1776213279126
+26/04/15 00:34:40 INFO Utils: Copying /home/***/.ivy2/jars/org.projectnessie.nessie-integrations_nessie-spark-extensions-3.5_2.12-0.95.0.jar to /tmp/spark-c13e4bbc-9be4-4f2b-b383-3f8777679896/userFiles-7b1b0a43-3190-4919-8d1c-a3b71117503c/org.projectnessie.nessie-integrations_nessie-spark-extensions-3.5_2.12-0.95.0.jar
+26/04/15 00:34:40 INFO SparkContext: Added file file:///home/***/.ivy2/jars/org.apache.hadoop_hadoop-aws-3.3.4.jar at file:///home/***/.ivy2/jars/org.apache.hadoop_hadoop-aws-3.3.4.jar with timestamp 1776213279126
+26/04/15 00:34:40 INFO Utils: Copying /home/***/.ivy2/jars/org.apache.hadoop_hadoop-aws-3.3.4.jar to /tmp/spark-c13e4bbc-9be4-4f2b-b383-3f8777679896/userFiles-7b1b0a43-3190-4919-8d1c-a3b71117503c/org.apache.hadoop_hadoop-aws-3.3.4.jar
+26/04/15 00:34:40 INFO SparkContext: Added file file:///home/***/.ivy2/jars/com.amazonaws_aws-java-sdk-bundle-1.12.262.jar at file:///home/***/.ivy2/jars/com.amazonaws_aws-java-sdk-bundle-1.12.262.jar with timestamp 1776213279126
+26/04/15 00:34:40 INFO Utils: Copying /home/***/.ivy2/jars/com.amazonaws_aws-java-sdk-bundle-1.12.262.jar to /tmp/spark-c13e4bbc-9be4-4f2b-b383-3f8777679896/userFiles-7b1b0a43-3190-4919-8d1c-a3b71117503c/com.amazonaws_aws-java-sdk-bundle-1.12.262.jar
+26/04/15 00:34:40 INFO SparkContext: Added file file:///home/***/.ivy2/jars/org.wildfly.openssl_wildfly-openssl-1.0.7.Final.jar at file:///home/***/.ivy2/jars/org.wildfly.openssl_wildfly-openssl-1.0.7.Final.jar with timestamp 1776213279126
+26/04/15 00:34:40 INFO Utils: Copying /home/***/.ivy2/jars/org.wildfly.openssl_wildfly-openssl-1.0.7.Final.jar to /tmp/spark-c13e4bbc-9be4-4f2b-b383-3f8777679896/userFiles-7b1b0a43-3190-4919-8d1c-a3b71117503c/org.wildfly.openssl_wildfly-openssl-1.0.7.Final.jar
+26/04/15 00:34:40 INFO Executor: Starting executor ID driver on host 853e52885e5c
+26/04/15 00:34:40 INFO Executor: OS info Linux, 5.15.153.1-microsoft-standard-WSL2, amd64
+26/04/15 00:34:40 INFO Executor: Java version 17.0.18
+26/04/15 00:34:40 INFO Executor: Starting executor with user classpath (userClassPathFirst = false): ''
+26/04/15 00:34:40 INFO Executor: Created or updated repl class loader org.apache.spark.util.MutableURLClassLoader@1c114e78 for default.
+26/04/15 00:34:40 INFO Executor: Fetching file:///home/***/.ivy2/jars/org.projectnessie.nessie-integrations_nessie-spark-extensions-3.5_2.12-0.95.0.jar with timestamp 1776213279126
+26/04/15 00:34:40 INFO Utils: /home/***/.ivy2/jars/org.projectnessie.nessie-integrations_nessie-spark-extensions-3.5_2.12-0.95.0.jar has been previously copied to /tmp/spark-c13e4bbc-9be4-4f2b-b383-3f8777679896/userFiles-7b1b0a43-3190-4919-8d1c-a3b71117503c/org.projectnessie.nessie-integrations_nessie-spark-extensions-3.5_2.12-0.95.0.jar
+26/04/15 00:34:40 INFO Executor: Fetching file:///home/***/.ivy2/jars/org.apache.hadoop_hadoop-aws-3.3.4.jar with timestamp 1776213279126
+26/04/15 00:34:40 INFO Utils: /home/***/.ivy2/jars/org.apache.hadoop_hadoop-aws-3.3.4.jar has been previously copied to /tmp/spark-c13e4bbc-9be4-4f2b-b383-3f8777679896/userFiles-7b1b0a43-3190-4919-8d1c-a3b71117503c/org.apache.hadoop_hadoop-aws-3.3.4.jar
+26/04/15 00:34:40 INFO Executor: Fetching file:///home/***/.ivy2/jars/org.apache.iceberg_iceberg-spark-runtime-3.5_2.12-1.6.1.jar with timestamp 1776213279126
+26/04/15 00:34:40 INFO Utils: /home/***/.ivy2/jars/org.apache.iceberg_iceberg-spark-runtime-3.5_2.12-1.6.1.jar has been previously copied to /tmp/spark-c13e4bbc-9be4-4f2b-b383-3f8777679896/userFiles-7b1b0a43-3190-4919-8d1c-a3b71117503c/org.apache.iceberg_iceberg-spark-runtime-3.5_2.12-1.6.1.jar
+26/04/15 00:34:40 INFO Executor: Fetching file:///home/***/.ivy2/jars/org.wildfly.openssl_wildfly-openssl-1.0.7.Final.jar with timestamp 1776213279126
+26/04/15 00:34:40 INFO Utils: /home/***/.ivy2/jars/org.wildfly.openssl_wildfly-openssl-1.0.7.Final.jar has been previously copied to /tmp/spark-c13e4bbc-9be4-4f2b-b383-3f8777679896/userFiles-7b1b0a43-3190-4919-8d1c-a3b71117503c/org.wildfly.openssl_wildfly-openssl-1.0.7.Final.jar
+26/04/15 00:34:40 INFO Executor: Fetching file:///home/***/.ivy2/jars/com.amazonaws_aws-java-sdk-bundle-1.12.262.jar with timestamp 1776213279126
+26/04/15 00:34:40 INFO Utils: /home/***/.ivy2/jars/com.amazonaws_aws-java-sdk-bundle-1.12.262.jar has been previously copied to /tmp/spark-c13e4bbc-9be4-4f2b-b383-3f8777679896/userFiles-7b1b0a43-3190-4919-8d1c-a3b71117503c/com.amazonaws_aws-java-sdk-bundle-1.12.262.jar
+26/04/15 00:34:40 INFO Executor: Fetching spark://853e52885e5c:42391/jars/org.projectnessie.nessie-integrations_nessie-spark-extensions-3.5_2.12-0.95.0.jar with timestamp 1776213279126
+26/04/15 00:34:40 INFO TransportClientFactory: Successfully created connection to 853e52885e5c/172.19.0.5:42391 after 32 ms (0 ms spent in bootstraps)
+26/04/15 00:34:40 INFO Utils: Fetching spark://853e52885e5c:42391/jars/org.projectnessie.nessie-integrations_nessie-spark-extensions-3.5_2.12-0.95.0.jar to /tmp/spark-c13e4bbc-9be4-4f2b-b383-3f8777679896/userFiles-7b1b0a43-3190-4919-8d1c-a3b71117503c/fetchFileTemp14724480838764291352.tmp
+26/04/15 00:34:40 INFO Utils: /tmp/spark-c13e4bbc-9be4-4f2b-b383-3f8777679896/userFiles-7b1b0a43-3190-4919-8d1c-a3b71117503c/fetchFileTemp14724480838764291352.tmp has been previously copied to /tmp/spark-c13e4bbc-9be4-4f2b-b383-3f8777679896/userFiles-7b1b0a43-3190-4919-8d1c-a3b71117503c/org.projectnessie.nessie-integrations_nessie-spark-extensions-3.5_2.12-0.95.0.jar
+26/04/15 00:34:40 INFO Executor: Adding file:/tmp/spark-c13e4bbc-9be4-4f2b-b383-3f8777679896/userFiles-7b1b0a43-3190-4919-8d1c-a3b71117503c/org.projectnessie.nessie-integrations_nessie-spark-extensions-3.5_2.12-0.95.0.jar to class loader default
+26/04/15 00:34:40 INFO Executor: Fetching spark://853e52885e5c:42391/jars/com.amazonaws_aws-java-sdk-bundle-1.12.262.jar with timestamp 1776213279126
+26/04/15 00:34:40 INFO Utils: Fetching spark://853e52885e5c:42391/jars/com.amazonaws_aws-java-sdk-bundle-1.12.262.jar to /tmp/spark-c13e4bbc-9be4-4f2b-b383-3f8777679896/userFiles-7b1b0a43-3190-4919-8d1c-a3b71117503c/fetchFileTemp1624546032286933404.tmp
+26/04/15 00:34:42 INFO Utils: /tmp/spark-c13e4bbc-9be4-4f2b-b383-3f8777679896/userFiles-7b1b0a43-3190-4919-8d1c-a3b71117503c/fetchFileTemp1624546032286933404.tmp has been previously copied to /tmp/spark-c13e4bbc-9be4-4f2b-b383-3f8777679896/userFiles-7b1b0a43-3190-4919-8d1c-a3b71117503c/com.amazonaws_aws-java-sdk-bundle-1.12.262.jar
+26/04/15 00:34:53 INFO Executor: Told to re-register on heartbeat
+26/04/15 00:34:53 INFO BlockManager: BlockManager null re-registering with master
+26/04/15 00:34:53 INFO BlockManagerMaster: Registering BlockManager null
+26/04/15 00:34:53 ERROR Inbox: Ignoring error
+java.lang.NullPointerException: Cannot invoke "org.apache.spark.storage.BlockManagerId.executorId()" because "idWithoutTopologyInfo" is null
+	at org.apache.spark.storage.BlockManagerMasterEndpoint.org$apache$spark$storage$BlockManagerMasterEndpoint$$register(BlockManagerMasterEndpoint.scala:677)
+	at org.apache.spark.storage.BlockManagerMasterEndpoint$$anonfun$receiveAndReply$1.applyOrElse(BlockManagerMasterEndpoint.scala:133)
+	at org.apache.spark.rpc.netty.Inbox.$anonfun$process$1(Inbox.scala:103)
+	at org.apache.spark.rpc.netty.Inbox.safelyCall(Inbox.scala:213)
+	at org.apache.spark.rpc.netty.Inbox.process(Inbox.scala:100)
+	at org.apache.spark.rpc.netty.MessageLoop.org$apache$spark$rpc$netty$MessageLoop$$receiveLoop(MessageLoop.scala:75)
+	at org.apache.spark.rpc.netty.MessageLoop$$anon$1.run(MessageLoop.scala:41)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.base/java.lang.Thread.run(Thread.java:840)
+26/04/15 00:34:53 WARN Executor: Issue communicating with driver in heartbeater
+org.apache.spark.SparkException: Exception thrown in awaitResult: 
+	at org.apache.spark.util.SparkThreadUtils$.awaitResult(SparkThreadUtils.scala:56)
+	at org.apache.spark.util.ThreadUtils$.awaitResult(ThreadUtils.scala:310)
+	at org.apache.spark.rpc.RpcTimeout.awaitResult(RpcTimeout.scala:75)
+	at org.apache.spark.rpc.RpcEndpointRef.askSync(RpcEndpointRef.scala:101)
+	at org.apache.spark.rpc.RpcEndpointRef.askSync(RpcEndpointRef.scala:85)
+	at org.apache.spark.storage.BlockManagerMaster.registerBlockManager(BlockManagerMaster.scala:80)
+	at org.apache.spark.storage.BlockManager.reregister(BlockManager.scala:642)
+	at org.apache.spark.executor.Executor.reportHeartBeat(Executor.scala:1223)
+	at org.apache.spark.executor.Executor.$anonfun$heartbeater$1(Executor.scala:295)
+	at scala.runtime.java8.JFunction0$mcV$sp.apply(JFunction0$mcV$sp.java:23)
+	at org.apache.spark.util.Utils$.logUncaughtExceptions(Utils.scala:1928)
+	at org.apache.spark.Heartbeater$$anon$1.run(Heartbeater.scala:46)
+	at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:539)
+	at java.base/java.util.concurrent.FutureTask.runAndReset(FutureTask.java:305)
+	at java.base/java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:305)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.base/java.lang.Thread.run(Thread.java:840)
+Caused by: java.lang.NullPointerException: Cannot invoke "org.apache.spark.storage.BlockManagerId.executorId()" because "idWithoutTopologyInfo" is null
+	at org.apache.spark.storage.BlockManagerMasterEndpoint.org$apache$spark$storage$BlockManagerMasterEndpoint$$register(BlockManagerMasterEndpoint.scala:677)
+	at org.apache.spark.storage.BlockManagerMasterEndpoint$$anonfun$receiveAndReply$1.applyOrElse(BlockManagerMasterEndpoint.scala:133)
+	at org.apache.spark.rpc.netty.Inbox.$anonfun$process$1(Inbox.scala:103)
+	at org.apache.spark.rpc.netty.Inbox.safelyCall(Inbox.scala:213)
+	at org.apache.spark.rpc.netty.Inbox.process(Inbox.scala:100)
+	at org.apache.spark.rpc.netty.MessageLoop.org$apache$spark$rpc$netty$MessageLoop$$receiveLoop(MessageLoop.scala:75)
+	at org.apache.spark.rpc.netty.MessageLoop$$anon$1.run(MessageLoop.scala:41)
+	... 3 more
+26/04/15 00:34:54 INFO Executor: Adding file:/tmp/spark-c13e4bbc-9be4-4f2b-b383-3f8777679896/userFiles-7b1b0a43-3190-4919-8d1c-a3b71117503c/com.amazonaws_aws-java-sdk-bundle-1.12.262.jar to class loader default
+26/04/15 00:34:54 INFO Executor: Fetching spark://853e52885e5c:42391/jars/org.wildfly.openssl_wildfly-openssl-1.0.7.Final.jar with timestamp 1776213279126
+26/04/15 00:34:54 INFO Utils: Fetching spark://853e52885e5c:42391/jars/org.wildfly.openssl_wildfly-openssl-1.0.7.Final.jar to /tmp/spark-c13e4bbc-9be4-4f2b-b383-3f8777679896/userFiles-7b1b0a43-3190-4919-8d1c-a3b71117503c/fetchFileTemp11711810344997202707.tmp
+26/04/15 00:34:54 INFO Utils: /tmp/spark-c13e4bbc-9be4-4f2b-b383-3f8777679896/userFiles-7b1b0a43-3190-4919-8d1c-a3b71117503c/fetchFileTemp11711810344997202707.tmp has been previously copied to /tmp/spark-c13e4bbc-9be4-4f2b-b383-3f8777679896/userFiles-7b1b0a43-3190-4919-8d1c-a3b71117503c/org.wildfly.openssl_wildfly-openssl-1.0.7.Final.jar
+26/04/15 00:34:54 INFO Executor: Adding file:/tmp/spark-c13e4bbc-9be4-4f2b-b383-3f8777679896/userFiles-7b1b0a43-3190-4919-8d1c-a3b71117503c/org.wildfly.openssl_wildfly-openssl-1.0.7.Final.jar to class loader default
+26/04/15 00:34:54 INFO Executor: Fetching spark://853e52885e5c:42391/jars/org.apache.iceberg_iceberg-spark-runtime-3.5_2.12-1.6.1.jar with timestamp 1776213279126
+26/04/15 00:34:54 INFO Utils: Fetching spark://853e52885e5c:42391/jars/org.apache.iceberg_iceberg-spark-runtime-3.5_2.12-1.6.1.jar to /tmp/spark-c13e4bbc-9be4-4f2b-b383-3f8777679896/userFiles-7b1b0a43-3190-4919-8d1c-a3b71117503c/fetchFileTemp16481885984546942515.tmp
+26/04/15 00:34:54 INFO Utils: /tmp/spark-c13e4bbc-9be4-4f2b-b383-3f8777679896/userFiles-7b1b0a43-3190-4919-8d1c-a3b71117503c/fetchFileTemp16481885984546942515.tmp has been previously copied to /tmp/spark-c13e4bbc-9be4-4f2b-b383-3f8777679896/userFiles-7b1b0a43-3190-4919-8d1c-a3b71117503c/org.apache.iceberg_iceberg-spark-runtime-3.5_2.12-1.6.1.jar
+26/04/15 00:34:55 INFO Executor: Adding file:/tmp/spark-c13e4bbc-9be4-4f2b-b383-3f8777679896/userFiles-7b1b0a43-3190-4919-8d1c-a3b71117503c/org.apache.iceberg_iceberg-spark-runtime-3.5_2.12-1.6.1.jar to class loader default
+26/04/15 00:34:55 INFO Executor: Fetching spark://853e52885e5c:42391/jars/org.apache.hadoop_hadoop-aws-3.3.4.jar with timestamp 1776213279126
+26/04/15 00:34:55 INFO Utils: Fetching spark://853e52885e5c:42391/jars/org.apache.hadoop_hadoop-aws-3.3.4.jar to /tmp/spark-c13e4bbc-9be4-4f2b-b383-3f8777679896/userFiles-7b1b0a43-3190-4919-8d1c-a3b71117503c/fetchFileTemp2114790644010042346.tmp
+26/04/15 00:34:55 INFO Utils: /tmp/spark-c13e4bbc-9be4-4f2b-b383-3f8777679896/userFiles-7b1b0a43-3190-4919-8d1c-a3b71117503c/fetchFileTemp2114790644010042346.tmp has been previously copied to /tmp/spark-c13e4bbc-9be4-4f2b-b383-3f8777679896/userFiles-7b1b0a43-3190-4919-8d1c-a3b71117503c/org.apache.hadoop_hadoop-aws-3.3.4.jar
+26/04/15 00:34:55 INFO Executor: Adding file:/tmp/spark-c13e4bbc-9be4-4f2b-b383-3f8777679896/userFiles-7b1b0a43-3190-4919-8d1c-a3b71117503c/org.apache.hadoop_hadoop-aws-3.3.4.jar to class loader default
+26/04/15 00:34:55 INFO Utils: Successfully started service 'org.apache.spark.network.netty.NettyBlockTransferService' on port 34083.
+26/04/15 00:34:55 INFO NettyBlockTransferService: Server created on 853e52885e5c 0.0.0.0:34083
+26/04/15 00:34:55 INFO BlockManager: Using org.apache.spark.storage.RandomBlockReplicationPolicy for block replication policy
+26/04/15 00:34:55 INFO BlockManagerMaster: Registering BlockManager BlockManagerId(driver, 853e52885e5c, 34083, None)
+26/04/15 00:34:55 INFO BlockManagerMasterEndpoint: Registering block manager 853e52885e5c:34083 with 600.0 MiB RAM, BlockManagerId(driver, 853e52885e5c, 34083, None)
+26/04/15 00:34:55 INFO BlockManagerMaster: Registered BlockManager BlockManagerId(driver, 853e52885e5c, 34083, None)
+26/04/15 00:34:55 INFO BlockManager: Initialized BlockManager: BlockManagerId(driver, 853e52885e5c, 34083, None)
+26/04/15 00:34:56 INFO SharedState: Setting hive.metastore.warehouse.dir ('null') to the value of spark.sql.warehouse.dir.
+26/04/15 00:34:56 INFO SharedState: Warehouse path is 'file:/opt/***/spark-warehouse'.
+26/04/15 00:34:57 INFO CatalogUtil: Loading custom FileIO implementation: org.apache.iceberg.hadoop.HadoopFileIO
+26/04/15 00:34:59 INFO BaseMetastoreTableOperations: Refreshing table metadata from new version: s3a://iceberg/silver/post_hist_086d9dd5-09ef-4831-b8b6-aab1d6fda2d1/metadata/00001-bc4e4017-f071-49e1-ba78-265145f2f6a2.metadata.json
+26/04/15 00:34:59 WARN MetricsConfig: Cannot locate configuration: tried hadoop-metrics2-s3a-file-system.properties,hadoop-metrics2.properties
+26/04/15 00:34:59 INFO MetricsSystemImpl: Scheduled Metric snapshot period at 10 second(s).
+26/04/15 00:34:59 INFO MetricsSystemImpl: s3a-file-system metrics system started
+26/04/15 00:35:01 INFO NessieUtil: loadTableMetadata for 'silver.post_hist' from location 's3a://iceberg/silver/post_hist_086d9dd5-09ef-4831-b8b6-aab1d6fda2d1/metadata/00001-bc4e4017-f071-49e1-ba78-265145f2f6a2.metadata.json' at 'Branch{name=main, metadata=null, hash=c0a74090283b8dabc058cad5c56132de3fa44baf6190277b82bcee04938c5a4c}'
+26/04/15 00:35:01 INFO BaseMetastoreCatalog: Table loaded by catalog: nessie.silver.post_hist
+26/04/15 00:35:01 INFO BaseMetastoreTableOperations: Refreshing table metadata from new version: s3a://iceberg/silver/users_hist_1f961856-8934-4255-b9ad-a275c5f9b99a/metadata/00001-d8e88899-045c-4a6b-b646-87705706fc1c.gz.metadata.json
+26/04/15 00:35:01 INFO NessieUtil: loadTableMetadata for 'silver.users_hist' from location 's3a://iceberg/silver/users_hist_1f961856-8934-4255-b9ad-a275c5f9b99a/metadata/00001-d8e88899-045c-4a6b-b646-87705706fc1c.gz.metadata.json' at 'Branch{name=main, metadata=null, hash=c0a74090283b8dabc058cad5c56132de3fa44baf6190277b82bcee04938c5a4c}'
+26/04/15 00:35:01 INFO BaseMetastoreCatalog: Table loaded by catalog: nessie.silver.users_hist
+26/04/15 00:35:01 INFO BaseMetastoreTableOperations: Refreshing table metadata from new version: s3a://iceberg/gold/cant_post_x_user_hist_429196b2-8a09-4433-aec3-acb5f118ff28/metadata/00000-2f3e1a30-2f2a-491e-bb86-080c9a781827.gz.metadata.json
+26/04/15 00:35:01 INFO NessieUtil: loadTableMetadata for 'gold.cant_post_x_user_hist' from location 's3a://iceberg/gold/cant_post_x_user_hist_429196b2-8a09-4433-aec3-acb5f118ff28/metadata/00000-2f3e1a30-2f2a-491e-bb86-080c9a781827.gz.metadata.json' at 'Branch{name=main, metadata=null, hash=c0a74090283b8dabc058cad5c56132de3fa44baf6190277b82bcee04938c5a4c}'
+26/04/15 00:35:01 INFO BaseMetastoreCatalog: Table loaded by catalog: nessie.gold.cant_post_x_user_hist
+26/04/15 00:35:03 INFO CodeGenerator: Code generated in 357.849238 ms
+26/04/15 00:35:04 INFO V2ScanRelationPushDown: 
+Pushing operators to nessie.silver.post_hist
+Pushed Filters: OwnerUserId IS NOT NULL
+Post-Scan Filters: isnotnull(OwnerUserId#15L)
+         
+26/04/15 00:35:04 INFO V2ScanRelationPushDown: 
+Pushing operators to nessie.silver.users_hist
+Pushed Filters: Id IS NOT NULL
+Post-Scan Filters: isnotnull(Id#33L)
+         
+26/04/15 00:35:04 INFO V2ScanRelationPushDown: 
+Output: Id#8L, Score#12L, ViewCount#13L, OwnerUserId#15L, anio#30
+         
+26/04/15 00:35:04 INFO V2ScanRelationPushDown: 
+Output: Id#33L, DisplayName#36
+         
+26/04/15 00:35:04 INFO SnapshotScan: Scanning table nessie.silver.post_hist snapshot 7706785561127122128 created at 2026-04-15T00:03:43.719+00:00 with filter OwnerUserId IS NOT NULL
+26/04/15 00:35:05 INFO BaseDistributedDataScan: Planning file tasks locally for table nessie.silver.post_hist
+26/04/15 00:35:05 INFO SparkPartitioningAwareScan: Reporting UnknownPartitioning with 2 partition(s) for table nessie.silver.post_hist
+26/04/15 00:35:05 INFO SnapshotScan: Scanning table nessie.silver.users_hist snapshot 356736919587650702 created at 2026-04-14T23:39:11.491+00:00 with filter Id IS NOT NULL
+26/04/15 00:35:05 INFO BaseDistributedDataScan: Planning file tasks locally for table nessie.silver.users_hist
+26/04/15 00:35:05 INFO SparkPartitioningAwareScan: Reporting UnknownPartitioning with 1 partition(s) for table nessie.silver.users_hist
+26/04/15 00:35:05 INFO GroupBasedRowLevelOperationScanPlanning: 
+Pushing operators to nessie.gold.cant_post_x_user_hist
+Pushed filters: 
+Filters evaluated on data source side: 
+Filters evaluated on Spark side: 
+Output: user_id#103L, display_name#104, anio#105, cant_posts#106L, total_score#107L, avg_score#108, total_views#109L, fecha_cargue#110, merge_key#111, _file#114
+         
+26/04/15 00:35:05 INFO V2ScanRelationPushDown: 
+Pushing operators to nessie.silver.post_hist
+Pushed Filters: OwnerUserId IS NOT NULL
+Post-Scan Filters: isnotnull(OwnerUserId#15L)
+         
+26/04/15 00:35:05 INFO V2ScanRelationPushDown: 
+Pushing operators to nessie.silver.users_hist
+Pushed Filters: Id IS NOT NULL
+Post-Scan Filters: isnotnull(Id#33L)
+         
+26/04/15 00:35:05 INFO V2ScanRelationPushDown: 
+Output: Id#8L, Score#12L, ViewCount#13L, OwnerUserId#15L, anio#30
+         
+26/04/15 00:35:05 INFO V2ScanRelationPushDown: 
+Output: Id#33L, DisplayName#36
+         
+26/04/15 00:35:05 INFO SnapshotScan: Scanning table nessie.gold.cant_post_x_user_hist snapshot 8390557212787572580 created at 2026-04-15T00:09:53.559+00:00 with filter true
+26/04/15 00:35:05 INFO SparkPartitioningAwareScan: Reporting UnknownPartitioning with 0 partition(s) for table nessie.gold.cant_post_x_user_hist
+26/04/15 00:35:05 INFO SnapshotScan: Scanning table nessie.silver.post_hist snapshot 7706785561127122128 created at 2026-04-15T00:03:43.719+00:00 with filter OwnerUserId IS NOT NULL
+26/04/15 00:35:05 INFO BaseDistributedDataScan: Planning file tasks locally for table nessie.silver.post_hist
+26/04/15 00:35:05 INFO SparkPartitioningAwareScan: Reporting UnknownPartitioning with 2 partition(s) for table nessie.silver.post_hist
+26/04/15 00:35:05 INFO SnapshotScan: Scanning table nessie.silver.users_hist snapshot 356736919587650702 created at 2026-04-14T23:39:11.491+00:00 with filter Id IS NOT NULL
+26/04/15 00:35:05 INFO BaseDistributedDataScan: Planning file tasks locally for table nessie.silver.users_hist
+26/04/15 00:35:05 INFO SparkPartitioningAwareScan: Reporting UnknownPartitioning with 1 partition(s) for table nessie.silver.users_hist
+26/04/15 00:35:05 INFO SparkWrite: Requesting 0 bytes advisory partition size for table nessie.gold.cant_post_x_user_hist
+26/04/15 00:35:05 INFO SparkWrite: Requesting UnspecifiedDistribution as write distribution for table nessie.gold.cant_post_x_user_hist
+26/04/15 00:35:05 INFO SparkWrite: Requesting [] as write ordering for table nessie.gold.cant_post_x_user_hist
+26/04/15 00:35:05 INFO V2ScanRelationPushDown: 
+Pushing operators to nessie.gold.cant_post_x_user_hist
+Pushed Filters: merge_key IS NOT NULL
+Post-Scan Filters: isnotnull(merge_key#173)
+         
+26/04/15 00:35:05 INFO V2ScanRelationPushDown: 
+Output: merge_key#173, _file#174
+         
+26/04/15 00:35:05 INFO SnapshotScan: Scanning table nessie.gold.cant_post_x_user_hist snapshot 8390557212787572580 created at 2026-04-15T00:09:53.559+00:00 with filter merge_key IS NOT NULL
+26/04/15 00:35:05 INFO BaseDistributedDataScan: Planning file tasks locally for table nessie.gold.cant_post_x_user_hist
+26/04/15 00:35:05 INFO SparkPartitioningAwareScan: Reporting UnknownPartitioning with 0 partition(s) for table nessie.gold.cant_post_x_user_hist
+26/04/15 00:35:05 INFO SparkPartitioningAwareScan: Reporting UnknownPartitioning with 2 partition(s) for table nessie.silver.post_hist
+26/04/15 00:35:05 INFO SparkPartitioningAwareScan: Reporting UnknownPartitioning with 1 partition(s) for table nessie.silver.users_hist
+26/04/15 00:35:06 INFO MemoryStore: Block broadcast_0 stored as values in memory (estimated size 32.0 KiB, free 600.0 MiB)
+26/04/15 00:35:06 INFO MemoryStore: Block broadcast_0_piece0 stored as bytes in memory (estimated size 30.8 KiB, free 599.9 MiB)
+26/04/15 00:35:06 INFO BlockManagerInfo: Added broadcast_0_piece0 in memory on 853e52885e5c:34083 (size: 30.8 KiB, free: 600.0 MiB)
+26/04/15 00:35:06 INFO SparkContext: Created broadcast 0 from broadcast at SparkBatch.java:79
+26/04/15 00:35:06 INFO MemoryStore: Block broadcast_1 stored as values in memory (estimated size 32.0 KiB, free 599.9 MiB)
+26/04/15 00:35:06 INFO MemoryStore: Block broadcast_1_piece0 stored as bytes in memory (estimated size 31.1 KiB, free 599.9 MiB)
+26/04/15 00:35:06 INFO BlockManagerInfo: Added broadcast_1_piece0 in memory on 853e52885e5c:34083 (size: 31.1 KiB, free: 599.9 MiB)
+26/04/15 00:35:06 INFO SparkContext: Created broadcast 1 from broadcast at SparkBatch.java:79
+26/04/15 00:35:06 INFO MemoryStore: Block broadcast_2 stored as values in memory (estimated size 32.0 KiB, free 599.8 MiB)
+26/04/15 00:35:06 INFO MemoryStore: Block broadcast_2_piece0 stored as bytes in memory (estimated size 30.8 KiB, free 599.8 MiB)
+26/04/15 00:35:06 INFO BlockManagerInfo: Added broadcast_2_piece0 in memory on 853e52885e5c:34083 (size: 30.8 KiB, free: 599.9 MiB)
+26/04/15 00:35:06 INFO SparkContext: Created broadcast 2 from broadcast at SparkBatch.java:79
+26/04/15 00:35:06 INFO BlockManagerInfo: Removed broadcast_0_piece0 on 853e52885e5c:34083 in memory (size: 30.8 KiB, free: 599.9 MiB)
+26/04/15 00:35:06 INFO MemoryStore: Block broadcast_3 stored as values in memory (estimated size 32.0 KiB, free 599.8 MiB)
+26/04/15 00:35:06 INFO MemoryStore: Block broadcast_3_piece0 stored as bytes in memory (estimated size 30.7 KiB, free 599.8 MiB)
+26/04/15 00:35:06 INFO BlockManagerInfo: Added broadcast_3_piece0 in memory on 853e52885e5c:34083 (size: 30.7 KiB, free: 599.9 MiB)
+26/04/15 00:35:06 INFO SparkContext: Created broadcast 3 from broadcast at SparkBatch.java:79
+26/04/15 00:35:06 INFO MemoryStore: Block broadcast_4 stored as values in memory (estimated size 32.0 KiB, free 599.8 MiB)
+26/04/15 00:35:06 INFO MemoryStore: Block broadcast_4_piece0 stored as bytes in memory (estimated size 31.1 KiB, free 599.8 MiB)
+26/04/15 00:35:06 INFO BlockManagerInfo: Removed broadcast_3_piece0 on 853e52885e5c:34083 in memory (size: 30.7 KiB, free: 599.9 MiB)
+26/04/15 00:35:06 INFO BlockManagerInfo: Added broadcast_4_piece0 in memory on 853e52885e5c:34083 (size: 31.1 KiB, free: 599.9 MiB)
+26/04/15 00:35:06 INFO SparkContext: Created broadcast 4 from broadcast at SparkBatch.java:79
+26/04/15 00:35:06 INFO MemoryStore: Block broadcast_5 stored as values in memory (estimated size 32.0 KiB, free 599.8 MiB)
+26/04/15 00:35:06 INFO MemoryStore: Block broadcast_5_piece0 stored as bytes in memory (estimated size 30.8 KiB, free 599.8 MiB)
+26/04/15 00:35:06 INFO BlockManagerInfo: Added broadcast_5_piece0 in memory on 853e52885e5c:34083 (size: 30.8 KiB, free: 599.9 MiB)
+26/04/15 00:35:06 INFO SparkContext: Created broadcast 5 from broadcast at SparkBatch.java:79
+26/04/15 00:35:06 INFO MemoryStore: Block broadcast_6 stored as values in memory (estimated size 32.0 KiB, free 599.7 MiB)
+26/04/15 00:35:06 INFO MemoryStore: Block broadcast_6_piece0 stored as bytes in memory (estimated size 30.8 KiB, free 599.7 MiB)
+26/04/15 00:35:06 INFO BlockManagerInfo: Added broadcast_6_piece0 in memory on 853e52885e5c:34083 (size: 30.8 KiB, free: 599.8 MiB)
+26/04/15 00:35:06 INFO SparkContext: Created broadcast 6 from broadcast at SparkBatch.java:79
+26/04/15 00:35:06 INFO MemoryStore: Block broadcast_7 stored as values in memory (estimated size 32.0 KiB, free 599.7 MiB)
+26/04/15 00:35:06 INFO MemoryStore: Block broadcast_7_piece0 stored as bytes in memory (estimated size 31.1 KiB, free 599.6 MiB)
+26/04/15 00:35:06 INFO BlockManagerInfo: Added broadcast_7_piece0 in memory on 853e52885e5c:34083 (size: 31.1 KiB, free: 599.8 MiB)
+26/04/15 00:35:06 INFO SparkContext: Created broadcast 7 from broadcast at SparkBatch.java:79
+26/04/15 00:35:06 INFO MemoryStore: Block broadcast_8 stored as values in memory (estimated size 32.0 KiB, free 599.6 MiB)
+26/04/15 00:35:06 INFO MemoryStore: Block broadcast_8_piece0 stored as bytes in memory (estimated size 30.8 KiB, free 599.6 MiB)
+26/04/15 00:35:06 INFO BlockManagerInfo: Added broadcast_8_piece0 in memory on 853e52885e5c:34083 (size: 30.8 KiB, free: 599.8 MiB)
+26/04/15 00:35:06 INFO SparkContext: Created broadcast 8 from broadcast at SparkBatch.java:79
+26/04/15 00:35:06 INFO CodeGenerator: Code generated in 25.876116 ms
+26/04/15 00:35:06 INFO CodeGenerator: Code generated in 29.807427 ms
+26/04/15 00:35:06 INFO CodeGenerator: Code generated in 42.792288 ms
+26/04/15 00:35:06 INFO MemoryStore: Block broadcast_9 stored as values in memory (estimated size 40.0 B, free 599.6 MiB)
+26/04/15 00:35:06 INFO MemoryStore: Block broadcast_9_piece0 stored as bytes in memory (estimated size 86.0 B, free 599.6 MiB)
+26/04/15 00:35:06 INFO BlockManagerInfo: Added broadcast_9_piece0 in memory on 853e52885e5c:34083 (size: 86.0 B, free: 599.8 MiB)
+26/04/15 00:35:06 INFO SparkContext: Created broadcast 9 from sql at NativeMethodAccessorImpl.java:0
+26/04/15 00:35:06 INFO SparkCopyOnWriteScan: 0 of 0 task(s) for table nessie.gold.cant_post_x_user_hist matched runtime file filter with 0 location(s)
+26/04/15 00:35:06 INFO MemoryStore: Block broadcast_10 stored as values in memory (estimated size 32.0 KiB, free 599.5 MiB)
+26/04/15 00:35:07 INFO MemoryStore: Block broadcast_10_piece0 stored as bytes in memory (estimated size 30.7 KiB, free 599.5 MiB)
+26/04/15 00:35:07 INFO BlockManagerInfo: Added broadcast_10_piece0 in memory on 853e52885e5c:34083 (size: 30.7 KiB, free: 599.8 MiB)
+26/04/15 00:35:07 INFO SparkContext: Created broadcast 10 from broadcast at SparkBatch.java:79
+26/04/15 00:35:07 INFO SparkContext: Starting job: $anonfun$withThreadLocalCaptured$1 at FutureTask.java:264
+26/04/15 00:35:07 INFO DAGScheduler: Got job 0 ($anonfun$withThreadLocalCaptured$1 at FutureTask.java:264) with 1 output partitions
+26/04/15 00:35:07 INFO MemoryStore: Block broadcast_11 stored as values in memory (estimated size 32.0 KiB, free 599.5 MiB)
+26/04/15 00:35:07 INFO DAGScheduler: Final stage: ResultStage 0 ($anonfun$withThreadLocalCaptured$1 at FutureTask.java:264)
+26/04/15 00:35:07 INFO DAGScheduler: Parents of final stage: List()
+26/04/15 00:35:07 INFO DAGScheduler: Missing parents: List()
+26/04/15 00:35:07 INFO MemoryStore: Block broadcast_11_piece0 stored as bytes in memory (estimated size 31.1 KiB, free 599.4 MiB)
+26/04/15 00:35:07 INFO BlockManagerInfo: Added broadcast_11_piece0 in memory on 853e52885e5c:34083 (size: 31.1 KiB, free: 599.7 MiB)
+26/04/15 00:35:07 INFO SparkContext: Created broadcast 11 from broadcast at SparkBatch.java:79
+26/04/15 00:35:07 INFO DAGScheduler: Submitting ResultStage 0 (MapPartitionsRDD[6] at $anonfun$withThreadLocalCaptured$1 at FutureTask.java:264), which has no missing parents
+26/04/15 00:35:07 INFO MemoryStore: Block broadcast_12 stored as values in memory (estimated size 12.2 KiB, free 599.4 MiB)
+26/04/15 00:35:07 INFO MemoryStore: Block broadcast_12_piece0 stored as bytes in memory (estimated size 5.2 KiB, free 599.4 MiB)
+26/04/15 00:35:07 INFO BlockManagerInfo: Added broadcast_12_piece0 in memory on 853e52885e5c:34083 (size: 5.2 KiB, free: 599.7 MiB)
+26/04/15 00:35:07 INFO SparkContext: Created broadcast 12 from broadcast at DAGScheduler.scala:1585
+26/04/15 00:35:07 INFO DAGScheduler: Submitting 1 missing tasks from ResultStage 0 (MapPartitionsRDD[6] at $anonfun$withThreadLocalCaptured$1 at FutureTask.java:264) (first 15 tasks are for partitions Vector(0))
+26/04/15 00:35:07 INFO TaskSchedulerImpl: Adding task set 0.0 with 1 tasks resource profile 0
+26/04/15 00:35:07 INFO TaskSetManager: Starting task 0.0 in stage 0.0 (TID 0) (853e52885e5c, executor driver, partition 0, PROCESS_LOCAL, 15234 bytes) 
+26/04/15 00:35:07 INFO Executor: Running task 0.0 in stage 0.0 (TID 0)
+26/04/15 00:35:07 INFO CodeGenerator: Code generated in 67.10017 ms
+26/04/15 00:35:07 INFO S3AInputStream: Switching to Random IO seek policy
+26/04/15 00:35:08 INFO CodecPool: Got brand-new decompressor [.zstd]
+26/04/15 00:35:08 INFO Executor: Finished task 0.0 in stage 0.0 (TID 0). 62987 bytes result sent to driver
+26/04/15 00:35:08 INFO TaskSetManager: Finished task 0.0 in stage 0.0 (TID 0) in 1337 ms on 853e52885e5c (executor driver) (1/1)
+26/04/15 00:35:08 INFO TaskSchedulerImpl: Removed TaskSet 0.0, whose tasks have all completed, from pool 
+26/04/15 00:35:08 INFO DAGScheduler: ResultStage 0 ($anonfun$withThreadLocalCaptured$1 at FutureTask.java:264) finished in 1.449 s
+26/04/15 00:35:08 INFO DAGScheduler: Job 0 is finished. Cancelling potential speculative or zombie tasks for this job
+26/04/15 00:35:08 INFO TaskSchedulerImpl: Killing all running tasks in stage 0: Stage finished
+26/04/15 00:35:08 INFO DAGScheduler: Job 0 finished: $anonfun$withThreadLocalCaptured$1 at FutureTask.java:264, took 1.529052 s
+26/04/15 00:35:08 INFO CodeGenerator: Code generated in 19.164442 ms
+26/04/15 00:35:08 INFO MemoryStore: Block broadcast_13 stored as values in memory (estimated size 1063.1 KiB, free 598.4 MiB)
+26/04/15 00:35:08 INFO MemoryStore: Block broadcast_13_piece0 stored as bytes in memory (estimated size 75.4 KiB, free 598.3 MiB)
+26/04/15 00:35:08 INFO BlockManagerInfo: Added broadcast_13_piece0 in memory on 853e52885e5c:34083 (size: 75.4 KiB, free: 599.6 MiB)
+26/04/15 00:35:08 INFO SparkContext: Created broadcast 13 from $anonfun$withThreadLocalCaptured$1 at FutureTask.java:264
+26/04/15 00:35:08 INFO MemoryStore: Block broadcast_14 stored as values in memory (estimated size 32.0 KiB, free 598.3 MiB)
+26/04/15 00:35:08 INFO MemoryStore: Block broadcast_14_piece0 stored as bytes in memory (estimated size 31.1 KiB, free 598.3 MiB)
+26/04/15 00:35:08 INFO BlockManagerInfo: Added broadcast_14_piece0 in memory on 853e52885e5c:34083 (size: 31.1 KiB, free: 599.6 MiB)
+26/04/15 00:35:08 INFO SparkContext: Created broadcast 14 from broadcast at SparkBatch.java:79
+26/04/15 00:35:08 INFO CodeGenerator: Code generated in 141.846618 ms
+26/04/15 00:35:09 INFO DAGScheduler: Registering RDD 13 (sql at NativeMethodAccessorImpl.java:0) as input to shuffle 0
+26/04/15 00:35:09 INFO DAGScheduler: Got map stage job 1 (sql at NativeMethodAccessorImpl.java:0) with 2 output partitions
+26/04/15 00:35:09 INFO DAGScheduler: Final stage: ShuffleMapStage 1 (sql at NativeMethodAccessorImpl.java:0)
+26/04/15 00:35:09 INFO DAGScheduler: Parents of final stage: List()
+26/04/15 00:35:09 INFO DAGScheduler: Missing parents: List()
+26/04/15 00:35:09 INFO DAGScheduler: Submitting ShuffleMapStage 1 (MapPartitionsRDD[13] at sql at NativeMethodAccessorImpl.java:0), which has no missing parents
+26/04/15 00:35:09 INFO MemoryStore: Block broadcast_15 stored as values in memory (estimated size 61.2 KiB, free 598.2 MiB)
+26/04/15 00:35:09 INFO MemoryStore: Block broadcast_15_piece0 stored as bytes in memory (estimated size 24.7 KiB, free 598.2 MiB)
+26/04/15 00:35:09 INFO BlockManagerInfo: Added broadcast_15_piece0 in memory on 853e52885e5c:34083 (size: 24.7 KiB, free: 599.6 MiB)
+26/04/15 00:35:09 INFO SparkContext: Created broadcast 15 from broadcast at DAGScheduler.scala:1585
+26/04/15 00:35:09 INFO DAGScheduler: Submitting 2 missing tasks from ShuffleMapStage 1 (MapPartitionsRDD[13] at sql at NativeMethodAccessorImpl.java:0) (first 15 tasks are for partitions Vector(0, 1))
+26/04/15 00:35:09 INFO TaskSchedulerImpl: Adding task set 1.0 with 2 tasks resource profile 0
+26/04/15 00:35:09 INFO TaskSetManager: Starting task 0.0 in stage 1.0 (TID 1) (853e52885e5c, executor driver, partition 0, PROCESS_LOCAL, 16206 bytes) 
+26/04/15 00:35:09 INFO Executor: Running task 0.0 in stage 1.0 (TID 1)
+26/04/15 00:35:09 INFO CodeGenerator: Code generated in 91.363568 ms
+26/04/15 00:35:09 INFO CodeGenerator: Code generated in 18.998175 ms
+26/04/15 00:35:09 INFO CodeGenerator: Code generated in 8.215674 ms
+26/04/15 00:35:09 INFO BlockManagerInfo: Removed broadcast_6_piece0 on 853e52885e5c:34083 in memory (size: 30.8 KiB, free: 599.6 MiB)
+26/04/15 00:35:09 INFO BlockManagerInfo: Removed broadcast_14_piece0 on 853e52885e5c:34083 in memory (size: 31.1 KiB, free: 599.7 MiB)
+26/04/15 00:35:09 INFO BlockManagerInfo: Removed broadcast_12_piece0 on 853e52885e5c:34083 in memory (size: 5.2 KiB, free: 599.7 MiB)
+26/04/15 00:35:09 INFO CodeGenerator: Code generated in 13.753565 ms
+26/04/15 00:35:09 INFO BlockManagerInfo: Removed broadcast_10_piece0 on 853e52885e5c:34083 in memory (size: 30.7 KiB, free: 599.7 MiB)
+26/04/15 00:35:09 INFO CodeGenerator: Code generated in 12.705952 ms
+26/04/15 00:35:09 INFO S3AInputStream: Switching to Random IO seek policy
+26/04/15 00:35:09 INFO CodecPool: Got brand-new decompressor [.zstd]
+26/04/15 00:35:09 INFO Executor: Finished task 0.0 in stage 1.0 (TID 1). 7939 bytes result sent to driver
+26/04/15 00:35:09 INFO TaskSetManager: Starting task 1.0 in stage 1.0 (TID 2) (853e52885e5c, executor driver, partition 1, PROCESS_LOCAL, 16206 bytes) 
+26/04/15 00:35:09 INFO Executor: Running task 1.0 in stage 1.0 (TID 2)
+26/04/15 00:35:09 INFO TaskSetManager: Finished task 0.0 in stage 1.0 (TID 1) in 768 ms on 853e52885e5c (executor driver) (1/2)
+26/04/15 00:35:09 INFO S3AInputStream: Switching to Random IO seek policy
+26/04/15 00:35:10 INFO CodecPool: Got brand-new decompressor [.zstd]
+26/04/15 00:35:10 INFO Executor: Finished task 1.0 in stage 1.0 (TID 2). 7853 bytes result sent to driver
+26/04/15 00:35:10 INFO TaskSetManager: Finished task 1.0 in stage 1.0 (TID 2) in 289 ms on 853e52885e5c (executor driver) (2/2)
+26/04/15 00:35:10 INFO TaskSchedulerImpl: Removed TaskSet 1.0, whose tasks have all completed, from pool 
+26/04/15 00:35:10 INFO DAGScheduler: ShuffleMapStage 1 (sql at NativeMethodAccessorImpl.java:0) finished in 1.090 s
+26/04/15 00:35:10 INFO DAGScheduler: looking for newly runnable stages
+26/04/15 00:35:10 INFO DAGScheduler: running: Set()
+26/04/15 00:35:10 INFO DAGScheduler: waiting: Set()
+26/04/15 00:35:10 INFO DAGScheduler: failed: Set()
+26/04/15 00:35:10 INFO ShufflePartitionsUtil: For shuffle(0), advisory target size: 67108864, actual target size 1048576, minimum partition size: 1048576
+26/04/15 00:35:10 INFO CodeGenerator: Code generated in 17.858541 ms
+26/04/15 00:35:10 INFO HashAggregateExec: spark.sql.codegen.aggregate.map.twolevel.enabled is set to true, but current version of codegened fast hashmap does not support this aggregate.
+26/04/15 00:35:10 INFO CodeGenerator: Code generated in 52.199394 ms
+26/04/15 00:35:10 INFO MemoryStore: Block broadcast_16 stored as values in memory (estimated size 32.0 KiB, free 598.3 MiB)
+26/04/15 00:35:10 INFO MemoryStore: Block broadcast_16_piece0 stored as bytes in memory (estimated size 30.8 KiB, free 598.3 MiB)
+26/04/15 00:35:10 INFO BlockManagerInfo: Added broadcast_16_piece0 in memory on 853e52885e5c:34083 (size: 30.8 KiB, free: 599.7 MiB)
+26/04/15 00:35:10 INFO SparkContext: Created broadcast 16 from broadcast at SparkWrite.java:193
+26/04/15 00:35:10 INFO ReplaceDataExec: Start processing data source write support: IcebergBatchWrite(table=nessie.gold.cant_post_x_user_hist, format=PARQUET). The input RDD has 1 partitions.
+26/04/15 00:35:10 INFO SparkContext: Starting job: sql at NativeMethodAccessorImpl.java:0
+26/04/15 00:35:10 INFO DAGScheduler: Got job 2 (sql at NativeMethodAccessorImpl.java:0) with 1 output partitions
+26/04/15 00:35:10 INFO DAGScheduler: Final stage: ResultStage 3 (sql at NativeMethodAccessorImpl.java:0)
+26/04/15 00:35:10 INFO DAGScheduler: Parents of final stage: List(ShuffleMapStage 2)
+26/04/15 00:35:10 INFO DAGScheduler: Missing parents: List()
+26/04/15 00:35:10 INFO DAGScheduler: Submitting ResultStage 3 (MapPartitionsRDD[17] at sql at NativeMethodAccessorImpl.java:0), which has no missing parents
+26/04/15 00:35:10 INFO MemoryStore: Block broadcast_17 stored as values in memory (estimated size 84.0 KiB, free 598.2 MiB)
+26/04/15 00:35:10 INFO MemoryStore: Block broadcast_17_piece0 stored as bytes in memory (estimated size 33.0 KiB, free 598.2 MiB)
+26/04/15 00:35:10 INFO BlockManagerInfo: Added broadcast_17_piece0 in memory on 853e52885e5c:34083 (size: 33.0 KiB, free: 599.6 MiB)
+26/04/15 00:35:10 INFO SparkContext: Created broadcast 17 from broadcast at DAGScheduler.scala:1585
+26/04/15 00:35:10 INFO DAGScheduler: Submitting 1 missing tasks from ResultStage 3 (MapPartitionsRDD[17] at sql at NativeMethodAccessorImpl.java:0) (first 15 tasks are for partitions Vector(0))
+26/04/15 00:35:10 INFO TaskSchedulerImpl: Adding task set 3.0 with 1 tasks resource profile 0
+26/04/15 00:35:10 INFO TaskSetManager: Starting task 0.0 in stage 3.0 (TID 3) (853e52885e5c, executor driver, partition 0, NODE_LOCAL, 10156 bytes) 
+26/04/15 00:35:10 INFO Executor: Running task 0.0 in stage 3.0 (TID 3)
+26/04/15 00:35:10 INFO ShuffleBlockFetcherIterator: Getting 2 (986.3 KiB) non-empty blocks including 2 (986.3 KiB) local and 0 (0.0 B) host-local and 0 (0.0 B) push-merged-local and 0 (0.0 B) remote blocks
+26/04/15 00:35:10 INFO ShuffleBlockFetcherIterator: Started 0 remote fetches in 24 ms
+26/04/15 00:35:10 INFO CodeGenerator: Code generated in 65.902568 ms
+26/04/15 00:35:10 INFO CodeGenerator: Code generated in 6.542955 ms
+26/04/15 00:35:10 INFO CodeGenerator: Code generated in 5.341719 ms
+26/04/15 00:35:10 INFO CodeGenerator: Code generated in 6.648775 ms
+26/04/15 00:35:10 INFO CodeGenerator: Code generated in 12.930582 ms
+26/04/15 00:35:10 INFO CodeGenerator: Code generated in 12.288541 ms
+26/04/15 00:35:10 INFO CodeGenerator: Code generated in 11.126665 ms
+26/04/15 00:35:10 INFO CodeGenerator: Code generated in 13.43178 ms
+26/04/15 00:35:10 INFO CodecPool: Got brand-new compressor [.zstd]
+26/04/15 00:35:11 INFO DataWritingSparkTask: Writer for partition 0 is committing.
+26/04/15 00:35:12 INFO DataWritingSparkTask: Committed partition 0 (task 3, attempt 0, stage 3.0)
+26/04/15 00:35:12 INFO Executor: Finished task 0.0 in stage 3.0 (TID 3). 13655 bytes result sent to driver
+26/04/15 00:35:12 INFO TaskSetManager: Finished task 0.0 in stage 3.0 (TID 3) in 1614 ms on 853e52885e5c (executor driver) (1/1)
+26/04/15 00:35:12 INFO TaskSchedulerImpl: Removed TaskSet 3.0, whose tasks have all completed, from pool 
+26/04/15 00:35:12 INFO DAGScheduler: ResultStage 3 (sql at NativeMethodAccessorImpl.java:0) finished in 1.637 s
+26/04/15 00:35:12 INFO DAGScheduler: Job 2 is finished. Cancelling potential speculative or zombie tasks for this job
+26/04/15 00:35:12 INFO TaskSchedulerImpl: Killing all running tasks in stage 3: Stage finished
+26/04/15 00:35:12 INFO DAGScheduler: Job 2 finished: sql at NativeMethodAccessorImpl.java:0, took 1.653103 s
+26/04/15 00:35:12 INFO ReplaceDataExec: Data source write support IcebergBatchWrite(table=nessie.gold.cant_post_x_user_hist, format=PARQUET) is committing.
+26/04/15 00:35:12 INFO SparkWrite: Committing overwrite of 0 data files with 1 new data files, scanSnapshotId: 8390557212787572580, conflictDetectionFilter: true to table nessie.gold.cant_post_x_user_hist
+26/04/15 00:35:12 INFO BlockManagerInfo: Removed broadcast_17_piece0 on 853e52885e5c:34083 in memory (size: 33.0 KiB, free: 599.7 MiB)
+26/04/15 00:35:12 INFO NessieIcebergClient: Committed 'gold.cant_post_x_user_hist' against 'Branch{name=main, metadata=null, hash=055bff45fc89cf1746470b1daba76cd298200b914465acdd75ce7ff8b9a19190}', expected commit-id was 'c0a74090283b8dabc058cad5c56132de3fa44baf6190277b82bcee04938c5a4c'
+26/04/15 00:35:12 INFO BaseMetastoreTableOperations: Successfully committed to table gold.cant_post_x_user_hist in 132 ms
+26/04/15 00:35:12 INFO SnapshotProducer: Committed snapshot 5809572756922844099 (BaseOverwriteFiles)
+26/04/15 00:35:12 INFO BaseMetastoreTableOperations: Refreshing table metadata from new version: s3a://iceberg/gold/cant_post_x_user_hist_429196b2-8a09-4433-aec3-acb5f118ff28/metadata/00001-333a42b7-2958-4083-86ff-96bd53be773b.gz.metadata.json
+26/04/15 00:35:12 INFO NessieUtil: loadTableMetadata for 'gold.cant_post_x_user_hist' from location 's3a://iceberg/gold/cant_post_x_user_hist_429196b2-8a09-4433-aec3-acb5f118ff28/metadata/00001-333a42b7-2958-4083-86ff-96bd53be773b.gz.metadata.json' at 'Branch{name=main, metadata=null, hash=055bff45fc89cf1746470b1daba76cd298200b914465acdd75ce7ff8b9a19190}'
+26/04/15 00:35:12 INFO LoggingMetricsReporter: Received metrics report: CommitReport{tableName=nessie.gold.cant_post_x_user_hist, snapshotId=5809572756922844099, sequenceNumber=2, operation=append, commitMetrics=CommitMetricsResult{totalDuration=TimerResult{timeUnit=NANOSECONDS, totalDuration=PT0.404358412S, count=1}, attempts=CounterResult{unit=COUNT, value=1}, addedDataFiles=CounterResult{unit=COUNT, value=1}, removedDataFiles=null, totalDataFiles=CounterResult{unit=COUNT, value=1}, addedDeleteFiles=null, addedEqualityDeleteFiles=null, addedPositionalDeleteFiles=null, removedDeleteFiles=null, removedEqualityDeleteFiles=null, removedPositionalDeleteFiles=null, totalDeleteFiles=CounterResult{unit=COUNT, value=0}, addedRecords=CounterResult{unit=COUNT, value=47128}, removedRecords=null, totalRecords=CounterResult{unit=COUNT, value=47128}, addedFilesSizeInBytes=CounterResult{unit=BYTES, value=522262}, removedFilesSizeInBytes=null, totalFilesSizeInBytes=CounterResult{unit=BYTES, value=522262}, addedPositionalDeletes=null, removedPositionalDeletes=null, totalPositionalDeletes=CounterResult{unit=COUNT, value=0}, addedEqualityDeletes=null, removedEqualityDeletes=null, totalEqualityDeletes=CounterResult{unit=COUNT, value=0}}, metadata={engine-version=3.5.5, app-id=local-1776213280418, engine-name=spark, iceberg-version=Apache Iceberg 1.6.1 (commit 8e9d59d299be42b0bca9461457cd1e95dbaad086)}}
+26/04/15 00:35:12 INFO SparkWrite: Committed in 430 ms
+26/04/15 00:35:12 INFO ReplaceDataExec: Data source write support IcebergBatchWrite(table=nessie.gold.cant_post_x_user_hist, format=PARQUET) committed.
+26/04/15 00:35:12 INFO SnapshotScan: Scanning table nessie.gold.cant_post_x_user_hist snapshot 5809572756922844099 created at 2026-04-15T00:35:12.434+00:00 with filter true
+26/04/15 00:35:12 INFO BaseDistributedDataScan: Planning file tasks locally for table nessie.gold.cant_post_x_user_hist
+26/04/15 00:35:12 INFO V2ScanRelationPushDown: 
+Pushing operators to nessie.gold.cant_post_x_user_hist
+Pushed Aggregate Functions:
+ COUNT(*)
+Pushed Group by:
+ 
+         
+26/04/15 00:35:12 INFO CodeGenerator: Code generated in 15.179823 ms
+26/04/15 00:35:12 INFO DAGScheduler: Registering RDD 20 (collect at /opt/***/scripts/gold_agg.py:105) as input to shuffle 1
+26/04/15 00:35:12 INFO DAGScheduler: Got map stage job 3 (collect at /opt/***/scripts/gold_agg.py:105) with 1 output partitions
+26/04/15 00:35:12 INFO DAGScheduler: Final stage: ShuffleMapStage 4 (collect at /opt/***/scripts/gold_agg.py:105)
+26/04/15 00:35:12 INFO DAGScheduler: Parents of final stage: List()
+26/04/15 00:35:12 INFO DAGScheduler: Missing parents: List()
+26/04/15 00:35:12 INFO DAGScheduler: Submitting ShuffleMapStage 4 (MapPartitionsRDD[20] at collect at /opt/***/scripts/gold_agg.py:105), which has no missing parents
+26/04/15 00:35:12 INFO MemoryStore: Block broadcast_18 stored as values in memory (estimated size 12.6 KiB, free 598.3 MiB)
+26/04/15 00:35:12 INFO MemoryStore: Block broadcast_18_piece0 stored as bytes in memory (estimated size 6.2 KiB, free 598.3 MiB)
+26/04/15 00:35:12 INFO BlockManagerInfo: Added broadcast_18_piece0 in memory on 853e52885e5c:34083 (size: 6.2 KiB, free: 599.7 MiB)
+26/04/15 00:35:12 INFO SparkContext: Created broadcast 18 from broadcast at DAGScheduler.scala:1585
+26/04/15 00:35:12 INFO DAGScheduler: Submitting 1 missing tasks from ShuffleMapStage 4 (MapPartitionsRDD[20] at collect at /opt/***/scripts/gold_agg.py:105) (first 15 tasks are for partitions Vector(0))
+26/04/15 00:35:12 INFO TaskSchedulerImpl: Adding task set 4.0 with 1 tasks resource profile 0
+26/04/15 00:35:12 INFO TaskSetManager: Starting task 0.0 in stage 4.0 (TID 4) (853e52885e5c, executor driver, partition 0, PROCESS_LOCAL, 10317 bytes) 
+26/04/15 00:35:12 INFO Executor: Running task 0.0 in stage 4.0 (TID 4)
+26/04/15 00:35:12 INFO CodeGenerator: Code generated in 20.247455 ms
+26/04/15 00:35:12 INFO Executor: Finished task 0.0 in stage 4.0 (TID 4). 1928 bytes result sent to driver
+26/04/15 00:35:12 INFO TaskSetManager: Finished task 0.0 in stage 4.0 (TID 4) in 48 ms on 853e52885e5c (executor driver) (1/1)
+26/04/15 00:35:12 INFO TaskSchedulerImpl: Removed TaskSet 4.0, whose tasks have all completed, from pool 
+26/04/15 00:35:12 INFO DAGScheduler: ShuffleMapStage 4 (collect at /opt/***/scripts/gold_agg.py:105) finished in 0.064 s
+26/04/15 00:35:12 INFO DAGScheduler: looking for newly runnable stages
+26/04/15 00:35:12 INFO DAGScheduler: running: Set()
+26/04/15 00:35:12 INFO DAGScheduler: waiting: Set()
+26/04/15 00:35:12 INFO DAGScheduler: failed: Set()
+26/04/15 00:35:12 INFO CodeGenerator: Code generated in 29.603338 ms
+26/04/15 00:35:12 INFO BlockManagerInfo: Removed broadcast_15_piece0 on 853e52885e5c:34083 in memory (size: 24.7 KiB, free: 599.7 MiB)
+26/04/15 00:35:12 INFO BlockManagerInfo: Removed broadcast_16_piece0 on 853e52885e5c:34083 in memory (size: 30.8 KiB, free: 599.7 MiB)
+26/04/15 00:35:12 INFO SparkContext: Starting job: collect at /opt/***/scripts/gold_agg.py:105
+26/04/15 00:35:12 INFO DAGScheduler: Got job 4 (collect at /opt/***/scripts/gold_agg.py:105) with 1 output partitions
+26/04/15 00:35:12 INFO DAGScheduler: Final stage: ResultStage 6 (collect at /opt/***/scripts/gold_agg.py:105)
+26/04/15 00:35:12 INFO DAGScheduler: Parents of final stage: List(ShuffleMapStage 5)
+26/04/15 00:35:12 INFO DAGScheduler: Missing parents: List()
+26/04/15 00:35:12 INFO DAGScheduler: Submitting ResultStage 6 (MapPartitionsRDD[23] at collect at /opt/***/scripts/gold_agg.py:105), which has no missing parents
+26/04/15 00:35:12 INFO MemoryStore: Block broadcast_19 stored as values in memory (estimated size 13.7 KiB, free 598.4 MiB)
+26/04/15 00:35:12 INFO MemoryStore: Block broadcast_19_piece0 stored as bytes in memory (estimated size 6.3 KiB, free 598.4 MiB)
+26/04/15 00:35:12 INFO BlockManagerInfo: Added broadcast_19_piece0 in memory on 853e52885e5c:34083 (size: 6.3 KiB, free: 599.7 MiB)
+26/04/15 00:35:12 INFO SparkContext: Created broadcast 19 from broadcast at DAGScheduler.scala:1585
+26/04/15 00:35:12 INFO DAGScheduler: Submitting 1 missing tasks from ResultStage 6 (MapPartitionsRDD[23] at collect at /opt/***/scripts/gold_agg.py:105) (first 15 tasks are for partitions Vector(0))
+26/04/15 00:35:12 INFO TaskSchedulerImpl: Adding task set 6.0 with 1 tasks resource profile 0
+26/04/15 00:35:12 INFO TaskSetManager: Starting task 0.0 in stage 6.0 (TID 5) (853e52885e5c, executor driver, partition 0, NODE_LOCAL, 10156 bytes) 
+26/04/15 00:35:12 INFO Executor: Running task 0.0 in stage 6.0 (TID 5)
+26/04/15 00:35:13 INFO ShuffleBlockFetcherIterator: Getting 1 (60.0 B) non-empty blocks including 1 (60.0 B) local and 0 (0.0 B) host-local and 0 (0.0 B) push-merged-local and 0 (0.0 B) remote blocks
+26/04/15 00:35:13 INFO ShuffleBlockFetcherIterator: Started 0 remote fetches in 2 ms
+26/04/15 00:35:13 INFO CodeGenerator: Code generated in 15.612839 ms
+26/04/15 00:35:13 INFO Executor: Finished task 0.0 in stage 6.0 (TID 5). 3995 bytes result sent to driver
+26/04/15 00:35:13 INFO TaskSetManager: Finished task 0.0 in stage 6.0 (TID 5) in 39 ms on 853e52885e5c (executor driver) (1/1)
+26/04/15 00:35:13 INFO TaskSchedulerImpl: Removed TaskSet 6.0, whose tasks have all completed, from pool 
+26/04/15 00:35:13 INFO DAGScheduler: ResultStage 6 (collect at /opt/***/scripts/gold_agg.py:105) finished in 0.055 s
+26/04/15 00:35:13 INFO DAGScheduler: Job 4 is finished. Cancelling potential speculative or zombie tasks for this job
+26/04/15 00:35:13 INFO TaskSchedulerImpl: Killing all running tasks in stage 6: Stage finished
+26/04/15 00:35:13 INFO DAGScheduler: Job 4 finished: collect at /opt/***/scripts/gold_agg.py:105, took 0.065256 s
+26/04/15 00:35:13 INFO SparkContext: SparkContext is stopping with exitCode 0.
+26/04/15 00:35:13 INFO SparkUI: Stopped Spark web UI at http://853e52885e5c:4040
+26/04/15 00:35:13 INFO MapOutputTrackerMasterEndpoint: MapOutputTrackerMasterEndpoint stopped!
+26/04/15 00:35:13 INFO MemoryStore: MemoryStore cleared
+26/04/15 00:35:13 INFO BlockManager: BlockManager stopped
+26/04/15 00:35:13 INFO BlockManagerMaster: BlockManagerMaster stopped
+26/04/15 00:35:13 INFO OutputCommitCoordinator$OutputCommitCoordinatorEndpoint: OutputCommitCoordinator stopped!
+26/04/15 00:35:13 INFO SparkContext: Successfully stopped SparkContext
+26/04/15 00:35:13 INFO ShutdownHookManager: Shutdown hook called
+26/04/15 00:35:13 INFO ShutdownHookManager: Deleting directory /tmp/spark-6872f402-3d80-4d88-a675-38e6f86b1f5e
+26/04/15 00:35:13 INFO ShutdownHookManager: Deleting directory /tmp/spark-c13e4bbc-9be4-4f2b-b383-3f8777679896/pyspark-e579c81f-4183-4eb4-9c9b-7583bced2851
+26/04/15 00:35:13 INFO ShutdownHookManager: Deleting directory /tmp/spark-c13e4bbc-9be4-4f2b-b383-3f8777679896
+26/04/15 00:35:13 INFO MetricsSystemImpl: Stopping s3a-file-system metrics system...
+26/04/15 00:35:13 INFO MetricsSystemImpl: s3a-file-system metrics system stopped.
+26/04/15 00:35:13 INFO MetricsSystemImpl: s3a-file-system metrics system shutdown complete.
+
+[2026-04-15T00:35:14.104+0000] {python.py:240} INFO - Done. Returned value was: None
+[2026-04-15T00:35:14.119+0000] {taskinstance.py:340} INFO - ::group::Post task execution logs
+[2026-04-15T00:35:14.120+0000] {taskinstance.py:352} INFO - Marking task as SUCCESS. dag_id=stackoverflow_pipeline, task_id=gold_agg, run_id=manual__2026-04-14T23:12:12.535566+00:00, execution_date=20260414T231212, start_date=20260415T003433, end_date=20260415T003514
+[2026-04-15T00:35:14.170+0000] {local_task_job_runner.py:266} INFO - Task exited with return code 0
+[2026-04-15T00:35:14.189+0000] {taskinstance.py:3895} INFO - 0 downstream tasks scheduled from follow-on schedule check
+[2026-04-15T00:35:14.196+0000] {local_task_job_runner.py:245} INFO - ::endgroup::

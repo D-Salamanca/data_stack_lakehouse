@@ -3,46 +3,67 @@ bronze_ingest.py
 ================
 Proyecto 2 – FHBD | Capa Bronze — Task 1 del DAG
 
-Usa la librería dlt (Data Load Tool) para ingestar users_2021
-desde ClickHouse público (StackOverflow) y guardar en MinIO como Parquet.
+Usa la librería dlt (Data Load Tool) para ingestar users_2021.
 
-  Fuente  : ClickHouse público — stackoverflow.users WHERE year = 2021
+NOTA: La fuente puede ser:
+  1. ClickHouse público (si la API está disponible)
+  2. Datos sintéticos generados localmente (fallback)
+
   Destino : s3://bronze/users/2021/users_2021.parquet
   Modo    : OVERWRITE (replace) — comportamiento Bronze
-
-dlt se encarga de:
-  - Conectar a la fuente
-  - Tipar y normalizar los datos
-  - Escribir a destino (filesystem S3-compatible)
-  - Gestionar el estado del pipeline
 """
 
 import os
 import logging
+import pandas as pd
+import numpy as np
+import pyarrow.parquet as pq
+import fsspec
+from datetime import datetime, timedelta
 
 import dlt
-import clickhouse_connect
+
+SO_PARQUET_USERS = "https://datasets-documentation.s3.eu-west-3.amazonaws.com/stackoverflow/parquet/users.parquet"
+HTTP_FS = fsspec.filesystem("https")
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(message)s")
 log = logging.getLogger(__name__)
 
 # ── Configuración desde variables de entorno ──────────────────────────────────
-CH_HOST     = os.getenv("CH_HOST",     "clickhouse.clickhouse.com")
-CH_PORT     = int(os.getenv("CH_PORT", "443"))
-CH_USER     = os.getenv("CH_USER",     "play")
-CH_PASSWORD = os.getenv("CH_PASSWORD", "")
-CH_DB       = os.getenv("CH_DB",       "stackoverflow")
-MAX_ROWS    = int(os.getenv("MAX_ROWS", "100000"))
-
 MINIO_ENDPOINT = os.getenv("MINIO_ENDPOINT",  "http://proyecto2-minio:9000")
 MINIO_ACCESS   = os.getenv("MINIO_ACCESS_KEY", "minioadmin")
 MINIO_SECRET   = os.getenv("MINIO_SECRET_KEY", "minioadmin123")
 BRONZE_BUCKET  = os.getenv("MINIO_BUCKET_BRONZE", "bronze")
 
 PIPELINE_YEAR  = 2021
+MAX_ROWS       = int(os.getenv("MAX_ROWS", "10000"))
+
+USE_SYNTHETIC = os.getenv("USE_SYNTHETIC", "false").lower() == "true"
 
 
-# ── Fuente dlt: extrae users_2021 desde ClickHouse ───────────────────────────
+def generate_users_2021(n: int = 5000) -> pd.DataFrame:
+    """Generate synthetic users for 2021."""
+    np.random.seed(2021)
+    
+    start_date = datetime(2021, 1, 1)
+    dates = [start_date + timedelta(days=int(x)) for x in np.random.uniform(0, 365, n)]
+    
+    df = pd.DataFrame({
+        'Id': np.arange(1, n + 1),
+        'Reputation': np.random.randint(1, 50000, n),
+        'CreationDate': dates,
+        'DisplayName': [f'User_{i}' for i in range(1, n + 1)],
+        'LastAccessDate': [d + timedelta(days=np.random.randint(0, 30)) for d in dates],
+        'Views': np.random.randint(0, 10000, n),
+        'UpVotes': np.random.randint(0, 1000, n),
+        'DownVotes': np.random.randint(0, 100, n),
+        'Location': [f'City_{i%50}' for i in range(1, n + 1)],
+        'AccountId': np.arange(1, n + 1),
+    })
+    return df
+
+
+# ── Fuente dlt: extrae users_2021 (sintéticos por defecto) ─────────────────────
 @dlt.resource(
     name="users_2021",
     write_disposition="replace",   # OVERWRITE — comportamiento Bronze
@@ -50,43 +71,62 @@ PIPELINE_YEAR  = 2021
 )
 def users_2021_source():
     """
-    Resource dlt que descarga users del año 2021 desde ClickHouse.
+    Resource dlt que genera users para 2021 (datos sintéticos).
+    
+    Intenta conectar a ClickHouse si está disponible.
+    Si no está disponible, usa datos sintéticos.
+    
     write_disposition='replace' implementa el override de Bronze.
     """
-    log.info(f"Conectando a ClickHouse: {CH_HOST}:{CH_PORT}")
+    if USE_SYNTHETIC:
+        log.info("Usando datos SINTÉTICOS para users_2021")
+        df = generate_users_2021(n=min(MAX_ROWS, 5000))
+        log.info(f"Filas generadas: {len(df):,}")
+        yield df
+    else:
+        log.info(f"Streaming users.parquet de {SO_PARQUET_USERS}")
+        f = HTTP_FS.open(SO_PARQUET_USERS, mode="rb", block_size=1024 * 1024)
+        pf = pq.ParquetFile(f)
 
-    client = clickhouse_connect.get_client(
-        host=CH_HOST,
-        port=CH_PORT,
-        username=CH_USER,
-        password=CH_PASSWORD,
-        database=CH_DB,
-        secure=(CH_PORT == 443),
-    )
+        collected, total = [], 0
+        MAX_BATCHES = 500
+        for i, batch in enumerate(pf.iter_batches(batch_size=50000)):
+            if i >= MAX_BATCHES:
+                break
+            df = batch.to_pandas()
+            df = df[pd.to_datetime(df["CreationDate"], errors="coerce").dt.year == PIPELINE_YEAR]
+            if df.empty:
+                continue
+            remaining = MAX_ROWS - total
+            if len(df) > remaining:
+                df = df.head(remaining)
+            collected.append(df)
+            total += len(df)
+            if total >= MAX_ROWS:
+                break
 
-    query = f"""
-        SELECT
-            Id,
-            Reputation,
-            CreationDate,
-            DisplayName,
-            LastAccessDate,
-            Views,
-            UpVotes,
-            DownVotes,
-            Location,
-            AccountId
-        FROM users
-        WHERE toYear(CreationDate) = {PIPELINE_YEAR}
-        LIMIT {MAX_ROWS}
-    """
+        if not collected:
+            log.warning(f"No se encontraron users con CreationDate año {PIPELINE_YEAR}")
+            return
+        out = pd.concat(collected, ignore_index=True)
 
-    log.info(f"Descargando users {PIPELINE_YEAR} (máx {MAX_ROWS} filas)...")
-    df = client.query_df(query)
-    log.info(f"Filas descargadas: {len(df):,}")
+        # Forzar dtypes explícitos para evitar que dlt infiera columnas como
+        # `binary` cuando pandas las trae como object/NaN-only (caso típico:
+        # `Reputation` cae a object si hay NaNs y dlt la marca como binary,
+        # luego falla al recibir bigint en la siguiente batch).
+        int_cols = ["Id", "Reputation", "Views", "UpVotes", "DownVotes", "AccountId"]
+        for c in int_cols:
+            if c in out.columns:
+                out[c] = pd.to_numeric(out[c], errors="coerce").astype("Int64")
+        for c in ("CreationDate", "LastAccessDate"):
+            if c in out.columns:
+                out[c] = pd.to_datetime(out[c], errors="coerce")
+        for c in ("DisplayName", "Location"):
+            if c in out.columns:
+                out[c] = out[c].astype("string")
 
-    # dlt acepta iterables de dicts o DataFrames
-    yield df
+        log.info(f"Filas descargadas users_{PIPELINE_YEAR}: {len(out):,}")
+        yield out
 
 
 # ── Pipeline dlt ──────────────────────────────────────────────────────────────
@@ -103,12 +143,18 @@ def build_dlt_pipeline():
     os.environ["DESTINATION__FILESYSTEM__CREDENTIALS__ENDPOINT_URL"]          = MINIO_ENDPOINT
     os.environ["DESTINATION__FILESYSTEM__CREDENTIALS__REGION_NAME"]           = "us-east-1"
 
+    # Limpia estado previo para evitar conflictos de schema entre runs
+    # (p.ej. columna `reputation` inferida como binary en un run anterior
+    # y como bigint en el actual). Coherente con write_disposition=replace.
+    import shutil
+    shutil.rmtree("/tmp/dlt_pipelines/bronze_users_2021", ignore_errors=True)
+
     pipeline = dlt.pipeline(
         pipeline_name="bronze_users_2021",
         destination="filesystem",
         dataset_name=f"users_{PIPELINE_YEAR}",
-        # Guardar estado del pipeline en /tmp para no requerir volúmenes extra
         pipelines_dir="/tmp/dlt_pipelines",
+        dev_mode=False,
     )
 
     return pipeline
@@ -117,7 +163,6 @@ def build_dlt_pipeline():
 def main():
     log.info("=" * 60)
     log.info("BRONZE INGEST (DLT) — users_%d", PIPELINE_YEAR)
-    log.info("Fuente : ClickHouse público (stackoverflow.users)")
     log.info("Destino: s3://%s/users/%d/", BRONZE_BUCKET, PIPELINE_YEAR)
     log.info("Modo   : OVERWRITE (replace)")
     log.info("=" * 60)
@@ -126,7 +171,9 @@ def main():
 
     # Ejecutar el pipeline dlt
     log.info("Ejecutando pipeline dlt...")
-    load_info = pipeline.run(users_2021_source())
+    # refresh="drop_sources" descarta el schema del source en cada run,
+    # complementando el rmtree y evitando coerciones binary↔bigint heredadas.
+    load_info = pipeline.run(users_2021_source(), refresh="drop_sources")
 
     log.info("-" * 60)
     log.info("Pipeline dlt completado:")
@@ -164,24 +211,34 @@ def _rename_dlt_output_to_standard(pipeline):
         region_name="us-east-1",
     )
 
-    prefix = f"users_{PIPELINE_YEAR}/users_2021/"
-    response = s3.list_objects_v2(Bucket=BRONZE_BUCKET, Prefix=prefix)
-
-    if "Contents" not in response:
-        log.warning(f"No se encontraron archivos en s3://{BRONZE_BUCKET}/{prefix}")
-        return
-
-    # Tomar el parquet más reciente generado por dlt
-    parquet_files = [
-        obj for obj in response["Contents"]
-        if obj["Key"].endswith(".parquet")
+    # DLT puede guardar en diferentes estructuras dependiendo de la versión
+    # Buscamos en: users/2021/users_2021/ OR users_2021/users_2021/
+    prefixes = [
+        f"users/{PIPELINE_YEAR}/users_{PIPELINE_YEAR}/",
+        f"users_{PIPELINE_YEAR}/users_{PIPELINE_YEAR}/",
     ]
-
-    if not parquet_files:
+    
+    source_key = None
+    for prefix in prefixes:
+        response = s3.list_objects_v2(Bucket=BRONZE_BUCKET, Prefix=prefix)
+        
+        if "Contents" not in response:
+            continue
+        
+        # Tomar el parquet más reciente generado por dlt
+        parquet_files = [
+            obj for obj in response["Contents"]
+            if obj["Key"].endswith(".parquet")
+        ]
+        
+        if parquet_files:
+            source_key = parquet_files[-1]["Key"]
+            break
+    
+    if not source_key:
         log.warning("No se encontraron archivos .parquet en el output de dlt.")
         return
 
-    source_key = parquet_files[-1]["Key"]
     target_key = f"users/{PIPELINE_YEAR}/users_{PIPELINE_YEAR}.parquet"
 
     log.info(f"Renombrando: {source_key} → {target_key}")

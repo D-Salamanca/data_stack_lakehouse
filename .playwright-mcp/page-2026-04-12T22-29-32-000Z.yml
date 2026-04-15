@@ -1,0 +1,57 @@
+- generic [ref=e1]:
+  - generic [ref=e3]:
+    - navigation [ref=e4]:
+      - navigation [ref=e5]:
+        - button "Skip to content"
+        - list [ref=e6]:
+          - listitem [ref=e7]:
+            - link "home" [ref=e8] [cursor=pointer]:
+              - /url: /
+              - img [ref=e12]
+          - listitem [ref=e14]:
+            - link [ref=e16] [cursor=pointer]:
+              - /url: /
+              - img [ref=e20]
+          - listitem [ref=e22]:
+            - link [ref=e24] [cursor=pointer]:
+              - /url: /new_query?context=%22%40admin%22
+              - img [ref=e28]
+          - listitem [ref=e30]:
+            - link [ref=e32] [cursor=pointer]:
+              - /url: /jobs
+              - img [ref=e36]
+        - list [ref=e38]:
+          - listitem [ref=e39]:
+            - link [ref=e41] [cursor=pointer]:
+              - /url: /settings
+              - img [ref=e45]
+          - generic [ref=e47]:
+            - button "Help" [expanded] [active] [ref=e48] [cursor=pointer]:
+              - generic:
+                - img
+              - generic:
+                - img
+            - menu "Help" [ref=e58]:
+              - list [ref=e59]:
+                - listitem [ref=e60]:
+                  - link "Documentation " [ref=e61] [cursor=pointer]:
+                    - /url: https://docs.dremio.com
+                    - text: Documentation
+                    - generic [ref=e62]: 
+                - listitem [ref=e63]:
+                  - link "Forum " [ref=e64] [cursor=pointer]:
+                    - /url: https://community.dremio.com
+                    - text: Forum
+                    - generic [ref=e65]: 
+                - listitem [ref=e66]:
+                  - link "About Dremio" [ref=e67] [cursor=pointer]:
+                    - /url: /admin
+          - button "AU" [ref=e51] [cursor=pointer]:
+            - generic: AU
+            - generic:
+              - img
+    - main [ref=e52]:
+      - heading "The page you are looking for doesn’t exist." [level=1] [ref=e56]
+  - img
+  - iframe [ref=e57]:
+    

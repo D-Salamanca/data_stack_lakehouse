@@ -1,0 +1,995 @@
+[2026-04-14T22:17:16.003+0000] {local_task_job_runner.py:123} INFO - ::group::Pre task execution logs
+[2026-04-14T22:17:16.042+0000] {taskinstance.py:2613} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: stackoverflow_pipeline.silver_transform manual__2026-04-14T22:14:04.562422+00:00 [queued]>
+[2026-04-14T22:17:16.068+0000] {taskinstance.py:2613} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: stackoverflow_pipeline.silver_transform manual__2026-04-14T22:14:04.562422+00:00 [queued]>
+[2026-04-14T22:17:16.069+0000] {taskinstance.py:2866} INFO - Starting attempt 1 of 2
+[2026-04-14T22:17:16.094+0000] {taskinstance.py:2889} INFO - Executing <Task(PythonOperator): silver_transform> on 2026-04-14 22:14:04.562422+00:00
+[2026-04-14T22:17:16.103+0000] {warnings.py:112} WARNING - /home/***/.local/lib/python3.12/site-packages/***/task/task_runner/standard_task_runner.py:70: DeprecationWarning: This process (pid=273) is multi-threaded, use of fork() may lead to deadlocks in the child.
+  pid = os.fork()
+
+[2026-04-14T22:17:16.104+0000] {standard_task_runner.py:104} INFO - Running: ['***', 'tasks', 'run', 'stackoverflow_pipeline', 'silver_transform', 'manual__2026-04-14T22:14:04.562422+00:00', '--job-id', '5', '--raw', '--subdir', 'DAGS_FOLDER/stackoverflow_pipeline.py', '--cfg-path', '/tmp/tmpkbzw2mpx']
+[2026-04-14T22:17:16.106+0000] {standard_task_runner.py:72} INFO - Started process 274 to run task
+[2026-04-14T22:17:16.106+0000] {standard_task_runner.py:105} INFO - Job 5: Subtask silver_transform
+[2026-04-14T22:17:16.171+0000] {task_command.py:467} INFO - Running <TaskInstance: stackoverflow_pipeline.silver_transform manual__2026-04-14T22:14:04.562422+00:00 [running]> on host 8b380e51bf92
+[2026-04-14T22:17:16.303+0000] {taskinstance.py:3132} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='fhbd-grupo' AIRFLOW_CTX_DAG_ID='stackoverflow_pipeline' AIRFLOW_CTX_TASK_ID='silver_transform' AIRFLOW_CTX_EXECUTION_DATE='2026-04-14T22:14:04.562422+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2026-04-14T22:14:04.562422+00:00'
+[2026-04-14T22:17:16.305+0000] {taskinstance.py:731} INFO - ::endgroup::
+[2026-04-14T22:17:16.357+0000] {stackoverflow_pipeline.py:197} INFO - Running command: /opt/spark/bin/spark-submit --master spark://spark-master:7077 --conf spark.submit.deployMode=client --conf spark.driver.bindAddress=0.0.0.0 --conf spark.executor.instances=1 --conf spark.executor.cores=2 --conf spark.executor.memory=2g --conf spark.driver.memory=1g --conf spark.sql.extensions=org.apache.iceberg.spark.extensions.IcebergSparkSessionExtensions,org.projectnessie.spark.extensions.NessieSparkSessionExtensions --conf spark.sql.catalog.nessie=org.apache.iceberg.spark.SparkCatalog --conf spark.sql.catalog.nessie.catalog-impl=org.apache.iceberg.nessie.NessieCatalog --conf spark.sql.catalog.nessie.uri=http://proyecto2-nessie:19120/api/v1 --conf spark.sql.catalog.nessie.ref=main --conf spark.sql.catalog.nessie.authentication.type=NONE --conf spark.sql.catalog.nessie.warehouse=s3a://iceberg/ --conf spark.hadoop.fs.s3a.endpoint=http://proyecto2-minio:9000 --conf spark.hadoop.fs.s3a.access.key=minioadmin --conf spark.hadoop.fs.s3a.secret.key=minioadmin123 --conf spark.hadoop.fs.s3a.path.style.access=true --conf spark.hadoop.fs.s3a.impl=org.apache.hadoop.fs.s3a.S3AFileSystem --conf spark.hadoop.fs.s3a.aws.credentials.provider=org.apache.hadoop.fs.s3a.SimpleAWSCredentialsProvider --conf spark.hadoop.fs.s3a.connection.ssl.enabled=false --packages org.apache.iceberg:iceberg-spark-runtime-3.5_2.12:1.6.1,org.projectnessie.nessie-integrations:nessie-spark-extensions-3.5_2.12:0.95.0,org.apache.hadoop:hadoop-aws:3.3.4,com.amazonaws:aws-java-sdk-bundle:1.12.262 --name silver_users_hist --verbose /opt/***/scripts/silver_transform.py
+[2026-04-14T22:17:16.358+0000] {stackoverflow_pipeline.py:198} INFO - Environment vars: CH_DB=stackoverflow, CH_HOST=play.clickhouse.com, CH_PASSWORD=, CH_PORT=443, CH_USER=play, GOLD_NAMESPACE=gold, MAX_ROWS=100000, MINIO_ACCESS_KEY=minioadmin, MINIO_BUCKET_BRONZE=bronze, MINIO_BUCKET_ICEBERG=iceberg, MINIO_ENDPOINT=http://proyecto2-minio:9000, MINIO_SECRET_KEY=minioadmin123, NESSIE_BRANCH=main, NESSIE_URL=http://proyecto2-nessie:19120/api/v1, SILVER_NAMESPACE=silver
+[2026-04-14T22:19:46.443+0000] {job.py:229} INFO - Heartbeat recovered after 144.46 seconds
+[2026-04-14T22:22:22.935+0000] {job.py:229} INFO - Heartbeat recovered after 27.27 seconds
+[2026-04-14T22:23:24.974+0000] {job.py:239} ERROR - Job heartbeat failed with error
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 3371, in _wrap_pool_connect
+    return fn()
+           ^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 327, in connect
+    return _ConnectionFairy._checkout(self)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 894, in _checkout
+    fairy = _ConnectionRecord.checkout(pool)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 493, in checkout
+    rec = pool._do_get()
+          ^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/sqlalchemy/pool/impl.py", line 256, in _do_get
+    return self._create_connection()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 273, in _create_connection
+    return _ConnectionRecord(self)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 388, in __init__
+    self.__connect()
+  File "/home/airflow/.local/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 690, in __connect
+    with util.safe_reraise():
+         ^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/sqlalchemy/util/langhelpers.py", line 70, in __exit__
+    compat.raise_(
+  File "/home/airflow/.local/lib/python3.12/site-packages/sqlalchemy/util/compat.py", line 211, in raise_
+    raise exception
+  File "/home/airflow/.local/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 686, in __connect
+    self.dbapi_connection = connection = pool._invoke_creator(self)
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/sqlalchemy/engine/create.py", line 574, in connect
+    return dialect.connect(*cargs, **cparams)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/sqlalchemy/engine/default.py", line 598, in connect
+    return self.dbapi.connect(*cargs, **cparams)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/psycopg2/__init__.py", line 122, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+psycopg2.OperationalError: could not translate host name "postgres" to address: Temporary failure in name resolution
+
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/jobs/job.py", line 207, in heartbeat
+    self._merge_from(Job._fetch_from_db(self, session))
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/api_internal/internal_api_call.py", line 166, in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/utils/session.py", line 94, in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/utils/retries.py", line 93, in wrapped_function
+    for attempt in run_with_db_retries(max_retries=retries, logger=logger, **retry_kwargs):
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/tenacity/__init__.py", line 443, in __iter__
+    do = self.iter(retry_state=retry_state)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/tenacity/__init__.py", line 376, in iter
+    result = action(retry_state)
+             ^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/tenacity/__init__.py", line 418, in exc_check
+    raise retry_exc.reraise()
+          ^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/tenacity/__init__.py", line 185, in reraise
+    raise self.last_attempt.result()
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/concurrent/futures/_base.py", line 449, in result
+    return self.__get_result()
+           ^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/concurrent/futures/_base.py", line 401, in __get_result
+    raise self._exception
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/utils/retries.py", line 102, in wrapped_function
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/jobs/job.py", line 335, in _fetch_from_db
+    session.merge(job)
+  File "/home/airflow/.local/lib/python3.12/site-packages/sqlalchemy/orm/session.py", line 3056, in merge
+    return self._merge(
+           ^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/sqlalchemy/orm/session.py", line 3136, in _merge
+    merged = self.get(
+             ^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/sqlalchemy/orm/session.py", line 2853, in get
+    return self._get_impl(
+           ^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/sqlalchemy/orm/session.py", line 2975, in _get_impl
+    return db_load_fn(
+           ^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/sqlalchemy/orm/loading.py", line 530, in load_on_pk_identity
+    session.execute(
+  File "/home/airflow/.local/lib/python3.12/site-packages/sqlalchemy/orm/session.py", line 1716, in execute
+    conn = self._connection_for_bind(bind)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/sqlalchemy/orm/session.py", line 1555, in _connection_for_bind
+    return self._transaction._connection_for_bind(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/sqlalchemy/orm/session.py", line 750, in _connection_for_bind
+    conn = bind.connect()
+           ^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/sqlalchemy/future/engine.py", line 412, in connect
+    return super(Engine, self).connect()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 3325, in connect
+    return self._connection_cls(self, close_with_result=close_with_result)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 96, in __init__
+    else engine.raw_connection()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 3404, in raw_connection
+    return self._wrap_pool_connect(self.pool.connect, _connection)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 3374, in _wrap_pool_connect
+    Connection._handle_dbapi_exception_noconnection(
+  File "/home/airflow/.local/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 2208, in _handle_dbapi_exception_noconnection
+    util.raise_(
+  File "/home/airflow/.local/lib/python3.12/site-packages/sqlalchemy/util/compat.py", line 211, in raise_
+    raise exception
+  File "/home/airflow/.local/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 3371, in _wrap_pool_connect
+    return fn()
+           ^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 327, in connect
+    return _ConnectionFairy._checkout(self)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 894, in _checkout
+    fairy = _ConnectionRecord.checkout(pool)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 493, in checkout
+    rec = pool._do_get()
+          ^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/sqlalchemy/pool/impl.py", line 256, in _do_get
+    return self._create_connection()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 273, in _create_connection
+    return _ConnectionRecord(self)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 388, in __init__
+    self.__connect()
+  File "/home/airflow/.local/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 690, in __connect
+    with util.safe_reraise():
+         ^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/sqlalchemy/util/langhelpers.py", line 70, in __exit__
+    compat.raise_(
+  File "/home/airflow/.local/lib/python3.12/site-packages/sqlalchemy/util/compat.py", line 211, in raise_
+    raise exception
+  File "/home/airflow/.local/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 686, in __connect
+    self.dbapi_connection = connection = pool._invoke_creator(self)
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/sqlalchemy/engine/create.py", line 574, in connect
+    return dialect.connect(*cargs, **cparams)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/sqlalchemy/engine/default.py", line 598, in connect
+    return self.dbapi.connect(*cargs, **cparams)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/psycopg2/__init__.py", line 122, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+sqlalchemy.exc.OperationalError: (psycopg2.OperationalError) could not translate host name "postgres" to address: Temporary failure in name resolution
+
+(Background on this error at: https://sqlalche.me/e/14/e3q8)
+[2026-04-14T22:24:57.063+0000] {job.py:254} ERROR - Job heartbeat failed with error. Scheduler is in unhealthy state
+[2026-04-14T22:25:00.996+0000] {job.py:229} INFO - Heartbeat recovered after 152.74 seconds
+[2026-04-14T22:26:56.256+0000] {stackoverflow_pipeline.py:203} INFO - Spark stdout:
+:: loading settings :: url = jar:file:/opt/spark/jars/ivy-2.5.1.jar!/org/apache/ivy/core/settings/ivysettings.xml
+2026-04-14 22:22:00,071 INFO ============================================================
+2026-04-14 22:22:00,071 INFO SILVER TRANSFORM — users_hist
+2026-04-14 22:22:00,071 INFO ============================================================
+2026-04-14 22:22:26,807 INFO Spark version: 3.5.5
+2026-04-14 22:22:26,808 INFO Leyendo Bronze: s3a://bronze/users/2019/users_2019.parquet
+2026-04-14 22:25:03,634 WARNING   ⚠️  No se pudo leer s3a://bronze/users/2019/users_2019.parquet: [PATH_NOT_FOUND] Path does not exist: s3a://bronze/users/2019/users_2019.parquet.
+2026-04-14 22:25:03,635 INFO Leyendo Bronze: s3a://bronze/users/2020/users_2020.parquet
+2026-04-14 22:25:03,780 WARNING   ⚠️  No se pudo leer s3a://bronze/users/2020/users_2020.parquet: [PATH_NOT_FOUND] Path does not exist: s3a://bronze/users/2020/users_2020.parquet.
+2026-04-14 22:25:03,780 INFO Leyendo Bronze: s3a://bronze/users/2021/users_2021.parquet
+2026-04-14 22:26:30,135 INFO   → 5,000 filas del año 2021
+2026-04-14 22:26:30,789 INFO Total filas Bronze (3 años): 5,000
+/opt/***/scripts/silver_transform.py:106: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+  .withColumn("fecha_cargue", F.lit(datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S"))
+2026-04-14 22:26:37,703 INFO Namespace 'nessie.silver' listo.
+2026-04-14 22:26:38,044 INFO Creando tabla 'nessie.silver.users_hist'...
+Traceback (most recent call last):
+  File "/opt/***/scripts/silver_transform.py", line 134, in create_table_if_not_exists
+    spark.sql(f"DESCRIBE TABLE {full_table}")
+  File "/opt/spark/python/lib/pyspark.zip/pyspark/sql/session.py", line 1631, in sql
+  File "/opt/spark/python/lib/py4j-0.10.9.7-src.zip/py4j/java_gateway.py", line 1322, in __call__
+  File "/opt/spark/python/lib/pyspark.zip/pyspark/errors/exceptions/captured.py", line 185, in deco
+pyspark.errors.exceptions.captured.AnalysisException: [TABLE_OR_VIEW_NOT_FOUND] The table or view `nessie`.`silver`.`users_hist` cannot be found. Verify the spelling and correctness of the schema and catalog.
+If you did not qualify the name with a schema, verify the current_schema() output, or qualify the name with the correct schema and catalog.
+To tolerate the error on drop use DROP VIEW IF EXISTS or DROP TABLE IF EXISTS.; line 1 pos 15;
+'DescribeRelation false, [col_name#289, data_type#290, comment#291]
++- 'UnresolvedTableOrView [nessie, silver, users_hist], DESCRIBE TABLE, true
+
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/opt/***/scripts/silver_transform.py", line 222, in <module>
+    main()
+  File "/opt/***/scripts/silver_transform.py", line 205, in main
+    create_table_if_not_exists(spark, SILVER_NS, "users_hist", df_silver)
+  File "/opt/***/scripts/silver_transform.py", line 143, in create_table_if_not_exists
+    .createOrReplace()
+     ^^^^^^^^^^^^^^^^^
+  File "/opt/spark/python/lib/pyspark.zip/pyspark/sql/readwriter.py", line 2100, in createOrReplace
+  File "/opt/spark/python/lib/py4j-0.10.9.7-src.zip/py4j/java_gateway.py", line 1322, in __call__
+  File "/opt/spark/python/lib/pyspark.zip/pyspark/errors/exceptions/captured.py", line 179, in deco
+  File "/opt/spark/python/lib/py4j-0.10.9.7-src.zip/py4j/protocol.py", line 326, in get_return_value
+py4j.protocol.Py4JJavaError: An error occurred while calling o122.createOrReplace.
+: org.apache.iceberg.exceptions.RuntimeIOException: Failed to create file: s3a://iceberg/silver/users_hist_e577e40a-5132-4d47-ba01-d8c1427ca48a/metadata/snap-2480785944954737746-1-1e071062-3462-4d88-86ad-a60f2d2ed535.avro
+	at org.apache.iceberg.hadoop.HadoopOutputFile.createOrOverwrite(HadoopOutputFile.java:87)
+	at org.apache.iceberg.avro.AvroFileAppender.<init>(AvroFileAppender.java:56)
+	at org.apache.iceberg.avro.Avro$WriteBuilder.build(Avro.java:197)
+	at org.apache.iceberg.ManifestListWriter$V2Writer.newAppender(ManifestListWriter.java:100)
+	at org.apache.iceberg.ManifestListWriter.<init>(ManifestListWriter.java:35)
+	at org.apache.iceberg.ManifestListWriter.<init>(ManifestListWriter.java:31)
+	at org.apache.iceberg.ManifestListWriter$V2Writer.<init>(ManifestListWriter.java:77)
+	at org.apache.iceberg.ManifestLists.write(ManifestLists.java:67)
+	at org.apache.iceberg.SnapshotProducer.apply(SnapshotProducer.java:241)
+	at org.apache.iceberg.SnapshotProducer.lambda$commit$2(SnapshotProducer.java:386)
+	at org.apache.iceberg.util.Tasks$Builder.runTaskWithRetry(Tasks.java:413)
+	at org.apache.iceberg.util.Tasks$Builder.runSingleThreaded(Tasks.java:219)
+	at org.apache.iceberg.util.Tasks$Builder.run(Tasks.java:203)
+	at org.apache.iceberg.util.Tasks$Builder.run(Tasks.java:196)
+	at org.apache.iceberg.SnapshotProducer.commit(SnapshotProducer.java:384)
+	at org.apache.iceberg.spark.source.SparkWrite.commitOperation(SparkWrite.java:233)
+	at org.apache.iceberg.spark.source.SparkWrite.access$1300(SparkWrite.java:84)
+	at org.apache.iceberg.spark.source.SparkWrite$BatchAppend.commit(SparkWrite.java:301)
+	at org.apache.spark.sql.execution.datasources.v2.V2TableWriteExec.writeWithV2(WriteToDataSourceV2Exec.scala:404)
+	at org.apache.spark.sql.execution.datasources.v2.V2TableWriteExec.writeWithV2$(WriteToDataSourceV2Exec.scala:364)
+	at org.apache.spark.sql.execution.datasources.v2.AppendDataExec.writeWithV2(WriteToDataSourceV2Exec.scala:230)
+	at org.apache.spark.sql.execution.datasources.v2.V2ExistingTableWriteExec.run(WriteToDataSourceV2Exec.scala:342)
+	at org.apache.spark.sql.execution.datasources.v2.V2ExistingTableWriteExec.run$(WriteToDataSourceV2Exec.scala:341)
+	at org.apache.spark.sql.execution.datasources.v2.AppendDataExec.run(WriteToDataSourceV2Exec.scala:230)
+	at org.apache.spark.sql.execution.datasources.v2.V2CommandExec.result$lzycompute(V2CommandExec.scala:43)
+	at org.apache.spark.sql.execution.datasources.v2.V2CommandExec.result(V2CommandExec.scala:43)
+	at org.apache.spark.sql.execution.datasources.v2.V2CommandExec.executeCollect(V2CommandExec.scala:49)
+	at org.apache.spark.sql.execution.QueryExecution$$anonfun$eagerlyExecuteCommands$1.$anonfun$applyOrElse$1(QueryExecution.scala:107)
+	at org.apache.spark.sql.execution.SQLExecution$.$anonfun$withNewExecutionId$6(SQLExecution.scala:125)
+	at org.apache.spark.sql.execution.SQLExecution$.withSQLConfPropagated(SQLExecution.scala:201)
+	at org.apache.spark.sql.execution.SQLExecution$.$anonfun$withNewExecutionId$1(SQLExecution.scala:108)
+	at org.apache.spark.sql.SparkSession.withActive(SparkSession.scala:900)
+	at org.apache.spark.sql.execution.SQLExecution$.withNewExecutionId(SQLExecution.scala:66)
+	at org.apache.spark.sql.execution.QueryExecution$$anonfun$eagerlyExecuteCommands$1.applyOrElse(QueryExecution.scala:107)
+	at org.apache.spark.sql.execution.QueryExecution$$anonfun$eagerlyExecuteCommands$1.applyOrElse(QueryExecution.scala:98)
+	at org.apache.spark.sql.catalyst.trees.TreeNode.$anonfun$transformDownWithPruning$1(TreeNode.scala:461)
+	at org.apache.spark.sql.catalyst.trees.CurrentOrigin$.withOrigin(origin.scala:76)
+	at org.apache.spark.sql.catalyst.trees.TreeNode.transformDownWithPruning(TreeNode.scala:461)
+	at org.apache.spark.sql.catalyst.plans.logical.LogicalPlan.org$apache$spark$sql$catalyst$plans$logical$AnalysisHelper$$super$transformDownWithPruning(LogicalPlan.scala:32)
+	at org.apache.spark.sql.catalyst.plans.logical.AnalysisHelper.transformDownWithPruning(AnalysisHelper.scala:267)
+	at org.apache.spark.sql.catalyst.plans.logical.AnalysisHelper.transformDownWithPruning$(AnalysisHelper.scala:263)
+	at org.apache.spark.sql.catalyst.plans.logical.LogicalPlan.transformDownWithPruning(LogicalPlan.scala:32)
+	at org.apache.spark.sql.catalyst.plans.logical.LogicalPlan.transformDownWithPruning(LogicalPlan.scala:32)
+	at org.apache.spark.sql.catalyst.trees.TreeNode.transformDown(TreeNode.scala:437)
+	at org.apache.spark.sql.execution.QueryExecution.eagerlyExecuteCommands(QueryExecution.scala:98)
+	at org.apache.spark.sql.execution.QueryExecution.commandExecuted$lzycompute(QueryExecution.scala:85)
+	at org.apache.spark.sql.execution.QueryExecution.commandExecuted(QueryExecution.scala:83)
+	at org.apache.spark.sql.execution.QueryExecution.assertCommandExecuted(QueryExecution.scala:142)
+	at org.apache.spark.sql.execution.datasources.v2.V2CreateTableAsSelectBaseExec.$anonfun$writeToTable$1(WriteToDataSourceV2Exec.scala:582)
+	at org.apache.spark.util.Utils$.tryWithSafeFinallyAndFailureCallbacks(Utils.scala:1397)
+	at org.apache.spark.sql.execution.datasources.v2.V2CreateTableAsSelectBaseExec.writeToTable(WriteToDataSourceV2Exec.scala:578)
+	at org.apache.spark.sql.execution.datasources.v2.V2CreateTableAsSelectBaseExec.writeToTable$(WriteToDataSourceV2Exec.scala:572)
+	at org.apache.spark.sql.execution.datasources.v2.AtomicReplaceTableAsSelectExec.writeToTable(WriteToDataSourceV2Exec.scala:186)
+	at org.apache.spark.sql.execution.datasources.v2.AtomicReplaceTableAsSelectExec.run(WriteToDataSourceV2Exec.scala:221)
+	at org.apache.spark.sql.execution.datasources.v2.V2CommandExec.result$lzycompute(V2CommandExec.scala:43)
+	at org.apache.spark.sql.execution.datasources.v2.V2CommandExec.result(V2CommandExec.scala:43)
+	at org.apache.spark.sql.execution.datasources.v2.V2CommandExec.executeCollect(V2CommandExec.scala:49)
+	at org.apache.spark.sql.execution.QueryExecution$$anonfun$eagerlyExecuteCommands$1.$anonfun$applyOrElse$1(QueryExecution.scala:107)
+	at org.apache.spark.sql.execution.SQLExecution$.$anonfun$withNewExecutionId$6(SQLExecution.scala:125)
+	at org.apache.spark.sql.execution.SQLExecution$.withSQLConfPropagated(SQLExecution.scala:201)
+	at org.apache.spark.sql.execution.SQLExecution$.$anonfun$withNewExecutionId$1(SQLExecution.scala:108)
+	at org.apache.spark.sql.SparkSession.withActive(SparkSession.scala:900)
+	at org.apache.spark.sql.execution.SQLExecution$.withNewExecutionId(SQLExecution.scala:66)
+	at org.apache.spark.sql.execution.QueryExecution$$anonfun$eagerlyExecuteCommands$1.applyOrElse(QueryExecution.scala:107)
+	at org.apache.spark.sql.execution.QueryExecution$$anonfun$eagerlyExecuteCommands$1.applyOrElse(QueryExecution.scala:98)
+	at org.apache.spark.sql.catalyst.trees.TreeNode.$anonfun$transformDownWithPruning$1(TreeNode.scala:461)
+	at org.apache.spark.sql.catalyst.trees.CurrentOrigin$.withOrigin(origin.scala:76)
+	at org.apache.spark.sql.catalyst.trees.TreeNode.transformDownWithPruning(TreeNode.scala:461)
+	at org.apache.spark.sql.catalyst.plans.logical.LogicalPlan.org$apache$spark$sql$catalyst$plans$logical$AnalysisHelper$$super$transformDownWithPruning(LogicalPlan.scala:32)
+	at org.apache.spark.sql.catalyst.plans.logical.AnalysisHelper.transformDownWithPruning(AnalysisHelper.scala:267)
+	at org.apache.spark.sql.catalyst.plans.logical.AnalysisHelper.transformDownWithPruning$(AnalysisHelper.scala:263)
+	at org.apache.spark.sql.catalyst.plans.logical.LogicalPlan.transformDownWithPruning(LogicalPlan.scala:32)
+	at org.apache.spark.sql.catalyst.plans.logical.LogicalPlan.transformDownWithPruning(LogicalPlan.scala:32)
+	at org.apache.spark.sql.catalyst.trees.TreeNode.transformDown(TreeNode.scala:437)
+	at org.apache.spark.sql.execution.QueryExecution.eagerlyExecuteCommands(QueryExecution.scala:98)
+	at org.apache.spark.sql.execution.QueryExecution.commandExecuted$lzycompute(QueryExecution.scala:85)
+	at org.apache.spark.sql.execution.QueryExecution.commandExecuted(QueryExecution.scala:83)
+	at org.apache.spark.sql.execution.QueryExecution.assertCommandExecuted(QueryExecution.scala:142)
+	at org.apache.spark.sql.DataFrameWriterV2.runCommand(DataFrameWriterV2.scala:201)
+	at org.apache.spark.sql.DataFrameWriterV2.internalReplace(DataFrameWriterV2.scala:213)
+	at org.apache.spark.sql.DataFrameWriterV2.createOrReplace(DataFrameWriterV2.scala:135)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:569)
+	at py4j.reflection.MethodInvoker.invoke(MethodInvoker.java:244)
+	at py4j.reflection.ReflectionEngine.invoke(ReflectionEngine.java:374)
+	at py4j.Gateway.invoke(Gateway.java:282)
+	at py4j.commands.AbstractCommand.invokeMethod(AbstractCommand.java:132)
+	at py4j.commands.CallCommand.execute(CallCommand.java:79)
+	at py4j.ClientServerConnection.waitForCommands(ClientServerConnection.java:182)
+	at py4j.ClientServerConnection.run(ClientServerConnection.java:106)
+	at java.base/java.lang.Thread.run(Thread.java:840)
+Caused by: org.apache.hadoop.fs.s3a.UnknownStoreException: `s3a://iceberg/silver/users_hist_e577e40a-5132-4d47-ba01-d8c1427ca48a/metadata/snap-2480785944954737746-1-1e071062-3462-4d88-86ad-a60f2d2ed535.avro': getFileStatus on s3a://iceberg/silver/users_hist_e577e40a-5132-4d47-ba01-d8c1427ca48a/metadata/snap-2480785944954737746-1-1e071062-3462-4d88-86ad-a60f2d2ed535.avro: com.amazonaws.services.s3.model.AmazonS3Exception: The specified bucket does not exist (Service: Amazon S3; Status Code: 404; Error Code: NoSuchBucket; Request ID: 18A6599872237660; S3 Extended Request ID: dd9025bab4ad464b049177c95eb6ebf374d3b3fd1af9251148b658df7ac2e3e8; Proxy: null), S3 Extended Request ID: dd9025bab4ad464b049177c95eb6ebf374d3b3fd1af9251148b658df7ac2e3e8:NoSuchBucket: The specified bucket does not exist (Service: Amazon S3; Status Code: 404; Error Code: NoSuchBucket; Request ID: 18A6599872237660; S3 Extended Request ID: dd9025bab4ad464b049177c95eb6ebf374d3b3fd1af9251148b658df7ac2e3e8; Proxy: null)
+	at org.apache.hadoop.fs.s3a.S3AUtils.translateException(S3AUtils.java:263)
+	at org.apache.hadoop.fs.s3a.S3AUtils.translateException(S3AUtils.java:175)
+	at org.apache.hadoop.fs.s3a.S3AFileSystem.s3GetFileStatus(S3AFileSystem.java:3858)
+	at org.apache.hadoop.fs.s3a.S3AFileSystem.innerGetFileStatus(S3AFileSystem.java:3688)
+	at org.apache.hadoop.fs.s3a.S3AFileSystem.innerCreateFile(S3AFileSystem.java:1682)
+	at org.apache.hadoop.fs.s3a.S3AFileSystem.lambda$create$6(S3AFileSystem.java:1646)
+	at org.apache.hadoop.fs.statistics.impl.IOStatisticsBinding.lambda$trackDurationOfOperation$5(IOStatisticsBinding.java:499)
+	at org.apache.hadoop.fs.statistics.impl.IOStatisticsBinding.trackDuration(IOStatisticsBinding.java:444)
+	at org.apache.hadoop.fs.s3a.S3AFileSystem.trackDurationAndSpan(S3AFileSystem.java:2337)
+	at org.apache.hadoop.fs.s3a.S3AFileSystem.trackDurationAndSpan(S3AFileSystem.java:2356)
+	at org.apache.hadoop.fs.s3a.S3AFileSystem.create(S3AFileSystem.java:1645)
+	at org.apache.hadoop.fs.FileSystem.create(FileSystem.java:1195)
+	at org.apache.hadoop.fs.FileSystem.create(FileSystem.java:1175)
+	at org.apache.hadoop.fs.FileSystem.create(FileSystem.java:1064)
+	at org.apache.iceberg.hadoop.HadoopOutputFile.createOrOverwrite(HadoopOutputFile.java:85)
+	... 92 more
+Caused by: com.amazonaws.services.s3.model.AmazonS3Exception: The specified bucket does not exist (Service: Amazon S3; Status Code: 404; Error Code: NoSuchBucket; Request ID: 18A6599872237660; S3 Extended Request ID: dd9025bab4ad464b049177c95eb6ebf374d3b3fd1af9251148b658df7ac2e3e8; Proxy: null), S3 Extended Request ID: dd9025bab4ad464b049177c95eb6ebf374d3b3fd1af9251148b658df7ac2e3e8
+	at com.amazonaws.http.AmazonHttpClient$RequestExecutor.handleErrorResponse(AmazonHttpClient.java:1879)
+	at com.amazonaws.http.AmazonHttpClient$RequestExecutor.handleServiceErrorResponse(AmazonHttpClient.java:1418)
+	at com.amazonaws.http.AmazonHttpClient$RequestExecutor.executeOneRequest(AmazonHttpClient.java:1387)
+	at com.amazonaws.http.AmazonHttpClient$RequestExecutor.executeHelper(AmazonHttpClient.java:1157)
+	at com.amazonaws.http.AmazonHttpClient$RequestExecutor.doExecute(AmazonHttpClient.java:814)
+	at com.amazonaws.http.AmazonHttpClient$RequestExecutor.executeWithTimer(AmazonHttpClient.java:781)
+	at com.amazonaws.http.AmazonHttpClient$RequestExecutor.execute(AmazonHttpClient.java:755)
+	at com.amazonaws.http.AmazonHttpClient$RequestExecutor.access$500(AmazonHttpClient.java:715)
+	at com.amazonaws.http.AmazonHttpClient$RequestExecutionBuilderImpl.execute(AmazonHttpClient.java:697)
+	at com.amazonaws.http.AmazonHttpClient.execute(AmazonHttpClient.java:561)
+	at com.amazonaws.http.AmazonHttpClient.execute(AmazonHttpClient.java:541)
+	at com.amazonaws.services.s3.AmazonS3Client.invoke(AmazonS3Client.java:5456)
+	at com.amazonaws.services.s3.AmazonS3Client.invoke(AmazonS3Client.java:5403)
+	at com.amazonaws.services.s3.AmazonS3Client.invoke(AmazonS3Client.java:5397)
+	at com.amazonaws.services.s3.AmazonS3Client.listObjectsV2(AmazonS3Client.java:971)
+	at org.apache.hadoop.fs.s3a.S3AFileSystem.lambda$listObjects$11(S3AFileSystem.java:2595)
+	at org.apache.hadoop.fs.statistics.impl.IOStatisticsBinding.lambda$trackDurationOfOperation$5(IOStatisticsBinding.java:499)
+	at org.apache.hadoop.fs.s3a.Invoker.retryUntranslated(Invoker.java:414)
+	at org.apache.hadoop.fs.s3a.Invoker.retryUntranslated(Invoker.java:377)
+	at org.apache.hadoop.fs.s3a.S3AFileSystem.listObjects(S3AFileSystem.java:2586)
+	at org.apache.hadoop.fs.s3a.S3AFileSystem.s3GetFileStatus(S3AFileSystem.java:3832)
+	... 104 more
+
+2026-04-14 22:26:54,922 INFO Closing down clientserver connection
+
+[2026-04-14T22:26:56.770+0000] {stackoverflow_pipeline.py:205} ERROR - Spark stderr:
+/opt/spark/bin/load-spark-env.sh: line 68: ps: command not found
+Using properties file: null
+Parsed arguments:
+  master                  spark://spark-master:7077
+  remote                  null
+  deployMode              client
+  executorMemory          2g
+  executorCores           2
+  totalExecutorCores      null
+  propertiesFile          null
+  driverMemory            1g
+  driverCores             null
+  driverExtraClassPath    null
+  driverExtraLibraryPath  null
+  driverExtraJavaOptions  null
+  supervise               false
+  queue                   null
+  numExecutors            1
+  files                   null
+  pyFiles                 null
+  archives                null
+  mainClass               null
+  primaryResource         file:/opt/***/scripts/silver_transform.py
+  name                    silver_users_hist
+  childArgs               []
+  jars                    null
+  packages                org.apache.iceberg:iceberg-spark-runtime-3.5_2.12:1.6.1,org.projectnessie.nessie-integrations:nessie-spark-extensions-3.5_2.12:0.95.0,org.apache.hadoop:hadoop-aws:3.3.4,com.amazonaws:aws-java-sdk-bundle:1.12.262
+  packagesExclusions      null
+  repositories            null
+  verbose                 true
+
+Spark properties used, including those specified through
+ --conf and those from the properties file null:
+  (spark.driver.bindAddress,0.0.0.0)
+  (spark.driver.memory,1g)
+  (spark.executor.cores,2)
+  (spark.executor.instances,1)
+  (spark.executor.memory,2g)
+  (spark.hadoop.fs.s3a.access.key,*********(redacted))
+  (spark.hadoop.fs.s3a.aws.credentials.provider,org.apache.hadoop.fs.s3a.SimpleAWSCredentialsProvider)
+  (spark.hadoop.fs.s3a.connection.ssl.enabled,false)
+  (spark.hadoop.fs.s3a.endpoint,http://proyecto2-minio:9000)
+  (spark.hadoop.fs.s3a.impl,org.apache.hadoop.fs.s3a.S3AFileSystem)
+  (spark.hadoop.fs.s3a.path.style.access,true)
+  (spark.hadoop.fs.s3a.secret.key,*********(redacted))
+  (spark.sql.catalog.nessie,org.apache.iceberg.spark.SparkCatalog)
+  (spark.sql.catalog.nessie.authentication.type,NONE)
+  (spark.sql.catalog.nessie.catalog-impl,org.apache.iceberg.nessie.NessieCatalog)
+  (spark.sql.catalog.nessie.ref,main)
+  (spark.sql.catalog.nessie.uri,http://proyecto2-nessie:19120/api/v1)
+  (spark.sql.catalog.nessie.warehouse,s3a://iceberg/)
+  (spark.sql.extensions,org.apache.iceberg.spark.extensions.IcebergSparkSessionExtensions,org.projectnessie.spark.extensions.NessieSparkSessionExtensions)
+  (spark.submit.deployMode,client)
+
+    
+Ivy Default Cache set to: /home/***/.ivy2/cache
+The jars for the packages stored in: /home/***/.ivy2/jars
+org.apache.iceberg#iceberg-spark-runtime-3.5_2.12 added as a dependency
+org.projectnessie.nessie-integrations#nessie-spark-extensions-3.5_2.12 added as a dependency
+org.apache.hadoop#hadoop-aws added as a dependency
+com.amazonaws#aws-java-sdk-bundle added as a dependency
+:: resolving dependencies :: org.apache.spark#spark-submit-parent-57e29dea-b60c-4e1b-8fd3-ca91f2eea14d;1.0
+	confs: [default]
+You probably access the destination server through a proxy server that is not well configured.
+	found org.apache.iceberg#iceberg-spark-runtime-3.5_2.12;1.6.1 in central
+	found org.projectnessie.nessie-integrations#nessie-spark-extensions-3.5_2.12;0.95.0 in central
+	found org.apache.hadoop#hadoop-aws;3.3.4 in central
+	found com.amazonaws#aws-java-sdk-bundle;1.12.262 in central
+	found org.wildfly.openssl#wildfly-openssl;1.0.7.Final in central
+downloading https://repo1.maven.org/maven2/org/apache/iceberg/iceberg-spark-runtime-3.5_2.12/1.6.1/iceberg-spark-runtime-3.5_2.12-1.6.1.jar ...
+	[SUCCESSFUL ] org.apache.iceberg#iceberg-spark-runtime-3.5_2.12;1.6.1!iceberg-spark-runtime-3.5_2.12.jar (14795ms)
+downloading https://repo1.maven.org/maven2/org/projectnessie/nessie-integrations/nessie-spark-extensions-3.5_2.12/0.95.0/nessie-spark-extensions-3.5_2.12-0.95.0.jar ...
+	[SUCCESSFUL ] org.projectnessie.nessie-integrations#nessie-spark-extensions-3.5_2.12;0.95.0!nessie-spark-extensions-3.5_2.12.jar (596ms)
+downloading https://repo1.maven.org/maven2/org/apache/hadoop/hadoop-aws/3.3.4/hadoop-aws-3.3.4.jar ...
+	[SUCCESSFUL ] org.apache.hadoop#hadoop-aws;3.3.4!hadoop-aws.jar (304ms)
+downloading https://repo1.maven.org/maven2/com/amazonaws/aws-java-sdk-bundle/1.12.262/aws-java-sdk-bundle-1.12.262.jar ...
+	[SUCCESSFUL ] com.amazonaws#aws-java-sdk-bundle;1.12.262!aws-java-sdk-bundle.jar (84379ms)
+downloading https://repo1.maven.org/maven2/org/wildfly/openssl/wildfly-openssl/1.0.7.Final/wildfly-openssl-1.0.7.Final.jar ...
+	[SUCCESSFUL ] org.wildfly.openssl#wildfly-openssl;1.0.7.Final!wildfly-openssl.jar (230ms)
+:: resolution report :: resolve 154935ms :: artifacts dl 100385ms
+	:: modules in use:
+	com.amazonaws#aws-java-sdk-bundle;1.12.262 from central in [default]
+	org.apache.hadoop#hadoop-aws;3.3.4 from central in [default]
+	org.apache.iceberg#iceberg-spark-runtime-3.5_2.12;1.6.1 from central in [default]
+	org.projectnessie.nessie-integrations#nessie-spark-extensions-3.5_2.12;0.95.0 from central in [default]
+	org.wildfly.openssl#wildfly-openssl;1.0.7.Final from central in [default]
+	---------------------------------------------------------------------
+	|                  |            modules            ||   artifacts   |
+	|       conf       | number| search|dwnlded|evicted|| number|dwnlded|
+	---------------------------------------------------------------------
+	|      default     |   5   |   5   |   4   |   0   ||   5   |   5   |
+	---------------------------------------------------------------------
+
+:: problems summary ::
+:::: WARNINGS
+	Host repo1.maven.org not found. url=https://repo1.maven.org/maven2/org/apache/iceberg/iceberg-spark-runtime-3.5_2.12/1.6.1/iceberg-spark-runtime-3.5_2.12-1.6.1.pom
+
+
+:: USE VERBOSE OR DEBUG MESSAGE LEVEL FOR MORE DETAILS
+:: retrieving :: org.apache.spark#spark-submit-parent-57e29dea-b60c-4e1b-8fd3-ca91f2eea14d
+	confs: [default]
+	5 artifacts copied, 0 already retrieved (318749kB/16445ms)
+26/04/14 22:21:55 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+Main class:
+org.apache.spark.deploy.PythonRunner
+Arguments:
+file:/opt/***/scripts/silver_transform.py
+file:///home/***/.ivy2/jars/org.apache.iceberg_iceberg-spark-runtime-3.5_2.12-1.6.1.jar,file:///home/***/.ivy2/jars/org.projectnessie.nessie-integrations_nessie-spark-extensions-3.5_2.12-0.95.0.jar,file:///home/***/.ivy2/jars/org.apache.hadoop_hadoop-aws-3.3.4.jar,file:///home/***/.ivy2/jars/com.amazonaws_aws-java-sdk-bundle-1.12.262.jar,file:///home/***/.ivy2/jars/org.wildfly.openssl_wildfly-openssl-1.0.7.Final.jar
+Spark config:
+(spark.app.name,silver_users_hist)
+(spark.app.submitTime,1776205316866)
+(spark.driver.bindAddress,0.0.0.0)
+(spark.driver.memory,1g)
+(spark.executor.cores,2)
+(spark.executor.instances,1)
+(spark.executor.memory,2g)
+(spark.files,file:///home/***/.ivy2/jars/org.apache.iceberg_iceberg-spark-runtime-3.5_2.12-1.6.1.jar,file:///home/***/.ivy2/jars/org.projectnessie.nessie-integrations_nessie-spark-extensions-3.5_2.12-0.95.0.jar,file:///home/***/.ivy2/jars/org.apache.hadoop_hadoop-aws-3.3.4.jar,file:///home/***/.ivy2/jars/com.amazonaws_aws-java-sdk-bundle-1.12.262.jar,file:///home/***/.ivy2/jars/org.wildfly.openssl_wildfly-openssl-1.0.7.Final.jar)
+(spark.hadoop.fs.s3a.access.key,*********(redacted))
+(spark.hadoop.fs.s3a.aws.credentials.provider,org.apache.hadoop.fs.s3a.SimpleAWSCredentialsProvider)
+(spark.hadoop.fs.s3a.connection.ssl.enabled,false)
+(spark.hadoop.fs.s3a.endpoint,http://proyecto2-minio:9000)
+(spark.hadoop.fs.s3a.impl,org.apache.hadoop.fs.s3a.S3AFileSystem)
+(spark.hadoop.fs.s3a.path.style.access,true)
+(spark.hadoop.fs.s3a.secret.key,*********(redacted))
+(spark.jars,file:///home/***/.ivy2/jars/org.apache.iceberg_iceberg-spark-runtime-3.5_2.12-1.6.1.jar,file:///home/***/.ivy2/jars/org.projectnessie.nessie-integrations_nessie-spark-extensions-3.5_2.12-0.95.0.jar,file:///home/***/.ivy2/jars/org.apache.hadoop_hadoop-aws-3.3.4.jar,file:///home/***/.ivy2/jars/com.amazonaws_aws-java-sdk-bundle-1.12.262.jar,file:///home/***/.ivy2/jars/org.wildfly.openssl_wildfly-openssl-1.0.7.Final.jar)
+(spark.master,spark://spark-master:7077)
+(spark.repl.local.jars,file:///home/***/.ivy2/jars/org.apache.iceberg_iceberg-spark-runtime-3.5_2.12-1.6.1.jar,file:///home/***/.ivy2/jars/org.projectnessie.nessie-integrations_nessie-spark-extensions-3.5_2.12-0.95.0.jar,file:///home/***/.ivy2/jars/org.apache.hadoop_hadoop-aws-3.3.4.jar,file:///home/***/.ivy2/jars/com.amazonaws_aws-java-sdk-bundle-1.12.262.jar,file:///home/***/.ivy2/jars/org.wildfly.openssl_wildfly-openssl-1.0.7.Final.jar)
+(spark.sql.catalog.nessie,org.apache.iceberg.spark.SparkCatalog)
+(spark.sql.catalog.nessie.authentication.type,NONE)
+(spark.sql.catalog.nessie.catalog-impl,org.apache.iceberg.nessie.NessieCatalog)
+(spark.sql.catalog.nessie.ref,main)
+(spark.sql.catalog.nessie.uri,http://proyecto2-nessie:19120/api/v1)
+(spark.sql.catalog.nessie.warehouse,s3a://iceberg/)
+(spark.sql.extensions,org.apache.iceberg.spark.extensions.IcebergSparkSessionExtensions,org.projectnessie.spark.extensions.NessieSparkSessionExtensions)
+(spark.submit.deployMode,client)
+(spark.submit.pyFiles,/home/***/.ivy2/jars/org.apache.iceberg_iceberg-spark-runtime-3.5_2.12-1.6.1.jar,/home/***/.ivy2/jars/org.projectnessie.nessie-integrations_nessie-spark-extensions-3.5_2.12-0.95.0.jar,/home/***/.ivy2/jars/org.apache.hadoop_hadoop-aws-3.3.4.jar,/home/***/.ivy2/jars/com.amazonaws_aws-java-sdk-bundle-1.12.262.jar,/home/***/.ivy2/jars/org.wildfly.openssl_wildfly-openssl-1.0.7.Final.jar)
+Classpath elements:
+file:///home/***/.ivy2/jars/org.apache.iceberg_iceberg-spark-runtime-3.5_2.12-1.6.1.jar
+file:///home/***/.ivy2/jars/org.projectnessie.nessie-integrations_nessie-spark-extensions-3.5_2.12-0.95.0.jar
+file:///home/***/.ivy2/jars/org.apache.hadoop_hadoop-aws-3.3.4.jar
+file:///home/***/.ivy2/jars/com.amazonaws_aws-java-sdk-bundle-1.12.262.jar
+file:///home/***/.ivy2/jars/org.wildfly.openssl_wildfly-openssl-1.0.7.Final.jar
+
+
+26/04/14 22:22:02 INFO SparkContext: Running Spark version 3.5.5
+26/04/14 22:22:02 INFO SparkContext: OS info Linux, 5.15.153.1-microsoft-standard-WSL2, amd64
+26/04/14 22:22:02 INFO SparkContext: Java version 17.0.18
+26/04/14 22:22:02 INFO ResourceUtils: ==============================================================
+26/04/14 22:22:02 INFO ResourceUtils: No custom resources configured for spark.driver.
+26/04/14 22:22:02 INFO ResourceUtils: ==============================================================
+26/04/14 22:22:02 INFO SparkContext: Submitted application: silver_users_hist
+26/04/14 22:22:02 INFO ResourceProfile: Default ResourceProfile created, executor resources: Map(cores -> name: cores, amount: 2, script: , vendor: , memory -> name: memory, amount: 2048, script: , vendor: , offHeap -> name: offHeap, amount: 0, script: , vendor: ), task resources: Map(cpus -> name: cpus, amount: 1.0)
+26/04/14 22:22:02 INFO ResourceProfile: Limiting resource is cpus at 2 tasks per executor
+26/04/14 22:22:02 INFO ResourceProfileManager: Added ResourceProfile id: 0
+26/04/14 22:22:02 INFO SecurityManager: Changing view acls to: ***
+26/04/14 22:22:02 INFO SecurityManager: Changing modify acls to: ***
+26/04/14 22:22:02 INFO SecurityManager: Changing view acls groups to: 
+26/04/14 22:22:02 INFO SecurityManager: Changing modify acls groups to: 
+26/04/14 22:22:02 INFO SecurityManager: SecurityManager: authentication disabled; ui acls disabled; users with view permissions: ***; groups with view permissions: EMPTY; users with modify permissions: ***; groups with modify permissions: EMPTY
+26/04/14 22:22:05 INFO Utils: Successfully started service 'sparkDriver' on port 43465.
+26/04/14 22:22:05 INFO SparkEnv: Registering MapOutputTracker
+26/04/14 22:22:06 INFO SparkEnv: Registering BlockManagerMaster
+26/04/14 22:22:06 INFO BlockManagerMasterEndpoint: Using org.apache.spark.storage.DefaultTopologyMapper for getting topology information
+26/04/14 22:22:06 INFO BlockManagerMasterEndpoint: BlockManagerMasterEndpoint up
+26/04/14 22:22:06 INFO SparkEnv: Registering BlockManagerMasterHeartbeat
+26/04/14 22:22:06 INFO DiskBlockManager: Created local directory at /tmp/blockmgr-901cf532-bc52-46fd-84e0-a8baf2b5665c
+26/04/14 22:22:06 INFO MemoryStore: MemoryStore started with capacity 434.4 MiB
+26/04/14 22:22:06 INFO SparkEnv: Registering OutputCommitCoordinator
+26/04/14 22:22:08 INFO JettyUtils: Start Jetty 0.0.0.0:4040 for SparkUI
+26/04/14 22:22:09 INFO Utils: Successfully started service 'SparkUI' on port 4040.
+26/04/14 22:22:10 INFO SparkContext: Added JAR file:///home/***/.ivy2/jars/org.apache.iceberg_iceberg-spark-runtime-3.5_2.12-1.6.1.jar at spark://8b380e51bf92:43465/jars/org.apache.iceberg_iceberg-spark-runtime-3.5_2.12-1.6.1.jar with timestamp 1776205322225
+26/04/14 22:22:10 INFO SparkContext: Added JAR file:///home/***/.ivy2/jars/org.projectnessie.nessie-integrations_nessie-spark-extensions-3.5_2.12-0.95.0.jar at spark://8b380e51bf92:43465/jars/org.projectnessie.nessie-integrations_nessie-spark-extensions-3.5_2.12-0.95.0.jar with timestamp 1776205322225
+26/04/14 22:22:10 INFO SparkContext: Added JAR file:///home/***/.ivy2/jars/org.apache.hadoop_hadoop-aws-3.3.4.jar at spark://8b380e51bf92:43465/jars/org.apache.hadoop_hadoop-aws-3.3.4.jar with timestamp 1776205322225
+26/04/14 22:22:10 INFO SparkContext: Added JAR file:///home/***/.ivy2/jars/com.amazonaws_aws-java-sdk-bundle-1.12.262.jar at spark://8b380e51bf92:43465/jars/com.amazonaws_aws-java-sdk-bundle-1.12.262.jar with timestamp 1776205322225
+26/04/14 22:22:10 INFO SparkContext: Added JAR file:///home/***/.ivy2/jars/org.wildfly.openssl_wildfly-openssl-1.0.7.Final.jar at spark://8b380e51bf92:43465/jars/org.wildfly.openssl_wildfly-openssl-1.0.7.Final.jar with timestamp 1776205322225
+26/04/14 22:22:10 INFO SparkContext: Added file file:///home/***/.ivy2/jars/org.apache.iceberg_iceberg-spark-runtime-3.5_2.12-1.6.1.jar at spark://8b380e51bf92:43465/files/org.apache.iceberg_iceberg-spark-runtime-3.5_2.12-1.6.1.jar with timestamp 1776205322225
+26/04/14 22:22:10 INFO Utils: Copying /home/***/.ivy2/jars/org.apache.iceberg_iceberg-spark-runtime-3.5_2.12-1.6.1.jar to /tmp/spark-974a3e10-a2f7-4441-af6a-f166ce120673/userFiles-c29ae198-7c91-4456-b9b3-5165e7f1b8b5/org.apache.iceberg_iceberg-spark-runtime-3.5_2.12-1.6.1.jar
+26/04/14 22:22:12 INFO SparkContext: Added file file:///home/***/.ivy2/jars/org.projectnessie.nessie-integrations_nessie-spark-extensions-3.5_2.12-0.95.0.jar at spark://8b380e51bf92:43465/files/org.projectnessie.nessie-integrations_nessie-spark-extensions-3.5_2.12-0.95.0.jar with timestamp 1776205322225
+26/04/14 22:22:12 INFO Utils: Copying /home/***/.ivy2/jars/org.projectnessie.nessie-integrations_nessie-spark-extensions-3.5_2.12-0.95.0.jar to /tmp/spark-974a3e10-a2f7-4441-af6a-f166ce120673/userFiles-c29ae198-7c91-4456-b9b3-5165e7f1b8b5/org.projectnessie.nessie-integrations_nessie-spark-extensions-3.5_2.12-0.95.0.jar
+26/04/14 22:22:12 INFO SparkContext: Added file file:///home/***/.ivy2/jars/org.apache.hadoop_hadoop-aws-3.3.4.jar at spark://8b380e51bf92:43465/files/org.apache.hadoop_hadoop-aws-3.3.4.jar with timestamp 1776205322225
+26/04/14 22:22:12 INFO Utils: Copying /home/***/.ivy2/jars/org.apache.hadoop_hadoop-aws-3.3.4.jar to /tmp/spark-974a3e10-a2f7-4441-af6a-f166ce120673/userFiles-c29ae198-7c91-4456-b9b3-5165e7f1b8b5/org.apache.hadoop_hadoop-aws-3.3.4.jar
+26/04/14 22:22:12 INFO SparkContext: Added file file:///home/***/.ivy2/jars/com.amazonaws_aws-java-sdk-bundle-1.12.262.jar at spark://8b380e51bf92:43465/files/com.amazonaws_aws-java-sdk-bundle-1.12.262.jar with timestamp 1776205322225
+26/04/14 22:22:12 INFO Utils: Copying /home/***/.ivy2/jars/com.amazonaws_aws-java-sdk-bundle-1.12.262.jar to /tmp/spark-974a3e10-a2f7-4441-af6a-f166ce120673/userFiles-c29ae198-7c91-4456-b9b3-5165e7f1b8b5/com.amazonaws_aws-java-sdk-bundle-1.12.262.jar
+26/04/14 22:22:21 INFO SparkContext: Added file file:///home/***/.ivy2/jars/org.wildfly.openssl_wildfly-openssl-1.0.7.Final.jar at spark://8b380e51bf92:43465/files/org.wildfly.openssl_wildfly-openssl-1.0.7.Final.jar with timestamp 1776205322225
+26/04/14 22:22:21 INFO Utils: Copying /home/***/.ivy2/jars/org.wildfly.openssl_wildfly-openssl-1.0.7.Final.jar to /tmp/spark-974a3e10-a2f7-4441-af6a-f166ce120673/userFiles-c29ae198-7c91-4456-b9b3-5165e7f1b8b5/org.wildfly.openssl_wildfly-openssl-1.0.7.Final.jar
+26/04/14 22:22:22 INFO StandaloneAppClient$ClientEndpoint: Connecting to master spark://spark-master:7077...
+26/04/14 22:22:23 INFO TransportClientFactory: Successfully created connection to spark-master/172.19.0.7:7077 after 133 ms (0 ms spent in bootstraps)
+26/04/14 22:22:25 INFO StandaloneSchedulerBackend: Connected to Spark cluster with app ID app-20260414222225-0000
+26/04/14 22:22:25 INFO Utils: Successfully started service 'org.apache.spark.network.netty.NettyBlockTransferService' on port 35583.
+26/04/14 22:22:25 INFO NettyBlockTransferService: Server created on 8b380e51bf92 0.0.0.0:35583
+26/04/14 22:22:25 INFO BlockManager: Using org.apache.spark.storage.RandomBlockReplicationPolicy for block replication policy
+26/04/14 22:22:25 INFO BlockManagerMaster: Registering BlockManager BlockManagerId(driver, 8b380e51bf92, 35583, None)
+26/04/14 22:22:25 INFO StandaloneAppClient$ClientEndpoint: Executor added: app-20260414222225-0000/0 on worker-20260414215836-172.19.0.8-38577 (172.19.0.8:38577) with 2 core(s)
+26/04/14 22:22:25 INFO BlockManagerMasterEndpoint: Registering block manager 8b380e51bf92:35583 with 434.4 MiB RAM, BlockManagerId(driver, 8b380e51bf92, 35583, None)
+26/04/14 22:22:25 INFO StandaloneSchedulerBackend: Granted executor ID app-20260414222225-0000/0 on hostPort 172.19.0.8:38577 with 2 core(s), 2.0 GiB RAM
+26/04/14 22:22:25 INFO StandaloneAppClient$ClientEndpoint: Executor added: app-20260414222225-0000/1 on worker-20260414215836-172.19.0.8-38577 (172.19.0.8:38577) with 2 core(s)
+26/04/14 22:22:25 INFO StandaloneSchedulerBackend: Granted executor ID app-20260414222225-0000/1 on hostPort 172.19.0.8:38577 with 2 core(s), 2.0 GiB RAM
+26/04/14 22:22:25 INFO BlockManagerMaster: Registered BlockManager BlockManagerId(driver, 8b380e51bf92, 35583, None)
+26/04/14 22:22:25 INFO BlockManager: Initialized BlockManager: BlockManagerId(driver, 8b380e51bf92, 35583, None)
+26/04/14 22:22:26 INFO StandaloneSchedulerBackend: SchedulerBackend is ready for scheduling beginning after reached minRegisteredResourcesRatio: 0.0
+26/04/14 22:22:26 INFO SharedState: Setting hive.metastore.warehouse.dir ('null') to the value of spark.sql.warehouse.dir.
+26/04/14 22:22:26 INFO SharedState: Warehouse path is 'file:/opt/***/spark-warehouse'.
+26/04/14 22:22:28 INFO StandaloneAppClient$ClientEndpoint: Executor updated: app-20260414222225-0000/0 is now RUNNING
+26/04/14 22:22:28 INFO StandaloneAppClient$ClientEndpoint: Executor updated: app-20260414222225-0000/1 is now RUNNING
+26/04/14 22:24:56 WARN MetricsConfig: Cannot locate configuration: tried hadoop-metrics2-s3a-file-system.properties,hadoop-metrics2.properties
+26/04/14 22:24:56 INFO MetricsSystemImpl: Scheduled Metric snapshot period at 10 second(s).
+26/04/14 22:24:56 INFO MetricsSystemImpl: s3a-file-system metrics system started
+26/04/14 22:25:04 INFO InMemoryFileIndex: It took 227 ms to list leaf files for 1 paths.
+26/04/14 22:25:05 INFO SparkContext: Starting job: parquet at NativeMethodAccessorImpl.java:0
+26/04/14 22:25:05 INFO DAGScheduler: Got job 0 (parquet at NativeMethodAccessorImpl.java:0) with 1 output partitions
+26/04/14 22:25:05 INFO DAGScheduler: Final stage: ResultStage 0 (parquet at NativeMethodAccessorImpl.java:0)
+26/04/14 22:25:05 INFO DAGScheduler: Parents of final stage: List()
+26/04/14 22:25:05 INFO DAGScheduler: Missing parents: List()
+26/04/14 22:25:05 INFO DAGScheduler: Submitting ResultStage 0 (MapPartitionsRDD[1] at parquet at NativeMethodAccessorImpl.java:0), which has no missing parents
+26/04/14 22:25:05 INFO MemoryStore: Block broadcast_0 stored as values in memory (estimated size 108.1 KiB, free 434.3 MiB)
+26/04/14 22:25:05 INFO MemoryStore: Block broadcast_0_piece0 stored as bytes in memory (estimated size 39.3 KiB, free 434.3 MiB)
+26/04/14 22:25:05 INFO BlockManagerInfo: Added broadcast_0_piece0 in memory on 8b380e51bf92:35583 (size: 39.3 KiB, free: 434.4 MiB)
+26/04/14 22:25:05 INFO SparkContext: Created broadcast 0 from broadcast at DAGScheduler.scala:1585
+26/04/14 22:25:05 INFO DAGScheduler: Submitting 1 missing tasks from ResultStage 0 (MapPartitionsRDD[1] at parquet at NativeMethodAccessorImpl.java:0) (first 15 tasks are for partitions Vector(0))
+26/04/14 22:25:05 INFO TaskSchedulerImpl: Adding task set 0.0 with 1 tasks resource profile 0
+26/04/14 22:25:08 INFO StandaloneSchedulerBackend$StandaloneDriverEndpoint: Registered executor NettyRpcEndpointRef(spark-client://Executor) (172.19.0.8:49340) with ID 1,  ResourceProfileId 0
+26/04/14 22:25:08 INFO StandaloneSchedulerBackend$StandaloneDriverEndpoint: Registered executor NettyRpcEndpointRef(spark-client://Executor) (172.19.0.8:49346) with ID 0,  ResourceProfileId 0
+26/04/14 22:25:08 INFO BlockManagerMasterEndpoint: Registering block manager 172.19.0.8:40855 with 1048.8 MiB RAM, BlockManagerId(0, 172.19.0.8, 40855, None)
+26/04/14 22:25:08 INFO BlockManagerMasterEndpoint: Registering block manager 172.19.0.8:45527 with 1048.8 MiB RAM, BlockManagerId(1, 172.19.0.8, 45527, None)
+26/04/14 22:26:15 INFO TaskSetManager: Starting task 0.0 in stage 0.0 (TID 0) (172.19.0.8, executor 1, partition 0, PROCESS_LOCAL, 10265 bytes) 
+26/04/14 22:26:16 INFO BlockManagerInfo: Added broadcast_0_piece0 in memory on 172.19.0.8:45527 (size: 39.3 KiB, free: 1048.8 MiB)
+26/04/14 22:26:22 INFO TaskSetManager: Finished task 0.0 in stage 0.0 (TID 0) in 6799 ms on 172.19.0.8 (executor 1) (1/1)
+26/04/14 22:26:22 INFO TaskSchedulerImpl: Removed TaskSet 0.0, whose tasks have all completed, from pool 
+26/04/14 22:26:22 INFO DAGScheduler: ResultStage 0 (parquet at NativeMethodAccessorImpl.java:0) finished in 76.713 s
+26/04/14 22:26:22 INFO DAGScheduler: Job 0 is finished. Cancelling potential speculative or zombie tasks for this job
+26/04/14 22:26:22 INFO TaskSchedulerImpl: Killing all running tasks in stage 0: Stage finished
+26/04/14 22:26:22 INFO DAGScheduler: Job 0 finished: parquet at NativeMethodAccessorImpl.java:0, took 76.466095 s
+26/04/14 22:26:23 INFO BlockManagerInfo: Removed broadcast_0_piece0 on 8b380e51bf92:35583 in memory (size: 39.3 KiB, free: 434.4 MiB)
+26/04/14 22:26:23 INFO BlockManagerInfo: Removed broadcast_0_piece0 on 172.19.0.8:45527 in memory (size: 39.3 KiB, free: 1048.8 MiB)
+26/04/14 22:26:26 INFO FileSourceStrategy: Pushed Filters: 
+26/04/14 22:26:26 INFO FileSourceStrategy: Post-Scan Filters: 
+26/04/14 22:26:27 INFO CodeGenerator: Code generated in 364.806977 ms
+26/04/14 22:26:27 INFO MemoryStore: Block broadcast_1 stored as values in memory (estimated size 208.4 KiB, free 434.2 MiB)
+26/04/14 22:26:27 INFO MemoryStore: Block broadcast_1_piece0 stored as bytes in memory (estimated size 36.7 KiB, free 434.2 MiB)
+26/04/14 22:26:27 INFO BlockManagerInfo: Added broadcast_1_piece0 in memory on 8b380e51bf92:35583 (size: 36.7 KiB, free: 434.4 MiB)
+26/04/14 22:26:27 INFO SparkContext: Created broadcast 1 from count at NativeMethodAccessorImpl.java:0
+26/04/14 22:26:27 INFO FileSourceScanExec: Planning scan with bin packing, max size: 4194304 bytes, open cost is considered as scanning 4194304 bytes.
+26/04/14 22:26:27 INFO DAGScheduler: Registering RDD 5 (count at NativeMethodAccessorImpl.java:0) as input to shuffle 0
+26/04/14 22:26:27 INFO DAGScheduler: Got map stage job 1 (count at NativeMethodAccessorImpl.java:0) with 1 output partitions
+26/04/14 22:26:27 INFO DAGScheduler: Final stage: ShuffleMapStage 1 (count at NativeMethodAccessorImpl.java:0)
+26/04/14 22:26:27 INFO DAGScheduler: Parents of final stage: List()
+26/04/14 22:26:27 INFO DAGScheduler: Missing parents: List()
+26/04/14 22:26:27 INFO DAGScheduler: Submitting ShuffleMapStage 1 (MapPartitionsRDD[5] at count at NativeMethodAccessorImpl.java:0), which has no missing parents
+26/04/14 22:26:27 INFO MemoryStore: Block broadcast_2 stored as values in memory (estimated size 17.0 KiB, free 434.1 MiB)
+26/04/14 22:26:27 INFO MemoryStore: Block broadcast_2_piece0 stored as bytes in memory (estimated size 7.8 KiB, free 434.1 MiB)
+26/04/14 22:26:27 INFO BlockManagerInfo: Added broadcast_2_piece0 in memory on 8b380e51bf92:35583 (size: 7.8 KiB, free: 434.4 MiB)
+26/04/14 22:26:27 INFO SparkContext: Created broadcast 2 from broadcast at DAGScheduler.scala:1585
+26/04/14 22:26:27 INFO DAGScheduler: Submitting 1 missing tasks from ShuffleMapStage 1 (MapPartitionsRDD[5] at count at NativeMethodAccessorImpl.java:0) (first 15 tasks are for partitions Vector(0))
+26/04/14 22:26:27 INFO TaskSchedulerImpl: Adding task set 1.0 with 1 tasks resource profile 0
+26/04/14 22:26:27 INFO TaskSetManager: Starting task 0.0 in stage 1.0 (TID 1) (172.19.0.8, executor 1, partition 0, PROCESS_LOCAL, 10759 bytes) 
+26/04/14 22:26:27 INFO BlockManagerInfo: Added broadcast_2_piece0 in memory on 172.19.0.8:45527 (size: 7.8 KiB, free: 1048.8 MiB)
+26/04/14 22:26:28 INFO BlockManagerInfo: Added broadcast_1_piece0 in memory on 172.19.0.8:45527 (size: 36.7 KiB, free: 1048.8 MiB)
+26/04/14 22:26:29 INFO TaskSetManager: Finished task 0.0 in stage 1.0 (TID 1) in 1645 ms on 172.19.0.8 (executor 1) (1/1)
+26/04/14 22:26:29 INFO TaskSchedulerImpl: Removed TaskSet 1.0, whose tasks have all completed, from pool 
+26/04/14 22:26:29 INFO DAGScheduler: ShuffleMapStage 1 (count at NativeMethodAccessorImpl.java:0) finished in 1.750 s
+26/04/14 22:26:29 INFO DAGScheduler: looking for newly runnable stages
+26/04/14 22:26:29 INFO DAGScheduler: running: Set()
+26/04/14 22:26:29 INFO DAGScheduler: waiting: Set()
+26/04/14 22:26:29 INFO DAGScheduler: failed: Set()
+26/04/14 22:26:29 INFO CodeGenerator: Code generated in 20.208054 ms
+26/04/14 22:26:29 INFO SparkContext: Starting job: count at NativeMethodAccessorImpl.java:0
+26/04/14 22:26:29 INFO DAGScheduler: Got job 2 (count at NativeMethodAccessorImpl.java:0) with 1 output partitions
+26/04/14 22:26:29 INFO DAGScheduler: Final stage: ResultStage 3 (count at NativeMethodAccessorImpl.java:0)
+26/04/14 22:26:29 INFO DAGScheduler: Parents of final stage: List(ShuffleMapStage 2)
+26/04/14 22:26:29 INFO DAGScheduler: Missing parents: List()
+26/04/14 22:26:29 INFO DAGScheduler: Submitting ResultStage 3 (MapPartitionsRDD[8] at count at NativeMethodAccessorImpl.java:0), which has no missing parents
+26/04/14 22:26:29 INFO MemoryStore: Block broadcast_3 stored as values in memory (estimated size 12.5 KiB, free 434.1 MiB)
+26/04/14 22:26:29 INFO MemoryStore: Block broadcast_3_piece0 stored as bytes in memory (estimated size 5.9 KiB, free 434.1 MiB)
+26/04/14 22:26:29 INFO BlockManagerInfo: Added broadcast_3_piece0 in memory on 8b380e51bf92:35583 (size: 5.9 KiB, free: 434.4 MiB)
+26/04/14 22:26:29 INFO SparkContext: Created broadcast 3 from broadcast at DAGScheduler.scala:1585
+26/04/14 22:26:29 INFO DAGScheduler: Submitting 1 missing tasks from ResultStage 3 (MapPartitionsRDD[8] at count at NativeMethodAccessorImpl.java:0) (first 15 tasks are for partitions Vector(0))
+26/04/14 22:26:29 INFO TaskSchedulerImpl: Adding task set 3.0 with 1 tasks resource profile 0
+26/04/14 22:26:29 INFO TaskSetManager: Starting task 0.0 in stage 3.0 (TID 2) (172.19.0.8, executor 1, partition 0, NODE_LOCAL, 10165 bytes) 
+26/04/14 22:26:29 INFO BlockManagerInfo: Added broadcast_3_piece0 in memory on 172.19.0.8:45527 (size: 5.9 KiB, free: 1048.8 MiB)
+26/04/14 22:26:29 INFO MapOutputTrackerMasterEndpoint: Asked to send map output locations for shuffle 0 to 172.19.0.8:49340
+26/04/14 22:26:30 INFO TaskSetManager: Finished task 0.0 in stage 3.0 (TID 2) in 581 ms on 172.19.0.8 (executor 1) (1/1)
+26/04/14 22:26:30 INFO TaskSchedulerImpl: Removed TaskSet 3.0, whose tasks have all completed, from pool 
+26/04/14 22:26:30 INFO DAGScheduler: ResultStage 3 (count at NativeMethodAccessorImpl.java:0) finished in 0.600 s
+26/04/14 22:26:30 INFO DAGScheduler: Job 2 is finished. Cancelling potential speculative or zombie tasks for this job
+26/04/14 22:26:30 INFO TaskSchedulerImpl: Killing all running tasks in stage 3: Stage finished
+26/04/14 22:26:30 INFO DAGScheduler: Job 2 finished: count at NativeMethodAccessorImpl.java:0, took 0.625721 s
+26/04/14 22:26:30 INFO FileSourceStrategy: Pushed Filters: 
+26/04/14 22:26:30 INFO FileSourceStrategy: Post-Scan Filters: 
+26/04/14 22:26:30 INFO MemoryStore: Block broadcast_4 stored as values in memory (estimated size 208.4 KiB, free 433.9 MiB)
+26/04/14 22:26:30 INFO MemoryStore: Block broadcast_4_piece0 stored as bytes in memory (estimated size 36.7 KiB, free 433.9 MiB)
+26/04/14 22:26:30 INFO BlockManagerInfo: Added broadcast_4_piece0 in memory on 8b380e51bf92:35583 (size: 36.7 KiB, free: 434.3 MiB)
+26/04/14 22:26:30 INFO SparkContext: Created broadcast 4 from count at NativeMethodAccessorImpl.java:0
+26/04/14 22:26:30 INFO FileSourceScanExec: Planning scan with bin packing, max size: 4194304 bytes, open cost is considered as scanning 4194304 bytes.
+26/04/14 22:26:30 INFO DAGScheduler: Registering RDD 12 (count at NativeMethodAccessorImpl.java:0) as input to shuffle 1
+26/04/14 22:26:30 INFO DAGScheduler: Got map stage job 3 (count at NativeMethodAccessorImpl.java:0) with 1 output partitions
+26/04/14 22:26:30 INFO DAGScheduler: Final stage: ShuffleMapStage 4 (count at NativeMethodAccessorImpl.java:0)
+26/04/14 22:26:30 INFO DAGScheduler: Parents of final stage: List()
+26/04/14 22:26:30 INFO DAGScheduler: Missing parents: List()
+26/04/14 22:26:30 INFO DAGScheduler: Submitting ShuffleMapStage 4 (MapPartitionsRDD[12] at count at NativeMethodAccessorImpl.java:0), which has no missing parents
+26/04/14 22:26:30 INFO MemoryStore: Block broadcast_5 stored as values in memory (estimated size 17.0 KiB, free 433.9 MiB)
+26/04/14 22:26:30 INFO MemoryStore: Block broadcast_5_piece0 stored as bytes in memory (estimated size 7.8 KiB, free 433.9 MiB)
+26/04/14 22:26:30 INFO BlockManagerInfo: Added broadcast_5_piece0 in memory on 8b380e51bf92:35583 (size: 7.8 KiB, free: 434.3 MiB)
+26/04/14 22:26:30 INFO SparkContext: Created broadcast 5 from broadcast at DAGScheduler.scala:1585
+26/04/14 22:26:30 INFO DAGScheduler: Submitting 1 missing tasks from ShuffleMapStage 4 (MapPartitionsRDD[12] at count at NativeMethodAccessorImpl.java:0) (first 15 tasks are for partitions Vector(0))
+26/04/14 22:26:30 INFO TaskSchedulerImpl: Adding task set 4.0 with 1 tasks resource profile 0
+26/04/14 22:26:30 INFO TaskSetManager: Starting task 0.0 in stage 4.0 (TID 3) (172.19.0.8, executor 1, partition 0, PROCESS_LOCAL, 10759 bytes) 
+26/04/14 22:26:30 INFO BlockManagerInfo: Added broadcast_5_piece0 in memory on 172.19.0.8:45527 (size: 7.8 KiB, free: 1048.7 MiB)
+26/04/14 22:26:30 INFO BlockManagerInfo: Added broadcast_4_piece0 in memory on 172.19.0.8:45527 (size: 36.7 KiB, free: 1048.7 MiB)
+26/04/14 22:26:30 INFO TaskSetManager: Finished task 0.0 in stage 4.0 (TID 3) in 243 ms on 172.19.0.8 (executor 1) (1/1)
+26/04/14 22:26:30 INFO TaskSchedulerImpl: Removed TaskSet 4.0, whose tasks have all completed, from pool 
+26/04/14 22:26:30 INFO DAGScheduler: ShuffleMapStage 4 (count at NativeMethodAccessorImpl.java:0) finished in 0.258 s
+26/04/14 22:26:30 INFO DAGScheduler: looking for newly runnable stages
+26/04/14 22:26:30 INFO DAGScheduler: running: Set()
+26/04/14 22:26:30 INFO DAGScheduler: waiting: Set()
+26/04/14 22:26:30 INFO DAGScheduler: failed: Set()
+26/04/14 22:26:30 INFO SparkContext: Starting job: count at NativeMethodAccessorImpl.java:0
+26/04/14 22:26:30 INFO DAGScheduler: Got job 4 (count at NativeMethodAccessorImpl.java:0) with 1 output partitions
+26/04/14 22:26:30 INFO DAGScheduler: Final stage: ResultStage 6 (count at NativeMethodAccessorImpl.java:0)
+26/04/14 22:26:30 INFO DAGScheduler: Parents of final stage: List(ShuffleMapStage 5)
+26/04/14 22:26:30 INFO DAGScheduler: Missing parents: List()
+26/04/14 22:26:30 INFO DAGScheduler: Submitting ResultStage 6 (MapPartitionsRDD[15] at count at NativeMethodAccessorImpl.java:0), which has no missing parents
+26/04/14 22:26:30 INFO MemoryStore: Block broadcast_6 stored as values in memory (estimated size 12.5 KiB, free 433.8 MiB)
+26/04/14 22:26:30 INFO MemoryStore: Block broadcast_6_piece0 stored as bytes in memory (estimated size 5.9 KiB, free 433.8 MiB)
+26/04/14 22:26:30 INFO BlockManagerInfo: Added broadcast_6_piece0 in memory on 8b380e51bf92:35583 (size: 5.9 KiB, free: 434.3 MiB)
+26/04/14 22:26:30 INFO SparkContext: Created broadcast 6 from broadcast at DAGScheduler.scala:1585
+26/04/14 22:26:30 INFO DAGScheduler: Submitting 1 missing tasks from ResultStage 6 (MapPartitionsRDD[15] at count at NativeMethodAccessorImpl.java:0) (first 15 tasks are for partitions Vector(0))
+26/04/14 22:26:30 INFO TaskSchedulerImpl: Adding task set 6.0 with 1 tasks resource profile 0
+26/04/14 22:26:30 INFO TaskSetManager: Starting task 0.0 in stage 6.0 (TID 4) (172.19.0.8, executor 1, partition 0, NODE_LOCAL, 10165 bytes) 
+26/04/14 22:26:30 INFO BlockManagerInfo: Added broadcast_6_piece0 in memory on 172.19.0.8:45527 (size: 5.9 KiB, free: 1048.7 MiB)
+26/04/14 22:26:30 INFO MapOutputTrackerMasterEndpoint: Asked to send map output locations for shuffle 1 to 172.19.0.8:49340
+26/04/14 22:26:30 INFO TaskSetManager: Finished task 0.0 in stage 6.0 (TID 4) in 82 ms on 172.19.0.8 (executor 1) (1/1)
+26/04/14 22:26:30 INFO TaskSchedulerImpl: Removed TaskSet 6.0, whose tasks have all completed, from pool 
+26/04/14 22:26:30 INFO DAGScheduler: ResultStage 6 (count at NativeMethodAccessorImpl.java:0) finished in 0.103 s
+26/04/14 22:26:30 INFO DAGScheduler: Job 4 is finished. Cancelling potential speculative or zombie tasks for this job
+26/04/14 22:26:30 INFO TaskSchedulerImpl: Killing all running tasks in stage 6: Stage finished
+26/04/14 22:26:30 INFO DAGScheduler: Job 4 finished: count at NativeMethodAccessorImpl.java:0, took 0.114655 s
+26/04/14 22:26:32 INFO BlockManagerInfo: Removed broadcast_2_piece0 on 8b380e51bf92:35583 in memory (size: 7.8 KiB, free: 434.3 MiB)
+26/04/14 22:26:32 INFO BlockManagerInfo: Removed broadcast_2_piece0 on 172.19.0.8:45527 in memory (size: 7.8 KiB, free: 1048.7 MiB)
+26/04/14 22:26:32 INFO BlockManagerInfo: Removed broadcast_3_piece0 on 8b380e51bf92:35583 in memory (size: 5.9 KiB, free: 434.3 MiB)
+26/04/14 22:26:32 INFO BlockManagerInfo: Removed broadcast_3_piece0 on 172.19.0.8:45527 in memory (size: 5.9 KiB, free: 1048.7 MiB)
+26/04/14 22:26:32 INFO BlockManagerInfo: Removed broadcast_5_piece0 on 8b380e51bf92:35583 in memory (size: 7.8 KiB, free: 434.3 MiB)
+26/04/14 22:26:32 INFO BlockManagerInfo: Removed broadcast_5_piece0 on 172.19.0.8:45527 in memory (size: 7.8 KiB, free: 1048.7 MiB)
+26/04/14 22:26:32 INFO BlockManagerInfo: Removed broadcast_6_piece0 on 8b380e51bf92:35583 in memory (size: 5.9 KiB, free: 434.3 MiB)
+26/04/14 22:26:32 INFO BlockManagerInfo: Removed broadcast_6_piece0 on 172.19.0.8:45527 in memory (size: 5.9 KiB, free: 1048.7 MiB)
+26/04/14 22:26:33 INFO CatalogUtil: Loading custom FileIO implementation: org.apache.iceberg.hadoop.HadoopFileIO
+26/04/14 22:26:38 INFO BaseMetastoreCatalog: Table properties set at catalog level through catalog properties: {gc.enabled=false, write.metadata.delete-after-commit.enabled=false}
+26/04/14 22:26:38 INFO BaseMetastoreCatalog: Table properties enforced at catalog level through catalog properties: {}
+26/04/14 22:26:38 INFO SparkWrite: Requesting 0 bytes advisory partition size for table silver.users_hist
+26/04/14 22:26:38 INFO SparkWrite: Requesting UnspecifiedDistribution as write distribution for table silver.users_hist
+26/04/14 22:26:38 INFO SparkWrite: Requesting [] as write ordering for table silver.users_hist
+26/04/14 22:26:38 INFO MemoryStore: Block broadcast_7 stored as values in memory (estimated size 32.0 KiB, free 433.9 MiB)
+26/04/14 22:26:38 INFO MemoryStore: Block broadcast_7_piece0 stored as bytes in memory (estimated size 30.4 KiB, free 433.9 MiB)
+26/04/14 22:26:38 INFO BlockManagerInfo: Added broadcast_7_piece0 in memory on 8b380e51bf92:35583 (size: 30.4 KiB, free: 434.3 MiB)
+26/04/14 22:26:38 INFO SparkContext: Created broadcast 7 from broadcast at SparkWrite.java:193
+26/04/14 22:26:38 INFO AppendDataExec: Start processing data source write support: IcebergBatchWrite(table=silver.users_hist, format=PARQUET). The input RDD has 1 partitions.
+26/04/14 22:26:39 INFO BlockManagerInfo: Removed broadcast_4_piece0 on 8b380e51bf92:35583 in memory (size: 36.7 KiB, free: 434.3 MiB)
+26/04/14 22:26:39 INFO BlockManagerInfo: Removed broadcast_4_piece0 on 172.19.0.8:45527 in memory (size: 36.7 KiB, free: 1048.8 MiB)
+26/04/14 22:26:39 INFO BlockManagerInfo: Removed broadcast_1_piece0 on 8b380e51bf92:35583 in memory (size: 36.7 KiB, free: 434.4 MiB)
+26/04/14 22:26:39 INFO BlockManagerInfo: Removed broadcast_1_piece0 on 172.19.0.8:45527 in memory (size: 36.7 KiB, free: 1048.8 MiB)
+26/04/14 22:26:39 INFO SparkContext: Starting job: createOrReplace at NativeMethodAccessorImpl.java:0
+26/04/14 22:26:39 INFO DAGScheduler: Got job 5 (createOrReplace at NativeMethodAccessorImpl.java:0) with 1 output partitions
+26/04/14 22:26:39 INFO DAGScheduler: Final stage: ResultStage 7 (createOrReplace at NativeMethodAccessorImpl.java:0)
+26/04/14 22:26:39 INFO DAGScheduler: Parents of final stage: List()
+26/04/14 22:26:39 INFO DAGScheduler: Missing parents: List()
+26/04/14 22:26:39 INFO DAGScheduler: Submitting ResultStage 7 (ParallelCollectionRDD[18] at createOrReplace at NativeMethodAccessorImpl.java:0), which has no missing parents
+26/04/14 22:26:39 INFO MemoryStore: Block broadcast_8 stored as values in memory (estimated size 6.6 KiB, free 434.3 MiB)
+26/04/14 22:26:39 INFO MemoryStore: Block broadcast_8_piece0 stored as bytes in memory (estimated size 3.9 KiB, free 434.3 MiB)
+26/04/14 22:26:39 INFO BlockManagerInfo: Added broadcast_8_piece0 in memory on 8b380e51bf92:35583 (size: 3.9 KiB, free: 434.4 MiB)
+26/04/14 22:26:39 INFO SparkContext: Created broadcast 8 from broadcast at DAGScheduler.scala:1585
+26/04/14 22:26:39 INFO DAGScheduler: Submitting 1 missing tasks from ResultStage 7 (ParallelCollectionRDD[18] at createOrReplace at NativeMethodAccessorImpl.java:0) (first 15 tasks are for partitions Vector(0))
+26/04/14 22:26:39 INFO TaskSchedulerImpl: Adding task set 7.0 with 1 tasks resource profile 0
+26/04/14 22:26:39 INFO TaskSetManager: Starting task 0.0 in stage 7.0 (TID 5) (172.19.0.8, executor 0, partition 0, PROCESS_LOCAL, 10186 bytes) 
+26/04/14 22:26:39 INFO BlockManagerInfo: Added broadcast_8_piece0 in memory on 172.19.0.8:40855 (size: 3.9 KiB, free: 1048.8 MiB)
+26/04/14 22:26:40 INFO BlockManagerInfo: Added broadcast_7_piece0 in memory on 172.19.0.8:40855 (size: 30.4 KiB, free: 1048.8 MiB)
+26/04/14 22:26:52 INFO TaskSetManager: Finished task 0.0 in stage 7.0 (TID 5) in 13153 ms on 172.19.0.8 (executor 0) (1/1)
+26/04/14 22:26:52 INFO TaskSchedulerImpl: Removed TaskSet 7.0, whose tasks have all completed, from pool 
+26/04/14 22:26:52 INFO DAGScheduler: ResultStage 7 (createOrReplace at NativeMethodAccessorImpl.java:0) finished in 13.190 s
+26/04/14 22:26:52 INFO DAGScheduler: Job 5 is finished. Cancelling potential speculative or zombie tasks for this job
+26/04/14 22:26:52 INFO TaskSchedulerImpl: Killing all running tasks in stage 7: Stage finished
+26/04/14 22:26:52 INFO DAGScheduler: Job 5 finished: createOrReplace at NativeMethodAccessorImpl.java:0, took 13.200539 s
+26/04/14 22:26:52 INFO AppendDataExec: Data source write support IcebergBatchWrite(table=silver.users_hist, format=PARQUET) is committing.
+26/04/14 22:26:52 INFO SparkWrite: Committing append with 0 new data files to table silver.users_hist
+26/04/14 22:26:54 ERROR AppendDataExec: Data source write support IcebergBatchWrite(table=silver.users_hist, format=PARQUET) is aborting.
+26/04/14 22:26:54 WARN SparkWrite: Skipping cleanup of written files
+26/04/14 22:26:54 ERROR AppendDataExec: Data source write support IcebergBatchWrite(table=silver.users_hist, format=PARQUET) aborted.
+26/04/14 22:26:54 ERROR Utils: Aborting task
+org.apache.iceberg.exceptions.RuntimeIOException: Failed to create file: s3a://iceberg/silver/users_hist_e577e40a-5132-4d47-ba01-d8c1427ca48a/metadata/snap-2480785944954737746-1-1e071062-3462-4d88-86ad-a60f2d2ed535.avro
+	at org.apache.iceberg.hadoop.HadoopOutputFile.createOrOverwrite(HadoopOutputFile.java:87)
+	at org.apache.iceberg.avro.AvroFileAppender.<init>(AvroFileAppender.java:56)
+	at org.apache.iceberg.avro.Avro$WriteBuilder.build(Avro.java:197)
+	at org.apache.iceberg.ManifestListWriter$V2Writer.newAppender(ManifestListWriter.java:100)
+	at org.apache.iceberg.ManifestListWriter.<init>(ManifestListWriter.java:35)
+	at org.apache.iceberg.ManifestListWriter.<init>(ManifestListWriter.java:31)
+	at org.apache.iceberg.ManifestListWriter$V2Writer.<init>(ManifestListWriter.java:77)
+	at org.apache.iceberg.ManifestLists.write(ManifestLists.java:67)
+	at org.apache.iceberg.SnapshotProducer.apply(SnapshotProducer.java:241)
+	at org.apache.iceberg.SnapshotProducer.lambda$commit$2(SnapshotProducer.java:386)
+	at org.apache.iceberg.util.Tasks$Builder.runTaskWithRetry(Tasks.java:413)
+	at org.apache.iceberg.util.Tasks$Builder.runSingleThreaded(Tasks.java:219)
+	at org.apache.iceberg.util.Tasks$Builder.run(Tasks.java:203)
+	at org.apache.iceberg.util.Tasks$Builder.run(Tasks.java:196)
+	at org.apache.iceberg.SnapshotProducer.commit(SnapshotProducer.java:384)
+	at org.apache.iceberg.spark.source.SparkWrite.commitOperation(SparkWrite.java:233)
+	at org.apache.iceberg.spark.source.SparkWrite.access$1300(SparkWrite.java:84)
+	at org.apache.iceberg.spark.source.SparkWrite$BatchAppend.commit(SparkWrite.java:301)
+	at org.apache.spark.sql.execution.datasources.v2.V2TableWriteExec.writeWithV2(WriteToDataSourceV2Exec.scala:404)
+	at org.apache.spark.sql.execution.datasources.v2.V2TableWriteExec.writeWithV2$(WriteToDataSourceV2Exec.scala:364)
+	at org.apache.spark.sql.execution.datasources.v2.AppendDataExec.writeWithV2(WriteToDataSourceV2Exec.scala:230)
+	at org.apache.spark.sql.execution.datasources.v2.V2ExistingTableWriteExec.run(WriteToDataSourceV2Exec.scala:342)
+	at org.apache.spark.sql.execution.datasources.v2.V2ExistingTableWriteExec.run$(WriteToDataSourceV2Exec.scala:341)
+	at org.apache.spark.sql.execution.datasources.v2.AppendDataExec.run(WriteToDataSourceV2Exec.scala:230)
+	at org.apache.spark.sql.execution.datasources.v2.V2CommandExec.result$lzycompute(V2CommandExec.scala:43)
+	at org.apache.spark.sql.execution.datasources.v2.V2CommandExec.result(V2CommandExec.scala:43)
+	at org.apache.spark.sql.execution.datasources.v2.V2CommandExec.executeCollect(V2CommandExec.scala:49)
+	at org.apache.spark.sql.execution.QueryExecution$$anonfun$eagerlyExecuteCommands$1.$anonfun$applyOrElse$1(QueryExecution.scala:107)
+	at org.apache.spark.sql.execution.SQLExecution$.$anonfun$withNewExecutionId$6(SQLExecution.scala:125)
+	at org.apache.spark.sql.execution.SQLExecution$.withSQLConfPropagated(SQLExecution.scala:201)
+	at org.apache.spark.sql.execution.SQLExecution$.$anonfun$withNewExecutionId$1(SQLExecution.scala:108)
+	at org.apache.spark.sql.SparkSession.withActive(SparkSession.scala:900)
+	at org.apache.spark.sql.execution.SQLExecution$.withNewExecutionId(SQLExecution.scala:66)
+	at org.apache.spark.sql.execution.QueryExecution$$anonfun$eagerlyExecuteCommands$1.applyOrElse(QueryExecution.scala:107)
+	at org.apache.spark.sql.execution.QueryExecution$$anonfun$eagerlyExecuteCommands$1.applyOrElse(QueryExecution.scala:98)
+	at org.apache.spark.sql.catalyst.trees.TreeNode.$anonfun$transformDownWithPruning$1(TreeNode.scala:461)
+	at org.apache.spark.sql.catalyst.trees.CurrentOrigin$.withOrigin(origin.scala:76)
+	at org.apache.spark.sql.catalyst.trees.TreeNode.transformDownWithPruning(TreeNode.scala:461)
+	at org.apache.spark.sql.catalyst.plans.logical.LogicalPlan.org$apache$spark$sql$catalyst$plans$logical$AnalysisHelper$$super$transformDownWithPruning(LogicalPlan.scala:32)
+	at org.apache.spark.sql.catalyst.plans.logical.AnalysisHelper.transformDownWithPruning(AnalysisHelper.scala:267)
+	at org.apache.spark.sql.catalyst.plans.logical.AnalysisHelper.transformDownWithPruning$(AnalysisHelper.scala:263)
+	at org.apache.spark.sql.catalyst.plans.logical.LogicalPlan.transformDownWithPruning(LogicalPlan.scala:32)
+	at org.apache.spark.sql.catalyst.plans.logical.LogicalPlan.transformDownWithPruning(LogicalPlan.scala:32)
+	at org.apache.spark.sql.catalyst.trees.TreeNode.transformDown(TreeNode.scala:437)
+	at org.apache.spark.sql.execution.QueryExecution.eagerlyExecuteCommands(QueryExecution.scala:98)
+	at org.apache.spark.sql.execution.QueryExecution.commandExecuted$lzycompute(QueryExecution.scala:85)
+	at org.apache.spark.sql.execution.QueryExecution.commandExecuted(QueryExecution.scala:83)
+	at org.apache.spark.sql.execution.QueryExecution.assertCommandExecuted(QueryExecution.scala:142)
+	at org.apache.spark.sql.execution.datasources.v2.V2CreateTableAsSelectBaseExec.$anonfun$writeToTable$1(WriteToDataSourceV2Exec.scala:582)
+	at org.apache.spark.util.Utils$.tryWithSafeFinallyAndFailureCallbacks(Utils.scala:1397)
+	at org.apache.spark.sql.execution.datasources.v2.V2CreateTableAsSelectBaseExec.writeToTable(WriteToDataSourceV2Exec.scala:578)
+	at org.apache.spark.sql.execution.datasources.v2.V2CreateTableAsSelectBaseExec.writeToTable$(WriteToDataSourceV2Exec.scala:572)
+	at org.apache.spark.sql.execution.datasources.v2.AtomicReplaceTableAsSelectExec.writeToTable(WriteToDataSourceV2Exec.scala:186)
+	at org.apache.spark.sql.execution.datasources.v2.AtomicReplaceTableAsSelectExec.run(WriteToDataSourceV2Exec.scala:221)
+	at org.apache.spark.sql.execution.datasources.v2.V2CommandExec.result$lzycompute(V2CommandExec.scala:43)
+	at org.apache.spark.sql.execution.datasources.v2.V2CommandExec.result(V2CommandExec.scala:43)
+	at org.apache.spark.sql.execution.datasources.v2.V2CommandExec.executeCollect(V2CommandExec.scala:49)
+	at org.apache.spark.sql.execution.QueryExecution$$anonfun$eagerlyExecuteCommands$1.$anonfun$applyOrElse$1(QueryExecution.scala:107)
+	at org.apache.spark.sql.execution.SQLExecution$.$anonfun$withNewExecutionId$6(SQLExecution.scala:125)
+	at org.apache.spark.sql.execution.SQLExecution$.withSQLConfPropagated(SQLExecution.scala:201)
+	at org.apache.spark.sql.execution.SQLExecution$.$anonfun$withNewExecutionId$1(SQLExecution.scala:108)
+	at org.apache.spark.sql.SparkSession.withActive(SparkSession.scala:900)
+	at org.apache.spark.sql.execution.SQLExecution$.withNewExecutionId(SQLExecution.scala:66)
+	at org.apache.spark.sql.execution.QueryExecution$$anonfun$eagerlyExecuteCommands$1.applyOrElse(QueryExecution.scala:107)
+	at org.apache.spark.sql.execution.QueryExecution$$anonfun$eagerlyExecuteCommands$1.applyOrElse(QueryExecution.scala:98)
+	at org.apache.spark.sql.catalyst.trees.TreeNode.$anonfun$transformDownWithPruning$1(TreeNode.scala:461)
+	at org.apache.spark.sql.catalyst.trees.CurrentOrigin$.withOrigin(origin.scala:76)
+	at org.apache.spark.sql.catalyst.trees.TreeNode.transformDownWithPruning(TreeNode.scala:461)
+	at org.apache.spark.sql.catalyst.plans.logical.LogicalPlan.org$apache$spark$sql$catalyst$plans$logical$AnalysisHelper$$super$transformDownWithPruning(LogicalPlan.scala:32)
+	at org.apache.spark.sql.catalyst.plans.logical.AnalysisHelper.transformDownWithPruning(AnalysisHelper.scala:267)
+	at org.apache.spark.sql.catalyst.plans.logical.AnalysisHelper.transformDownWithPruning$(AnalysisHelper.scala:263)
+	at org.apache.spark.sql.catalyst.plans.logical.LogicalPlan.transformDownWithPruning(LogicalPlan.scala:32)
+	at org.apache.spark.sql.catalyst.plans.logical.LogicalPlan.transformDownWithPruning(LogicalPlan.scala:32)
+	at org.apache.spark.sql.catalyst.trees.TreeNode.transformDown(TreeNode.scala:437)
+	at org.apache.spark.sql.execution.QueryExecution.eagerlyExecuteCommands(QueryExecution.scala:98)
+	at org.apache.spark.sql.execution.QueryExecution.commandExecuted$lzycompute(QueryExecution.scala:85)
+	at org.apache.spark.sql.execution.QueryExecution.commandExecuted(QueryExecution.scala:83)
+	at org.apache.spark.sql.execution.QueryExecution.assertCommandExecuted(QueryExecution.scala:142)
+	at org.apache.spark.sql.DataFrameWriterV2.runCommand(DataFrameWriterV2.scala:201)
+	at org.apache.spark.sql.DataFrameWriterV2.internalReplace(DataFrameWriterV2.scala:213)
+	at org.apache.spark.sql.DataFrameWriterV2.createOrReplace(DataFrameWriterV2.scala:135)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:569)
+	at py4j.reflection.MethodInvoker.invoke(MethodInvoker.java:244)
+	at py4j.reflection.ReflectionEngine.invoke(ReflectionEngine.java:374)
+	at py4j.Gateway.invoke(Gateway.java:282)
+	at py4j.commands.AbstractCommand.invokeMethod(AbstractCommand.java:132)
+	at py4j.commands.CallCommand.execute(CallCommand.java:79)
+	at py4j.ClientServerConnection.waitForCommands(ClientServerConnection.java:182)
+	at py4j.ClientServerConnection.run(ClientServerConnection.java:106)
+	at java.base/java.lang.Thread.run(Thread.java:840)
+Caused by: org.apache.hadoop.fs.s3a.UnknownStoreException: `s3a://iceberg/silver/users_hist_e577e40a-5132-4d47-ba01-d8c1427ca48a/metadata/snap-2480785944954737746-1-1e071062-3462-4d88-86ad-a60f2d2ed535.avro': getFileStatus on s3a://iceberg/silver/users_hist_e577e40a-5132-4d47-ba01-d8c1427ca48a/metadata/snap-2480785944954737746-1-1e071062-3462-4d88-86ad-a60f2d2ed535.avro: com.amazonaws.services.s3.model.AmazonS3Exception: The specified bucket does not exist (Service: Amazon S3; Status Code: 404; Error Code: NoSuchBucket; Request ID: 18A6599872237660; S3 Extended Request ID: dd9025bab4ad464b049177c95eb6ebf374d3b3fd1af9251148b658df7ac2e3e8; Proxy: null), S3 Extended Request ID: dd9025bab4ad464b049177c95eb6ebf374d3b3fd1af9251148b658df7ac2e3e8:NoSuchBucket: The specified bucket does not exist (Service: Amazon S3; Status Code: 404; Error Code: NoSuchBucket; Request ID: 18A6599872237660; S3 Extended Request ID: dd9025bab4ad464b049177c95eb6ebf374d3b3fd1af9251148b658df7ac2e3e8; Proxy: null)
+	at org.apache.hadoop.fs.s3a.S3AUtils.translateException(S3AUtils.java:263)
+	at org.apache.hadoop.fs.s3a.S3AUtils.translateException(S3AUtils.java:175)
+	at org.apache.hadoop.fs.s3a.S3AFileSystem.s3GetFileStatus(S3AFileSystem.java:3858)
+	at org.apache.hadoop.fs.s3a.S3AFileSystem.innerGetFileStatus(S3AFileSystem.java:3688)
+	at org.apache.hadoop.fs.s3a.S3AFileSystem.innerCreateFile(S3AFileSystem.java:1682)
+	at org.apache.hadoop.fs.s3a.S3AFileSystem.lambda$create$6(S3AFileSystem.java:1646)
+	at org.apache.hadoop.fs.statistics.impl.IOStatisticsBinding.lambda$trackDurationOfOperation$5(IOStatisticsBinding.java:499)
+	at org.apache.hadoop.fs.statistics.impl.IOStatisticsBinding.trackDuration(IOStatisticsBinding.java:444)
+	at org.apache.hadoop.fs.s3a.S3AFileSystem.trackDurationAndSpan(S3AFileSystem.java:2337)
+	at org.apache.hadoop.fs.s3a.S3AFileSystem.trackDurationAndSpan(S3AFileSystem.java:2356)
+	at org.apache.hadoop.fs.s3a.S3AFileSystem.create(S3AFileSystem.java:1645)
+	at org.apache.hadoop.fs.FileSystem.create(FileSystem.java:1195)
+	at org.apache.hadoop.fs.FileSystem.create(FileSystem.java:1175)
+	at org.apache.hadoop.fs.FileSystem.create(FileSystem.java:1064)
+	at org.apache.iceberg.hadoop.HadoopOutputFile.createOrOverwrite(HadoopOutputFile.java:85)
+	... 92 more
+Caused by: com.amazonaws.services.s3.model.AmazonS3Exception: The specified bucket does not exist (Service: Amazon S3; Status Code: 404; Error Code: NoSuchBucket; Request ID: 18A6599872237660; S3 Extended Request ID: dd9025bab4ad464b049177c95eb6ebf374d3b3fd1af9251148b658df7ac2e3e8; Proxy: null), S3 Extended Request ID: dd9025bab4ad464b049177c95eb6ebf374d3b3fd1af9251148b658df7ac2e3e8
+	at com.amazonaws.http.AmazonHttpClient$RequestExecutor.handleErrorResponse(AmazonHttpClient.java:1879)
+	at com.amazonaws.http.AmazonHttpClient$RequestExecutor.handleServiceErrorResponse(AmazonHttpClient.java:1418)
+	at com.amazonaws.http.AmazonHttpClient$RequestExecutor.executeOneRequest(AmazonHttpClient.java:1387)
+	at com.amazonaws.http.AmazonHttpClient$RequestExecutor.executeHelper(AmazonHttpClient.java:1157)
+	at com.amazonaws.http.AmazonHttpClient$RequestExecutor.doExecute(AmazonHttpClient.java:814)
+	at com.amazonaws.http.AmazonHttpClient$RequestExecutor.executeWithTimer(AmazonHttpClient.java:781)
+	at com.amazonaws.http.AmazonHttpClient$RequestExecutor.execute(AmazonHttpClient.java:755)
+	at com.amazonaws.http.AmazonHttpClient$RequestExecutor.access$500(AmazonHttpClient.java:715)
+	at com.amazonaws.http.AmazonHttpClient$RequestExecutionBuilderImpl.execute(AmazonHttpClient.java:697)
+	at com.amazonaws.http.AmazonHttpClient.execute(AmazonHttpClient.java:561)
+	at com.amazonaws.http.AmazonHttpClient.execute(AmazonHttpClient.java:541)
+	at com.amazonaws.services.s3.AmazonS3Client.invoke(AmazonS3Client.java:5456)
+	at com.amazonaws.services.s3.AmazonS3Client.invoke(AmazonS3Client.java:5403)
+	at com.amazonaws.services.s3.AmazonS3Client.invoke(AmazonS3Client.java:5397)
+	at com.amazonaws.services.s3.AmazonS3Client.listObjectsV2(AmazonS3Client.java:971)
+	at org.apache.hadoop.fs.s3a.S3AFileSystem.lambda$listObjects$11(S3AFileSystem.java:2595)
+	at org.apache.hadoop.fs.statistics.impl.IOStatisticsBinding.lambda$trackDurationOfOperation$5(IOStatisticsBinding.java:499)
+	at org.apache.hadoop.fs.s3a.Invoker.retryUntranslated(Invoker.java:414)
+	at org.apache.hadoop.fs.s3a.Invoker.retryUntranslated(Invoker.java:377)
+	at org.apache.hadoop.fs.s3a.S3AFileSystem.listObjects(S3AFileSystem.java:2586)
+	at org.apache.hadoop.fs.s3a.S3AFileSystem.s3GetFileStatus(S3AFileSystem.java:3832)
+	... 104 more
+26/04/14 22:26:55 INFO SparkContext: Invoking stop() from shutdown hook
+26/04/14 22:26:55 INFO SparkContext: SparkContext is stopping with exitCode 0.
+26/04/14 22:26:55 INFO SparkUI: Stopped Spark web UI at http://8b380e51bf92:4040
+26/04/14 22:26:55 INFO StandaloneSchedulerBackend: Shutting down all executors
+26/04/14 22:26:55 INFO StandaloneSchedulerBackend$StandaloneDriverEndpoint: Asking each executor to shut down
+26/04/14 22:26:55 INFO MapOutputTrackerMasterEndpoint: MapOutputTrackerMasterEndpoint stopped!
+26/04/14 22:26:55 INFO MemoryStore: MemoryStore cleared
+26/04/14 22:26:55 INFO BlockManager: BlockManager stopped
+26/04/14 22:26:55 INFO BlockManagerMaster: BlockManagerMaster stopped
+26/04/14 22:26:55 INFO OutputCommitCoordinator$OutputCommitCoordinatorEndpoint: OutputCommitCoordinator stopped!
+26/04/14 22:26:55 INFO SparkContext: Successfully stopped SparkContext
+26/04/14 22:26:55 INFO ShutdownHookManager: Shutdown hook called
+26/04/14 22:26:55 INFO ShutdownHookManager: Deleting directory /tmp/spark-d9704004-8513-4549-bb5d-44b2ea18e61c
+26/04/14 22:26:55 INFO ShutdownHookManager: Deleting directory /tmp/spark-974a3e10-a2f7-4441-af6a-f166ce120673/pyspark-c8464eaa-268c-4002-b06d-fcf6715ea2ce
+26/04/14 22:26:55 INFO ShutdownHookManager: Deleting directory /tmp/spark-974a3e10-a2f7-4441-af6a-f166ce120673
+26/04/14 22:26:55 INFO MetricsSystemImpl: Stopping s3a-file-system metrics system...
+26/04/14 22:26:55 INFO MetricsSystemImpl: s3a-file-system metrics system stopped.
+26/04/14 22:26:55 INFO MetricsSystemImpl: s3a-file-system metrics system shutdown complete.
+
+[2026-04-14T22:26:57.286+0000] {taskinstance.py:3311} ERROR - Task failed with exception
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 762, in _execute_task
+    result = _execute_callable(context=context, **execute_callable_kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 733, in _execute_callable
+    return ExecutionCallableRunner(
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/utils/operator_helpers.py", line 252, in run
+    return self.func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/baseoperator.py", line 417, in wrapper
+    return func(self, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/operators/python.py", line 238, in execute
+    return_value = self.execute_callable()
+                   ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/operators/python.py", line 256, in execute_callable
+    return runner.run(*self.op_args, **self.op_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/utils/operator_helpers.py", line 252, in run
+    return self.func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/airflow/dags/stackoverflow_pipeline.py", line 208, in silver_transform_callable
+    raise RuntimeError(f"Spark job failed with return code {result.returncode}")
+RuntimeError: Spark job failed with return code 1
+[2026-04-14T22:26:58.492+0000] {taskinstance.py:1225} INFO - Marking task as UP_FOR_RETRY. dag_id=stackoverflow_pipeline, task_id=silver_transform, run_id=manual__2026-04-14T22:14:04.562422+00:00, execution_date=20260414T221404, start_date=20260414T221716, end_date=20260414T222658
+[2026-04-14T22:26:59.184+0000] {taskinstance.py:340} INFO - ::group::Post task execution logs
+[2026-04-14T22:26:59.195+0000] {standard_task_runner.py:124} ERROR - Failed to execute job 5 for task silver_transform (Spark job failed with return code 1; 274)
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/task/task_runner/standard_task_runner.py", line 117, in _start_by_fork
+    ret = args.func(args, dag=self.dag)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/cli/cli_config.py", line 49, in command
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/utils/cli.py", line 116, in wrapper
+    return f(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/cli/commands/task_command.py", line 483, in task_run
+    task_return_code = _run_task_by_selected_method(args, _dag, ti)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/cli/commands/task_command.py", line 256, in _run_task_by_selected_method
+    return _run_raw_task(args, ti)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/cli/commands/task_command.py", line 341, in _run_raw_task
+    return ti._run_raw_task(
+           ^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/utils/session.py", line 97, in wrapper
+    return func(*args, session=session, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 3005, in _run_raw_task
+    return _run_raw_task(
+           ^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 273, in _run_raw_task
+    TaskInstance._execute_task_with_callbacks(
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 3159, in _execute_task_with_callbacks
+    result = self._execute_task(context, task_orig)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 3183, in _execute_task
+    return _execute_task(self, context, task_orig)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 762, in _execute_task
+    result = _execute_callable(context=context, **execute_callable_kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 733, in _execute_callable
+    return ExecutionCallableRunner(
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/utils/operator_helpers.py", line 252, in run
+    return self.func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/baseoperator.py", line 417, in wrapper
+    return func(self, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/operators/python.py", line 238, in execute
+    return_value = self.execute_callable()
+                   ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/operators/python.py", line 256, in execute_callable
+    return runner.run(*self.op_args, **self.op_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/utils/operator_helpers.py", line 252, in run
+    return self.func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/airflow/dags/stackoverflow_pipeline.py", line 208, in silver_transform_callable
+    raise RuntimeError(f"Spark job failed with return code {result.returncode}")
+RuntimeError: Spark job failed with return code 1
+[2026-04-14T22:26:59.316+0000] {local_task_job_runner.py:266} INFO - Task exited with return code 1
+[2026-04-14T22:26:59.765+0000] {taskinstance.py:3895} INFO - 0 downstream tasks scheduled from follow-on schedule check
+[2026-04-14T22:26:59.771+0000] {local_task_job_runner.py:245} INFO - ::endgroup::

@@ -10,6 +10,17 @@ ARG SCALA_VERSION=2.12
 
 ENV SPARK_JARS_DIR=/opt/spark/jars
 
+# Instalar OpenJDK 17 (compatible con Airflow)
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends \
+    openjdk-17-jdk-headless \
+    wget && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
+
+ENV JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64
+ENV PATH="${JAVA_HOME}/bin:${PATH}"
+
 # Iceberg runtime para Spark 3.5
 RUN wget -q \
     "https://repo1.maven.org/maven2/org/apache/iceberg/iceberg-spark-runtime-3.5_${SCALA_VERSION}/${ICEBERG_VERSION}/iceberg-spark-runtime-3.5_${SCALA_VERSION}-${ICEBERG_VERSION}.jar" \

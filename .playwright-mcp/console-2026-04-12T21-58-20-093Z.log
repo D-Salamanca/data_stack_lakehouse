@@ -1,0 +1,13 @@
+[     298ms] [ERROR] Manifest: Line: 1, column: 1, Syntax error. @ http://localhost:9047/manifest.webmanifest:0
+[     362ms] [ERROR]  Note that 'script-src' was not explicitly set, so 'default-src' is used as a fallback. @ https://www.googletagmanager.com/gtm.js?id=GTM-5D8RST:4
+[     363ms] [ERROR]  Note that 'script-src' was not explicitly set, so 'default-src' is used as a fallback. @ https://www.googletagmanager.com/gtm.js?id=GTM-5D8RST:4
+[     367ms] [ERROR]  Note that 'script-src' was not explicitly set, so 'default-src' is used as a fallback. @ https://www.googletagmanager.com/gtm.js?id=GTM-5D8RST:4
+[     367ms] [ERROR]  Note that 'script-src' was not explicitly set, so 'default-src' is used as a fallback. @ https://www.googletagmanager.com/gtm.js?id=GTM-5D8RST:4
+[     368ms] [ERROR]  Note that 'script-src' was not explicitly set, so 'default-src' is used as a fallback. @ https://www.googletagmanager.com/gtm.js?id=GTM-5D8RST:4
+[     376ms] [ERROR] Failed to load resource: the server responded with a status of 403 (Forbidden) @ http://localhost:9047/apiv2/login/?nocache=1776031100434:0
+[     427ms] [ERROR] Manifest: Line: 1, column: 1, Syntax error. @ http://localhost:9047/manifest.webmanifest:0
+[     630ms] [ERROR] Failed to load resource: the server responded with a status of 404 () @ https://o31066.ingest.sentry.io/:0
+[     692ms] [WARNING] [Intercom] The App ID in your code snippet has not been set. Set it to your App ID found in settings to complete installation: https://app.intercom.com/a/apps/_/settings/web @ https://js.intercomcdn.com/frame-modern.3fa1db07.js:0
+[     750ms] [ERROR] Failed to load resource: the server responded with a status of 403 () @ https://o31066.ingest.sentry.io/api/66750/envelope/?sentry_key=2592b22bfefa49b3b5b1e72393f84194&sentry_version=7&sentry_client=sentry.javascript.browser%2F8.33.1:0
+[  144993ms] [ERROR] Failed to load resource: the server responded with a status of 400 (Bad Request) @ http://localhost:9047/apiv2/source/nessie/?nocache=1776031244739:0
+[  199848ms] [ERROR] Failed to load resource: the server responded with a status of 400 (Bad Request) @ http://localhost:9047/apiv2/source/nessie/?nocache=1776031299891:0

@@ -1,0 +1,104 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e4]:
+    - navigation [ref=e5]:
+      - button "Skip to content"
+      - list [ref=e6]:
+        - listitem [ref=e7]:
+          - link "home" [ref=e600] [cursor=pointer]:
+            - /url: /
+            - img [ref=e12]
+        - listitem [ref=e14]:
+          - link [ref=e16] [cursor=pointer]:
+            - /url: /
+            - img [ref=e20]
+        - listitem [ref=e22]:
+          - link [ref=e24] [cursor=pointer]:
+            - /url: /new_query?context=%22%40admin%22
+            - img [ref=e28]
+        - listitem [ref=e30]:
+          - link [ref=e32] [cursor=pointer]:
+            - /url: /jobs
+            - img [ref=e36]
+      - list [ref=e38]:
+        - listitem [ref=e39]:
+          - link [ref=e41] [cursor=pointer]:
+            - /url: /settings
+            - img [ref=e45]
+        - button "Help" [ref=e601] [cursor=pointer]:
+          - generic:
+            - img
+          - generic:
+            - img
+        - button "AU" [ref=e602] [cursor=pointer]:
+          - generic: AU
+          - generic:
+            - img
+    - generic [ref=e52]:
+      - generic [ref=e58]:
+        - img [ref=e60]
+        - textbox "Search Spaces and Datasets" [ref=e603]
+      - generic [ref=e63]:
+        - generic [ref=e64]:
+          - heading "Datasets" [level=3] [ref=e604]
+          - generic [ref=e66]:
+            - list [ref=e67]:
+              - listitem [ref=e68] [cursor=pointer]:
+                - link "admin" [ref=e605]:
+                  - /url: /home
+                  - img [ref=e73]
+                  - generic [ref=e76]: admin
+            - generic [ref=e79]:
+              - heading "View all Spaces" [level=4] [ref=e606] [cursor=pointer]:
+                - link "View all Spaces" [ref=e607]:
+                  - /url: /spaces/list
+                  - button "Collapse Spaces" [ref=e608]:
+                    - generic:
+                      - img
+                  - generic [ref=e83]: Spaces (0)
+                  - button [ref=e85]:
+                    - generic:
+                      - img
+              - generic [ref=e260]:
+                - img [ref=e262]
+                - generic [ref=e264]: No spaces yet
+                - link "Add space" [ref=e609] [cursor=pointer]:
+                  - /url: /
+            - generic [ref=e87]:
+              - text: Sources
+              - button "Add Source" [ref=e610] [cursor=pointer]:
+                - generic:
+                  - img
+            - generic [ref=e266]:
+              - img [ref=e268]
+              - generic [ref=e270]: No data sources yet
+              - link "Add source" [ref=e611] [cursor=pointer]:
+                - /url: /
+          - button "Add Source" [ref=e612] [cursor=pointer]:
+            - generic [ref=e91]:
+              - img [ref=e93]
+              - text: Add Source
+        - main [ref=e95]:
+          - generic [ref=e96]:
+            - heading "@admin Copy" [level=3] [ref=e613]:
+              - generic [ref=e273]:
+                - generic [ref=e275]: "@admin"
+                - button "Copy" [ref=e614] [cursor=pointer]:
+                  - generic:
+                    - img
+            - generic [ref=e99]:
+              - button [ref=e101] [cursor=pointer]:
+                - generic:
+                  - img
+              - generic [ref=e279]:
+                - button [ref=e281] [cursor=pointer]:
+                  - generic:
+                    - img
+                - button "Details Panel" [ref=e615] [cursor=pointer]:
+                  - generic:
+                    - img
+          - generic [ref=e284]:
+            - img [ref=e286]
+            - generic [ref=e288]: No items
+  - img
+  - iframe [ref=e450]:
+    

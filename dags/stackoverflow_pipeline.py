@@ -29,6 +29,7 @@ from datetime import datetime, timedelta
 
 from airflow import DAG
 from airflow.operators.python import PythonOperator
+from airflow.operators.bash import BashOperator
 from airflow.providers.apache.spark.operators.spark_submit import SparkSubmitOperator
 
 # ── Versiones de JARs ─────────────────────────────────────────────────────────
@@ -49,10 +50,12 @@ PACKAGES = ",".join([
 SPARK_CONF = {
     "spark.submit.deployMode":  "client",
     "spark.driver.bindAddress": "0.0.0.0",
-    "spark.executor.instances": "1",
-    "spark.executor.cores":     "2",
-    "spark.executor.memory":    "2g",
-    "spark.driver.memory":      "1g",
+    "spark.executor.instances":         "1",
+    "spark.executor.cores":             "1",
+    "spark.executor.memory":            "1g",
+    "spark.executor.memoryOverhead":    "512m",
+    "spark.driver.memory":              "1g",
+    "spark.sql.shuffle.partitions":     "4",
     "spark.sql.extensions": (
         "org.apache.iceberg.spark.extensions.IcebergSparkSessionExtensions,"
         "org.projectnessie.spark.extensions.NessieSparkSessionExtensions"
@@ -72,6 +75,7 @@ SPARK_CONF = {
     "spark.hadoop.fs.s3a.connection.ssl.enabled":   "false",
 }
 
+# ── Environment Variables for Spark Tasks ─────────────────────────────────────
 SPARK_ENV_VARS = {
     "MINIO_ENDPOINT":       os.getenv("MINIO_ENDPOINT",       "http://proyecto2-minio:9000"),
     "MINIO_ACCESS_KEY":     os.getenv("MINIO_ACCESS_KEY",     "minioadmin"),
@@ -82,7 +86,7 @@ SPARK_ENV_VARS = {
     "NESSIE_BRANCH":        os.getenv("NESSIE_BRANCH",        "main"),
     "SILVER_NAMESPACE":     os.getenv("SILVER_NAMESPACE",     "silver"),
     "GOLD_NAMESPACE":       os.getenv("GOLD_NAMESPACE",       "gold"),
-    "CH_HOST":              os.getenv("CH_HOST",              "clickhouse.clickhouse.com"),
+    "CH_HOST":              os.getenv("CH_HOST",              "play.clickhouse.com"),
     "CH_PORT":              os.getenv("CH_PORT",              "443"),
     "CH_USER":              os.getenv("CH_USER",              "play"),
     "CH_PASSWORD":          os.getenv("CH_PASSWORD",          ""),
@@ -165,16 +169,70 @@ spark-submit scripts/silver_votes_badges_manual.py
         """,
     )
 
+    # ── Helper Spark-submit reutilizable ─────────────────────────────────────
+    def _stream_subprocess(cmd: list, env: dict, name: str):
+        """Ejecuta `cmd` haciendo streaming de stdout+stderr al log de Airflow.
+
+        Importante: NO usar subprocess.run(capture_output=True) porque acumula
+        TODO el output en memoria y bloquea el heartbeat del scheduler durante
+        spark-submit (que descarga jars + corre por minutos), causando
+        SIGTERM por 'Heartbeat time limit exceeded'."""
+        import logging
+        import subprocess
+
+        log = logging.getLogger(__name__)
+        log.info(f"[{name}] Running: {' '.join(cmd)}")
+
+        proc = subprocess.Popen(
+            cmd, env=env, stdout=subprocess.PIPE, stderr=subprocess.STDOUT,
+            text=True, bufsize=1,
+        )
+        try:
+            for line in proc.stdout:
+                log.info(f"[{name}] {line.rstrip()}")
+        finally:
+            rc = proc.wait()
+        if rc != 0:
+            raise RuntimeError(f"Spark job {name} failed with rc={rc}")
+
+    def _run_spark_submit(script_path: str, name: str, master: str = "spark://spark-master:7077",
+                          extra_conf: dict | None = None, replace_conf: dict | None = None):
+        """Lanza spark-submit contra `script_path` con las configs del DAG.
+
+        - extra_conf: merge sobre SPARK_CONF (gana extra_conf).
+        - replace_conf: ignora SPARK_CONF por completo y usa solo este dict.
+        """
+        if replace_conf is not None:
+            conf = replace_conf
+        else:
+            conf = {**SPARK_CONF, **(extra_conf or {})}
+        cmd = ["/opt/spark/bin/spark-submit", "--master", master]
+        for k, v in conf.items():
+            cmd.extend(["--conf", f"{k}={v}"])
+        cmd.extend(["--packages", PACKAGES, "--name", name, script_path])
+
+        env = os.environ.copy()
+        env.update(SPARK_ENV_VARS)
+        _stream_subprocess(cmd, env, name)
+
     # ── Task 2: Silver (PySpark + Iceberg) ────────────────────────────────────
-    t_silver = SparkSubmitOperator(
+    # Nota: post_hist se construye con script manual previo
+    # (`scripts/silver_post_hist_manual.py`), tal como exige el PDF del
+    # Proyecto 2 — el DAG solo orquesta Bronze(users_2021) → Silver(users_hist)
+    # → Gold(cant_post_x_user_hist).
+    def silver_transform_callable(**context):
+        """Lanza silver_transform con streaming de output (no satura el scheduler).
+
+        Vectorización Iceberg deshabilitada: el reader vectorizado de Arrow
+        crashea con SIGSEGV (rc=134) sobre Java 17 cuando el MERGE escanea la
+        tabla destino con datos existentes. Mismo workaround que gold."""
+        _run_spark_submit("/opt/airflow/scripts/silver_transform.py",
+                          "silver_users_hist",
+                          extra_conf={"spark.sql.iceberg.vectorization.enabled": "false"})
+    
+    t_silver = PythonOperator(
         task_id="silver_transform",
-        application="/opt/airflow/scripts/silver_transform.py",
-        conn_id="spark_default",
-        name="silver_users_hist",
-        verbose=True,
-        packages=PACKAGES,
-        conf=SPARK_CONF,
-        env_vars=SPARK_ENV_VARS,
+        python_callable=silver_transform_callable,
         execution_timeout=timedelta(hours=1),
         doc_md="""
 **Silver — users_hist**
@@ -186,15 +244,29 @@ spark-submit scripts/silver_votes_badges_manual.py
     )
 
     # ── Task 3: Gold (PySpark + Iceberg) ─────────────────────────────────────
-    t_gold = SparkSubmitOperator(
+    def gold_agg_callable(**context):
+        """Gold con master=local[1] y configs ajustadas (vectorization off por
+        SIGSEGV con Iceberg en este stack)."""
+        local_conf = {
+            "spark.driver.memory": "1500m",
+            "spark.driver.maxResultSize": "512m",
+            "spark.memory.fraction": "0.5",
+            "spark.sql.shuffle.partitions": "2",
+            "spark.sql.iceberg.vectorization.enabled": "false",
+            "spark.driver.extraJavaOptions": "-Xss4m",
+        }
+        # Quita configs de executor (irrelevantes en local mode) y usa replace_conf
+        # para evitar que SPARK_CONF las reintroduzca por merge.
+        base = {k: v for k, v in SPARK_CONF.items()
+                if not k.startswith("spark.executor.")}
+        _run_spark_submit("/opt/airflow/scripts/gold_agg.py",
+                          "gold_cant_post_x_user_hist",
+                          master="local[1]",
+                          replace_conf={**base, **local_conf})
+    
+    t_gold = PythonOperator(
         task_id="gold_agg",
-        application="/opt/airflow/scripts/gold_agg.py",
-        conn_id="spark_default",
-        name="gold_cant_post_x_user_hist",
-        verbose=True,
-        packages=PACKAGES,
-        conf=SPARK_CONF,
-        env_vars=SPARK_ENV_VARS,
+        python_callable=gold_agg_callable,
         execution_timeout=timedelta(hours=2),
         doc_md="""
 **Gold — cant_post_x_user_hist**

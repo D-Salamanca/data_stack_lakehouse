@@ -1,0 +1,12 @@
+[     533ms] [ERROR] Manifest: Line: 1, column: 1, Syntax error. @ http://localhost:9047/manifest.webmanifest:0
+[     600ms] [ERROR] Failed to load resource: the server responded with a status of 401 (Unauthorized) @ http://localhost:9047/apiv2/login/?nocache=1776030812351:0
+[     653ms] [ERROR]  Note that 'script-src' was not explicitly set, so 'default-src' is used as a fallback. @ https://www.googletagmanager.com/gtm.js?id=GTM-5D8RST:4
+[     654ms] [ERROR]  Note that 'script-src' was not explicitly set, so 'default-src' is used as a fallback. @ https://www.googletagmanager.com/gtm.js?id=GTM-5D8RST:4
+[     657ms] [ERROR]  Note that 'script-src' was not explicitly set, so 'default-src' is used as a fallback. @ https://www.googletagmanager.com/gtm.js?id=GTM-5D8RST:4
+[     658ms] [ERROR]  Note that 'script-src' was not explicitly set, so 'default-src' is used as a fallback. @ https://www.googletagmanager.com/gtm.js?id=GTM-5D8RST:4
+[     659ms] [ERROR]  Note that 'script-src' was not explicitly set, so 'default-src' is used as a fallback. @ https://www.googletagmanager.com/gtm.js?id=GTM-5D8RST:4
+[     680ms] [ERROR] Manifest: Line: 1, column: 1, Syntax error. @ http://localhost:9047/manifest.webmanifest:0
+[     988ms] [ERROR] Failed to load resource: the server responded with a status of 404 () @ https://o31066.ingest.sentry.io/:0
+[    1070ms] [WARNING] [Intercom] The App ID in your code snippet has not been set. Set it to your App ID found in settings to complete installation: https://app.intercom.com/a/apps/_/settings/web @ https://js.intercomcdn.com/frame-modern.3fa1db07.js:0
+[    1072ms] [ERROR] Failed to load resource: the server responded with a status of 403 () @ https://o31066.ingest.sentry.io/api/66750/envelope/?sentry_key=2592b22bfefa49b3b5b1e72393f84194&sentry_version=7&sentry_client=sentry.javascript.browser%2F8.33.1:0
+[   21013ms] [ERROR] Failed to load resource: the server responded with a status of 401 (Unauthorized) @ http://localhost:9047/apiv2/login:0

@@ -50,10 +50,12 @@ PACKAGES = ",".join([
 SPARK_CONF = {
     "spark.submit.deployMode":  "client",
     "spark.driver.bindAddress": "0.0.0.0",
-    "spark.executor.instances": "1",
-    "spark.executor.cores":     "2",
-    "spark.executor.memory":    "2g",
-    "spark.driver.memory":      "1g",
+    "spark.executor.instances":         "1",
+    "spark.executor.cores":             "1",
+    "spark.executor.memory":            "1g",
+    "spark.executor.memoryOverhead":    "512m",
+    "spark.driver.memory":              "1g",
+    "spark.sql.shuffle.partitions":     "4",
     "spark.sql.extensions": (
         "org.apache.iceberg.spark.extensions.IcebergSparkSessionExtensions,"
         "org.projectnessie.spark.extensions.NessieSparkSessionExtensions"
@@ -228,13 +230,25 @@ spark-submit scripts/silver_votes_badges_manual.py
         
         cmd = [
             "/opt/spark/bin/spark-submit",
-            "--master", "spark://spark-master:7077",
+            "--master", "local[1]",
         ]
-        
-        # Add each config as separate args
-        for key, value in SPARK_CONF.items():
+
+        # Override memory-related configs for local mode (driver does the work)
+        local_conf = {**SPARK_CONF, "spark.driver.memory": "1500m",
+                      "spark.driver.maxResultSize": "512m",
+                      "spark.memory.fraction": "0.5",
+                      "spark.sql.shuffle.partitions": "2",
+                      "spark.sql.iceberg.vectorization.enabled": "false",
+                      "spark.driver.extraJavaOptions": "-Xss4m"}
+        local_conf.pop("spark.executor.instances", None)
+        local_conf.pop("spark.executor.cores", None)
+        local_conf.pop("spark.executor.memory", None)
+        local_conf.pop("spark.executor.memoryOverhead", None)
+
+        for key, value in local_conf.items():
             cmd.extend(["--conf", f"{key}={value}"])
-        
+
+
         # Add packages
         cmd.extend(["--packages", PACKAGES])
         cmd.extend(["--name", "gold_cant_post_x_user_hist"])

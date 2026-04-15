@@ -17,9 +17,14 @@ import os
 import logging
 import pandas as pd
 import numpy as np
+import pyarrow.parquet as pq
+import fsspec
 from datetime import datetime, timedelta
 
 import dlt
+
+SO_PARQUET_USERS = "https://datasets-documentation.s3.eu-west-3.amazonaws.com/stackoverflow/parquet/users.parquet"
+HTTP_FS = fsspec.filesystem("https")
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(message)s")
 log = logging.getLogger(__name__)
@@ -33,7 +38,7 @@ BRONZE_BUCKET  = os.getenv("MINIO_BUCKET_BRONZE", "bronze")
 PIPELINE_YEAR  = 2021
 MAX_ROWS       = int(os.getenv("MAX_ROWS", "10000"))
 
-USE_SYNTHETIC = True  # Default: usar datos sintéticos
+USE_SYNTHETIC = os.getenv("USE_SYNTHETIC", "false").lower() == "true"
 
 
 def generate_users_2021(n: int = 5000) -> pd.DataFrame:
@@ -79,47 +84,33 @@ def users_2021_source():
         log.info(f"Filas generadas: {len(df):,}")
         yield df
     else:
-        # Código original para ClickHouse (si estuviera disponible)
-        import clickhouse_connect
-        
-        CH_HOST     = os.getenv("CH_HOST",     "play.clickhouse.com")
-        CH_PORT     = int(os.getenv("CH_PORT", "443"))
-        CH_USER     = os.getenv("CH_USER",     "play")
-        CH_PASSWORD = os.getenv("CH_PASSWORD", "")
-        CH_DB       = os.getenv("CH_DB",       "stackoverflow")
-        
-        log.info(f"Conectando a ClickHouse: {CH_HOST}:{CH_PORT}")
+        log.info(f"Streaming users.parquet de {SO_PARQUET_USERS}")
+        f = HTTP_FS.open(SO_PARQUET_USERS, mode="rb", block_size=1024 * 1024)
+        pf = pq.ParquetFile(f)
 
-        client = clickhouse_connect.get_client(
-            host=CH_HOST,
-            port=CH_PORT,
-            username=CH_USER,
-            password=CH_PASSWORD,
-            database=CH_DB,
-            secure=(CH_PORT == 443),
-        )
+        collected, total = [], 0
+        MAX_BATCHES = 500
+        for i, batch in enumerate(pf.iter_batches(batch_size=50000)):
+            if i >= MAX_BATCHES:
+                break
+            df = batch.to_pandas()
+            df = df[pd.to_datetime(df["CreationDate"], errors="coerce").dt.year == PIPELINE_YEAR]
+            if df.empty:
+                continue
+            remaining = MAX_ROWS - total
+            if len(df) > remaining:
+                df = df.head(remaining)
+            collected.append(df)
+            total += len(df)
+            if total >= MAX_ROWS:
+                break
 
-        query = f"""
-            SELECT
-                Id,
-                Reputation,
-                CreationDate,
-                DisplayName,
-                LastAccessDate,
-                Views,
-                UpVotes,
-                DownVotes,
-                Location,
-                AccountId
-            FROM users
-            WHERE toYear(CreationDate) = {PIPELINE_YEAR}
-            LIMIT {MAX_ROWS}
-        """
-
-        log.info(f"Descargando users {PIPELINE_YEAR} (máx {MAX_ROWS} filas)...")
-        df = client.query_df(query)
-        log.info(f"Filas descargadas: {len(df):,}")
-        yield df
+        if not collected:
+            log.warning(f"No se encontraron users con CreationDate año {PIPELINE_YEAR}")
+            return
+        out = pd.concat(collected, ignore_index=True)
+        log.info(f"Filas descargadas users_{PIPELINE_YEAR}: {len(out):,}")
+        yield out
 
 
 # ── Pipeline dlt ──────────────────────────────────────────────────────────────

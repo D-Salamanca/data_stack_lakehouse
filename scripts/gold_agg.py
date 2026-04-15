@@ -118,22 +118,22 @@ def build_cant_post_x_user_hist(spark: SparkSession):
 
     df = spark.sql(f"""
         SELECT
-            p.owner_user_id                           AS user_id,
+            p.OwnerUserId                           AS user_id,
             COALESCE(u.DisplayName, 'Unknown')      AS display_name,
-            p.year                                  AS anio,
-            COUNT(p.post_id)                             AS cant_posts,
-            COALESCE(SUM(p.score), 0)               AS total_score,
-            ROUND(AVG(p.score), 2)                  AS avg_score,
-            COALESCE(SUM(p.view_count), 0)           AS total_views,
+            p.anio                                  AS anio,
+            COUNT(p.Id)                             AS cant_posts,
+            COALESCE(SUM(p.Score), 0)               AS total_score,
+            ROUND(AVG(p.Score), 2)                  AS avg_score,
+            COALESCE(SUM(p.ViewCount), 0)           AS total_views,
             CAST('{FECHA_CARGUE}' AS TIMESTAMP)     AS fecha_cargue
         FROM nessie.{SILVER_NS}.post_hist p
         LEFT JOIN nessie.{SILVER_NS}.users_hist u
-            ON p.owner_user_id = u.Id
-        WHERE p.owner_user_id IS NOT NULL
+            ON p.OwnerUserId = u.Id
+        WHERE p.OwnerUserId IS NOT NULL
         GROUP BY
-            p.owner_user_id,
+            p.OwnerUserId,
             u.DisplayName,
-            p.year
+            p.anio
     """)
 
     # Clave compuesta: user_id + anio

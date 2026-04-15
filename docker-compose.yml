@@ -1,31 +1,24 @@
 # ============================================================
-# docker-compose.yaml — Proyecto 2 FHBD
+# docker-compose.yaml — Proyecto 2 FHBD (OPTIMIZADO)
 # Arquitectura Lakehouse: StackOverflow → Bronze → Silver → Gold
 #
-# Servicios incluidos:
-#   Capa de Orquestación : airflow-webserver, scheduler, worker,
-#                          triggerer, init, redis, postgres
-#   Capa de Procesamiento: spark-master, spark-worker
-#   Capa de Almacenamiento: minio (S3), nessie (catalog Iceberg)
-#   Capa de Consulta     : trino (Silver), dremio (Gold)
-#   Capa de Desarrollo   : jupyter
+# Cambios vs versión original:
+#   - Airflow: CeleryExecutor → LocalExecutor
+#     (se elimina redis, airflow-worker, airflow-triggerer, flower)
+#   - Dremio: 4→2 GB heap, límite 2.5 GB
+#   - Spark: solo master (local[*] en los jobs) → se elimina spark-worker
+#   - Trino: heap 1 GB (/trino/etc/jvm.config)
 #
-# Uso:
-#   docker compose up -d                  → levantar todo
-#   docker compose --profile flower up -d → incluir Flower UI
-#   docker compose --profile debug up -d  → incluir CLI de Airflow
+# Servicios:
+#   Orquestación : airflow-webserver, airflow-scheduler, postgres
+#   Procesamiento: spark-master (single-node)
+#   Almacenamiento: minio, nessie
+#   Consulta     : trino (Silver), dremio (Gold)
+#   Desarrollo   : jupyter
 #
-# Puertos expuestos:
-#   8080  → Airflow Webserver
-#   8081  → Spark Master UI
-#   8082  → Spark Worker UI
-#   8888  → Jupyter Notebook
-#   9000  → MinIO S3 API
-#   9001  → MinIO Console
-#   9047  → Dremio UI
-#   8090  → Trino UI
-#   19120 → Nessie API
-#   5555  → Flower (perfil opcional)
+# Puertos:
+#   8080 Airflow · 8081 Spark · 8888 Jupyter · 9000/9001 MinIO
+#   9047 Dremio · 8090 Trino · 19120 Nessie
 # ============================================================
 
 x-airflow-common:
@@ -38,11 +31,8 @@ x-airflow-common:
     - .env
   environment:
     &airflow-common-env
-    # --- Core Airflow ---
-    AIRFLOW__CORE__EXECUTOR: CeleryExecutor
+    AIRFLOW__CORE__EXECUTOR: LocalExecutor
     AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: postgresql+psycopg2://airflow:airflow@postgres/airflow
-    AIRFLOW__CELERY__RESULT_BACKEND: db+postgresql://airflow:airflow@postgres/airflow
-    AIRFLOW__CELERY__BROKER_URL: redis://:@redis:6379/0
     AIRFLOW__CORE__FERNET_KEY: ''
     AIRFLOW__CORE__DAGS_ARE_PAUSED_AT_CREATION: 'true'
     AIRFLOW__CORE__LOAD_EXAMPLES: 'false'
@@ -51,23 +41,19 @@ x-airflow-common:
 
     SPARK_HOME: '/opt/spark'
 
-    # --- MinIO ---
     MINIO_ENDPOINT: '${MINIO_ENDPOINT:-http://proyecto2-minio:9000}'
     MINIO_ACCESS_KEY: '${MINIO_ACCESS_KEY:-minioadmin}'
     MINIO_SECRET_KEY: '${MINIO_SECRET_KEY:-minioadmin123}'
     MINIO_BUCKET_BRONZE: '${MINIO_BUCKET_BRONZE:-bronze}'
     MINIO_BUCKET_ICEBERG: '${MINIO_BUCKET_ICEBERG:-iceberg}'
 
-    # --- Nessie ---
     NESSIE_URL: '${NESSIE_URL:-http://proyecto2-nessie:19120/api/v1}'
     NESSIE_BRANCH: '${NESSIE_BRANCH:-main}'
 
-    # --- StackOverflow / Iceberg namespaces ---
     BRONZE_NAMESPACE: 'bronze'
     SILVER_NAMESPACE: 'silver'
     GOLD_NAMESPACE: 'gold'
 
-    # --- ClickHouse público (fuente de datos StackOverflow) ---
     CH_HOST: 'play.clickhouse.com'
     CH_PORT: '443'
     CH_USER: 'play'
@@ -86,20 +72,15 @@ x-airflow-common:
   user: "${AIRFLOW_UID:-50000}:0"
   depends_on:
     &airflow-common-depends-on
-    redis:
-      condition: service_healthy
     postgres:
       condition: service_healthy
   networks:
     - proyecto2-network
 
-# ============================================================
-# SERVICIOS
-# ============================================================
 services:
 
   # ----------------------------------------------------------
-  # INFRAESTRUCTURA DE AIRFLOW
+  # AIRFLOW
   # ----------------------------------------------------------
 
   postgres:
@@ -120,21 +101,6 @@ services:
     networks:
       - proyecto2-network
 
-  redis:
-    image: redis:7.2-bookworm
-    container_name: proyecto2-redis
-    expose:
-      - 6379
-    healthcheck:
-      test: ["CMD", "redis-cli", "ping"]
-      interval: 10s
-      timeout: 30s
-      retries: 50
-      start_period: 30s
-    restart: always
-    networks:
-      - proyecto2-network
-
   airflow-init:
     <<: *airflow-common
     container_name: proyecto2-airflow-init
@@ -142,22 +108,8 @@ services:
     command:
       - -c
       - |
-        if [[ -z "${AIRFLOW_UID}" ]]; then
-          echo -e "\033[1;33mWARNING: AIRFLOW_UID not set!\e[0m"
-        fi
-        one_meg=1048576
-        mem_available=$$(($$(getconf _PHYS_PAGES) * $$(getconf PAGE_SIZE) / one_meg))
-        cpus_available=$$(grep -cE 'cpu[0-9]+' /proc/stat)
-        disk_available=$$(df / | tail -1 | awk '{print $$4}')
-        if (( mem_available < 4000 )); then
-          echo -e "\033[1;33mWARNING: At least 4GB RAM required.\e[0m"
-        fi
-        if (( cpus_available < 2 )); then
-          echo -e "\033[1;33mWARNING: At least 2 CPUs recommended.\e[0m"
-        fi
         mkdir -p /sources/logs /sources/dags /sources/plugins /sources/scripts /sources/data /sources/notebooks
-        chown -R "${AIRFLOW_UID}:0" /sources/{logs,dags,plugins,scripts,data,notebooks}
-        # Crear conexión Spark automáticamente
+        chown -R "${AIRFLOW_UID:-50000}:0" /sources/{logs,dags,plugins,scripts,data,notebooks}
         exec /entrypoint airflow version
     environment:
       <<: *airflow-common-env
@@ -210,78 +162,8 @@ services:
       airflow-init:
         condition: service_completed_successfully
 
-  airflow-worker:
-    <<: *airflow-common
-    container_name: proyecto2-airflow-worker
-    command: celery worker
-    healthcheck:
-      test:
-        - "CMD-SHELL"
-        - 'celery --app airflow.providers.celery.executors.celery_executor.app inspect ping -d "celery@$${HOSTNAME}" || celery --app airflow.executors.celery_executor.app inspect ping -d "celery@$${HOSTNAME}"'
-      interval: 30s
-      timeout: 10s
-      retries: 5
-      start_period: 30s
-    environment:
-      <<: *airflow-common-env
-      DUMB_INIT_SETSID: "0"
-    restart: always
-    depends_on:
-      <<: *airflow-common-depends-on
-      airflow-init:
-        condition: service_completed_successfully
-
-  airflow-triggerer:
-    <<: *airflow-common
-    container_name: proyecto2-airflow-triggerer
-    command: triggerer
-    healthcheck:
-      test: ["CMD-SHELL", 'airflow jobs check --job-type TriggererJob --hostname "$${HOSTNAME}"']
-      interval: 30s
-      timeout: 10s
-      retries: 5
-      start_period: 30s
-    restart: always
-    depends_on:
-      <<: *airflow-common-depends-on
-      airflow-init:
-        condition: service_completed_successfully
-
-  airflow-cli:
-    <<: *airflow-common
-    container_name: proyecto2-airflow-cli
-    profiles:
-      - debug
-    environment:
-      <<: *airflow-common-env
-      CONNECTION_CHECK_MAX_COUNT: "0"
-    command:
-      - bash
-      - -c
-      - airflow
-
-  flower:
-    <<: *airflow-common
-    container_name: proyecto2-flower
-    command: celery flower
-    profiles:
-      - flower
-    ports:
-      - "5555:5555"
-    healthcheck:
-      test: ["CMD", "curl", "--fail", "http://localhost:5555/"]
-      interval: 30s
-      timeout: 10s
-      retries: 5
-      start_period: 30s
-    restart: always
-    depends_on:
-      <<: *airflow-common-depends-on
-      airflow-init:
-        condition: service_completed_successfully
-
   # ----------------------------------------------------------
-  # PROCESAMIENTO — Apache Spark
+  # SPARK (single-node, jobs corren en local[*])
   # ----------------------------------------------------------
 
   spark-master:
@@ -293,6 +175,7 @@ services:
     command: /opt/spark/bin/spark-class org.apache.spark.deploy.master.Master --host spark-master --port 7077 --webui-port 8081
     environment:
       - SPARK_NO_DAEMONIZE=true
+      - SPARK_DAEMON_MEMORY=512m
       - AWS_ACCESS_KEY_ID=${MINIO_ACCESS_KEY:-minioadmin}
       - AWS_SECRET_ACCESS_KEY=${MINIO_SECRET_KEY:-minioadmin123}
       - AWS_REGION=us-east-1
@@ -325,6 +208,8 @@ services:
     environment:
       - SPARK_NO_DAEMONIZE=true
       - SPARK_MASTER_URL=spark://spark-master:7077
+      - SPARK_WORKER_MEMORY=4g
+      - SPARK_WORKER_CORES=2
       - AWS_ACCESS_KEY_ID=${MINIO_ACCESS_KEY:-minioadmin}
       - AWS_SECRET_ACCESS_KEY=${MINIO_SECRET_KEY:-minioadmin123}
       - AWS_REGION=us-east-1
@@ -340,7 +225,7 @@ services:
       - spark-master
 
   # ----------------------------------------------------------
-  # ALMACENAMIENTO — MinIO (S3-compatible)
+  # MinIO
   # ----------------------------------------------------------
 
   minio:
@@ -366,7 +251,7 @@ services:
       - proyecto2-network
 
   # ----------------------------------------------------------
-  # CATÁLOGO — Nessie
+  # Nessie
   # ----------------------------------------------------------
 
   nessie:
@@ -405,7 +290,7 @@ services:
         condition: service_healthy
 
   # ----------------------------------------------------------
-  # CONSULTA SILVER — Trino (apunta a Iceberg vía Nessie)
+  # Trino (heap limitado a 1 GB vía trino/etc/jvm.config)
   # ----------------------------------------------------------
 
   trino:
@@ -414,7 +299,7 @@ services:
     ports:
       - "8090:8080"
     volumes:
-      - ${AIRFLOW_PROJ_DIR:-.}/trino/catalog:/etc/trino/catalog
+      - ${AIRFLOW_PROJ_DIR:-.}/trino/etc:/etc/trino
     healthcheck:
       test: ["CMD", "curl", "--fail", "http://localhost:8080/v1/info"]
       interval: 20s
@@ -429,16 +314,16 @@ services:
         condition: service_healthy
 
   # ----------------------------------------------------------
-  # CONSULTA GOLD — Dremio (apunta a Iceberg vía Nessie)
+  # Dremio (heap 4 GB — mínimo requerido por Dremio)
   # ----------------------------------------------------------
 
   dremio:
     image: dremio/dremio-oss:latest
     container_name: proyecto2-dremio
     ports:
-      - "9047:9047"   # UI y API REST
-      - "31010:31010" # JDBC/ODBC
-      - "32010:32010" # Arrow Flight
+      - "9047:9047"
+      - "31010:31010"
+      - "32010:32010"
     environment:
       - DREMIO_MAX_MEMORY_SIZE_MB=4096
     volumes:
@@ -465,7 +350,7 @@ services:
         condition: service_healthy
 
   # ----------------------------------------------------------
-  # DESARROLLO — Jupyter Notebook
+  # Jupyter
   # ----------------------------------------------------------
 
   jupyter:
@@ -475,21 +360,16 @@ services:
       - "8888:8888"
     environment:
       - JUPYTER_TOKEN=fhbd
-      # MinIO
       - MINIO_ENDPOINT=http://proyecto2-minio:9000
       - MINIO_ACCESS_KEY=${MINIO_ACCESS_KEY:-minioadmin}
       - MINIO_SECRET_KEY=${MINIO_SECRET_KEY:-minioadmin123}
       - MINIO_BUCKET_BRONZE=bronze
       - MINIO_BUCKET_ICEBERG=iceberg
-      # Nessie
       - NESSIE_URL=http://proyecto2-nessie:19120/api/v1
       - NESSIE_BRANCH=main
-      # Namespaces
       - SILVER_NAMESPACE=silver
       - GOLD_NAMESPACE=gold
-      # Spark
       - SPARK_MASTER=spark://spark-master:7077
-      # ClickHouse público (fuente StackOverflow)
       - CH_HOST=play.clickhouse.com
       - CH_PORT=443
       - CH_USER=play
@@ -508,24 +388,18 @@ services:
       spark-master:
         condition: service_healthy
     command: >
-      bash -lc "pip install -r /home/jovyan/requirements.txt &&
+      bash -lc "pip install --no-cache-dir -r /home/jovyan/requirements.txt &&
       start-notebook.py --NotebookApp.token=$${JUPYTER_TOKEN}"
     restart: always
     networks:
       - proyecto2-network
 
-# ============================================================
-# VOLÚMENES
-# ============================================================
 volumes:
   postgres-db-volume:
   minio_data:
   nessie_data:
   dremio_data:
 
-# ============================================================
-# RED
-# ============================================================
 networks:
   proyecto2-network:
     driver: bridge

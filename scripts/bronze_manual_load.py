@@ -31,13 +31,17 @@ import logging
 import os
 
 import boto3
+import aiohttp
 import fsspec
 import pandas as pd
 import pyarrow.parquet as pq
 from botocore.client import Config
 
 # Filesystem HTTP con range-reads (NO descarga el parquet completo)
-HTTP_FS = fsspec.filesystem("https")
+HTTP_FS = fsspec.filesystem(
+    "https",
+    client_kwargs={"timeout": aiohttp.ClientTimeout(total=600, sock_read=300)},
+)
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(message)s")
 log = logging.getLogger(__name__)
@@ -86,7 +90,7 @@ def already_exists(s3, bucket: str, key: str) -> bool:
 def _open_remote_parquet(url: str):
     """Abre un parquet remoto con range-reads (sin descargarlo completo)."""
     log.info(f"  ↓ stream {url}")
-    f = HTTP_FS.open(url, mode="rb", block_size=1024 * 1024)
+    f = HTTP_FS.open(url, mode="rb", block_size=8 * 1024 * 1024)  # 8 MB — menos round-trips en archivos ~3 GB
     return pq.ParquetFile(f)
 
 

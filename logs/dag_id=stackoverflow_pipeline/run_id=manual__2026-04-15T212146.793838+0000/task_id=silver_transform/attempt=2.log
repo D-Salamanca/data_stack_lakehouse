@@ -1,0 +1,988 @@
+[2026-04-15T21:29:13.627+0000] {local_task_job_runner.py:123} INFO - ::group::Pre task execution logs
+[2026-04-15T21:29:13.680+0000] {taskinstance.py:2613} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: stackoverflow_pipeline.silver_transform manual__2026-04-15T21:21:46.793838+00:00 [queued]>
+[2026-04-15T21:29:13.702+0000] {taskinstance.py:2613} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: stackoverflow_pipeline.silver_transform manual__2026-04-15T21:21:46.793838+00:00 [queued]>
+[2026-04-15T21:29:13.703+0000] {taskinstance.py:2866} INFO - Starting attempt 2 of 2
+[2026-04-15T21:29:13.732+0000] {taskinstance.py:2889} INFO - Executing <Task(PythonOperator): silver_transform> on 2026-04-15 21:21:46.793838+00:00
+[2026-04-15T21:29:13.741+0000] {logging_mixin.py:190} WARNING - /home/***/.local/lib/python3.12/site-packages/***/task/task_runner/standard_task_runner.py:70 DeprecationWarning: This process (pid=2279) is multi-threaded, use of fork() may lead to deadlocks in the child.
+[2026-04-15T21:29:13.740+0000] {standard_task_runner.py:104} INFO - Running: ['***', 'tasks', 'run', 'stackoverflow_pipeline', 'silver_transform', 'manual__2026-04-15T21:21:46.793838+00:00', '--job-id', '5', '--raw', '--subdir', 'DAGS_FOLDER/stackoverflow_pipeline.py', '--cfg-path', '/tmp/tmp9z8l24p5']
+[2026-04-15T21:29:13.743+0000] {standard_task_runner.py:72} INFO - Started process 2280 to run task
+[2026-04-15T21:29:13.743+0000] {standard_task_runner.py:105} INFO - Job 5: Subtask silver_transform
+[2026-04-15T21:29:13.818+0000] {task_command.py:467} INFO - Running <TaskInstance: stackoverflow_pipeline.silver_transform manual__2026-04-15T21:21:46.793838+00:00 [running]> on host 53aa898b95b0
+[2026-04-15T21:29:13.949+0000] {taskinstance.py:3132} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='fhbd-grupo' AIRFLOW_CTX_DAG_ID='stackoverflow_pipeline' AIRFLOW_CTX_TASK_ID='silver_transform' AIRFLOW_CTX_EXECUTION_DATE='2026-04-15T21:21:46.793838+00:00' AIRFLOW_CTX_TRY_NUMBER='2' AIRFLOW_CTX_DAG_RUN_ID='manual__2026-04-15T21:21:46.793838+00:00'
+[2026-04-15T21:29:13.951+0000] {taskinstance.py:731} INFO - ::endgroup::
+[2026-04-15T21:29:13.998+0000] {stackoverflow_pipeline.py:184} INFO - [silver_users_hist] Running: /opt/spark/bin/spark-submit --master spark://spark-master:7077 --conf spark.submit.deployMode=client --conf spark.driver.bindAddress=0.0.0.0 --conf spark.executor.instances=1 --conf spark.executor.cores=1 --conf spark.executor.memory=1g --conf spark.executor.memoryOverhead=512m --conf spark.driver.memory=1g --conf spark.sql.shuffle.partitions=4 --conf spark.sql.extensions=org.apache.iceberg.spark.extensions.IcebergSparkSessionExtensions,org.projectnessie.spark.extensions.NessieSparkSessionExtensions --conf spark.sql.catalog.nessie=org.apache.iceberg.spark.SparkCatalog --conf spark.sql.catalog.nessie.catalog-impl=org.apache.iceberg.nessie.NessieCatalog --conf spark.sql.catalog.nessie.uri=http://proyecto2-nessie:19120/api/v1 --conf spark.sql.catalog.nessie.ref=main --conf spark.sql.catalog.nessie.authentication.type=NONE --conf spark.sql.catalog.nessie.warehouse=s3a://iceberg/ --conf spark.hadoop.fs.s3a.endpoint=http://proyecto2-minio:9000 --conf spark.hadoop.fs.s3a.access.key=minioadmin --conf spark.hadoop.fs.s3a.secret.key=minioadmin123 --conf spark.hadoop.fs.s3a.path.style.access=true --conf spark.hadoop.fs.s3a.impl=org.apache.hadoop.fs.s3a.S3AFileSystem --conf spark.hadoop.fs.s3a.aws.credentials.provider=org.apache.hadoop.fs.s3a.SimpleAWSCredentialsProvider --conf spark.hadoop.fs.s3a.connection.ssl.enabled=false --conf spark.sql.iceberg.vectorization.enabled=false --packages org.apache.iceberg:iceberg-spark-runtime-3.5_2.12:1.6.1,org.projectnessie.nessie-integrations:nessie-spark-extensions-3.5_2.12:0.95.0,org.apache.hadoop:hadoop-aws:3.3.4,com.amazonaws:aws-java-sdk-bundle:1.12.262 --name silver_users_hist /opt/***/scripts/silver_transform.py
+[2026-04-15T21:29:14.028+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] /opt/spark/bin/load-spark-env.sh: line 68: ps: command not found
+[2026-04-15T21:29:16.606+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] :: loading settings :: url = jar:file:/opt/spark/jars/ivy-2.5.1.jar!/org/apache/ivy/core/settings/ivysettings.xml
+[2026-04-15T21:29:16.706+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] Ivy Default Cache set to: /home/***/.ivy2/cache
+[2026-04-15T21:29:16.708+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] The jars for the packages stored in: /home/***/.ivy2/jars
+[2026-04-15T21:29:16.713+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] org.apache.iceberg#iceberg-spark-runtime-3.5_2.12 added as a dependency
+[2026-04-15T21:29:16.714+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] org.projectnessie.nessie-integrations#nessie-spark-extensions-3.5_2.12 added as a dependency
+[2026-04-15T21:29:16.715+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] org.apache.hadoop#hadoop-aws added as a dependency
+[2026-04-15T21:29:16.715+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] com.amazonaws#aws-java-sdk-bundle added as a dependency
+[2026-04-15T21:29:16.716+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] :: resolving dependencies :: org.apache.spark#spark-submit-parent-e22d4090-05d0-424d-bd03-2129650dfa52;1.0
+[2026-04-15T21:29:16.717+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	confs: [default]
+[2026-04-15T21:29:16.963+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	found org.apache.iceberg#iceberg-spark-runtime-3.5_2.12;1.6.1 in central
+[2026-04-15T21:29:17.007+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	found org.projectnessie.nessie-integrations#nessie-spark-extensions-3.5_2.12;0.95.0 in central
+[2026-04-15T21:29:17.080+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	found org.apache.hadoop#hadoop-aws;3.3.4 in central
+[2026-04-15T21:29:17.119+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	found com.amazonaws#aws-java-sdk-bundle;1.12.262 in central
+[2026-04-15T21:29:17.161+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	found org.wildfly.openssl#wildfly-openssl;1.0.7.Final in central
+[2026-04-15T21:29:17.213+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] :: resolution report :: resolve 470ms :: artifacts dl 29ms
+[2026-04-15T21:29:17.214+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	:: modules in use:
+[2026-04-15T21:29:17.215+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	com.amazonaws#aws-java-sdk-bundle;1.12.262 from central in [default]
+[2026-04-15T21:29:17.216+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	org.apache.hadoop#hadoop-aws;3.3.4 from central in [default]
+[2026-04-15T21:29:17.216+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	org.apache.iceberg#iceberg-spark-runtime-3.5_2.12;1.6.1 from central in [default]
+[2026-04-15T21:29:17.217+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	org.projectnessie.nessie-integrations#nessie-spark-extensions-3.5_2.12;0.95.0 from central in [default]
+[2026-04-15T21:29:17.219+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	org.wildfly.openssl#wildfly-openssl;1.0.7.Final from central in [default]
+[2026-04-15T21:29:17.222+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	---------------------------------------------------------------------
+[2026-04-15T21:29:17.227+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	|                  |            modules            ||   artifacts   |
+[2026-04-15T21:29:17.229+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	|       conf       | number| search|dwnlded|evicted|| number|dwnlded|
+[2026-04-15T21:29:17.230+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	---------------------------------------------------------------------
+[2026-04-15T21:29:17.231+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	|      default     |   5   |   0   |   0   |   0   ||   5   |   0   |
+[2026-04-15T21:29:17.232+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	---------------------------------------------------------------------
+[2026-04-15T21:29:17.232+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] :: retrieving :: org.apache.spark#spark-submit-parent-e22d4090-05d0-424d-bd03-2129650dfa52
+[2026-04-15T21:29:17.234+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	confs: [default]
+[2026-04-15T21:29:17.238+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	0 artifacts copied, 5 already retrieved (0kB/14ms)
+[2026-04-15T21:29:17.678+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:29:17 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+[2026-04-15T21:29:20.019+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 2026-04-15 21:29:20,018 INFO ============================================================
+[2026-04-15T21:29:20.020+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 2026-04-15 21:29:20,019 INFO SILVER TRANSFORM — users_hist
+[2026-04-15T21:29:20.021+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 2026-04-15 21:29:20,019 INFO ============================================================
+[2026-04-15T21:29:20.337+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:29:20 INFO SparkContext: Running Spark version 3.5.5
+[2026-04-15T21:29:20.338+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:29:20 INFO SparkContext: OS info Linux, 6.6.87.2-microsoft-standard-WSL2, amd64
+[2026-04-15T21:29:20.338+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:29:20 INFO SparkContext: Java version 17.0.18
+[2026-04-15T21:29:20.362+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:29:20 INFO ResourceUtils: ==============================================================
+[2026-04-15T21:29:20.362+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:29:20 INFO ResourceUtils: No custom resources configured for spark.driver.
+[2026-04-15T21:29:20.363+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:29:20 INFO ResourceUtils: ==============================================================
+[2026-04-15T21:29:20.364+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:29:20 INFO SparkContext: Submitted application: silver_users_hist
+[2026-04-15T21:29:20.390+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:29:20 INFO ResourceProfile: Default ResourceProfile created, executor resources: Map(memoryOverhead -> name: memoryOverhead, amount: 512, script: , vendor: , cores -> name: cores, amount: 1, script: , vendor: , memory -> name: memory, amount: 1024, script: , vendor: , offHeap -> name: offHeap, amount: 0, script: , vendor: ), task resources: Map(cpus -> name: cpus, amount: 1.0)
+[2026-04-15T21:29:20.399+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:29:20 INFO ResourceProfile: Limiting resource is cpus at 1 tasks per executor
+[2026-04-15T21:29:20.401+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:29:20 INFO ResourceProfileManager: Added ResourceProfile id: 0
+[2026-04-15T21:29:20.486+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:29:20 INFO SecurityManager: Changing view acls to: ***
+[2026-04-15T21:29:20.488+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:29:20 INFO SecurityManager: Changing modify acls to: ***
+[2026-04-15T21:29:20.488+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:29:20 INFO SecurityManager: Changing view acls groups to:
+[2026-04-15T21:29:20.489+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:29:20 INFO SecurityManager: Changing modify acls groups to:
+[2026-04-15T21:29:20.490+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:29:20 INFO SecurityManager: SecurityManager: authentication disabled; ui acls disabled; users with view permissions: ***; groups with view permissions: EMPTY; users with modify permissions: ***; groups with modify permissions: EMPTY
+[2026-04-15T21:29:20.759+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:29:20 INFO Utils: Successfully started service 'sparkDriver' on port 45411.
+[2026-04-15T21:29:20.803+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:29:20 INFO SparkEnv: Registering MapOutputTracker
+[2026-04-15T21:29:20.855+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:29:20 INFO SparkEnv: Registering BlockManagerMaster
+[2026-04-15T21:29:20.895+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:29:20 INFO BlockManagerMasterEndpoint: Using org.apache.spark.storage.DefaultTopologyMapper for getting topology information
+[2026-04-15T21:29:20.896+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:29:20 INFO BlockManagerMasterEndpoint: BlockManagerMasterEndpoint up
+[2026-04-15T21:29:20.901+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:29:20 INFO SparkEnv: Registering BlockManagerMasterHeartbeat
+[2026-04-15T21:29:20.931+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:29:20 INFO DiskBlockManager: Created local directory at /tmp/blockmgr-ff1c7fd1-e797-452f-aed7-06a661e10a09
+[2026-04-15T21:29:20.948+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:29:20 INFO MemoryStore: MemoryStore started with capacity 434.4 MiB
+[2026-04-15T21:29:20.965+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:29:20 INFO SparkEnv: Registering OutputCommitCoordinator
+[2026-04-15T21:29:21.133+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:29:21 INFO JettyUtils: Start Jetty 0.0.0.0:4040 for SparkUI
+[2026-04-15T21:29:21.200+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:29:21 INFO Utils: Successfully started service 'SparkUI' on port 4040.
+[2026-04-15T21:29:21.241+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:29:21 INFO SparkContext: Added JAR file:///home/***/.ivy2/jars/org.apache.iceberg_iceberg-spark-runtime-3.5_2.12-1.6.1.jar at spark://53aa898b95b0:45411/jars/org.apache.iceberg_iceberg-spark-runtime-3.5_2.12-1.6.1.jar with timestamp 1776288560329
+[2026-04-15T21:29:21.242+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:29:21 INFO SparkContext: Added JAR file:///home/***/.ivy2/jars/org.projectnessie.nessie-integrations_nessie-spark-extensions-3.5_2.12-0.95.0.jar at spark://53aa898b95b0:45411/jars/org.projectnessie.nessie-integrations_nessie-spark-extensions-3.5_2.12-0.95.0.jar with timestamp 1776288560329
+[2026-04-15T21:29:21.243+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:29:21 INFO SparkContext: Added JAR file:///home/***/.ivy2/jars/org.apache.hadoop_hadoop-aws-3.3.4.jar at spark://53aa898b95b0:45411/jars/org.apache.hadoop_hadoop-aws-3.3.4.jar with timestamp 1776288560329
+[2026-04-15T21:29:21.244+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:29:21 INFO SparkContext: Added JAR file:///home/***/.ivy2/jars/com.amazonaws_aws-java-sdk-bundle-1.12.262.jar at spark://53aa898b95b0:45411/jars/com.amazonaws_aws-java-sdk-bundle-1.12.262.jar with timestamp 1776288560329
+[2026-04-15T21:29:21.244+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:29:21 INFO SparkContext: Added JAR file:///home/***/.ivy2/jars/org.wildfly.openssl_wildfly-openssl-1.0.7.Final.jar at spark://53aa898b95b0:45411/jars/org.wildfly.openssl_wildfly-openssl-1.0.7.Final.jar with timestamp 1776288560329
+[2026-04-15T21:29:21.246+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:29:21 INFO SparkContext: Added file file:///home/***/.ivy2/jars/org.apache.iceberg_iceberg-spark-runtime-3.5_2.12-1.6.1.jar at spark://53aa898b95b0:45411/files/org.apache.iceberg_iceberg-spark-runtime-3.5_2.12-1.6.1.jar with timestamp 1776288560329
+[2026-04-15T21:29:21.248+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:29:21 INFO Utils: Copying /home/***/.ivy2/jars/org.apache.iceberg_iceberg-spark-runtime-3.5_2.12-1.6.1.jar to /tmp/spark-f70745e8-0759-4aad-89de-4b4cba51b866/userFiles-ecd24089-48c0-49dc-887f-fe2148eb54b5/org.apache.iceberg_iceberg-spark-runtime-3.5_2.12-1.6.1.jar
+[2026-04-15T21:29:21.757+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:29:21 INFO SparkContext: Added file file:///home/***/.ivy2/jars/org.projectnessie.nessie-integrations_nessie-spark-extensions-3.5_2.12-0.95.0.jar at spark://53aa898b95b0:45411/files/org.projectnessie.nessie-integrations_nessie-spark-extensions-3.5_2.12-0.95.0.jar with timestamp 1776288560329
+[2026-04-15T21:29:21.758+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:29:21 INFO Utils: Copying /home/***/.ivy2/jars/org.projectnessie.nessie-integrations_nessie-spark-extensions-3.5_2.12-0.95.0.jar to /tmp/spark-f70745e8-0759-4aad-89de-4b4cba51b866/userFiles-ecd24089-48c0-49dc-887f-fe2148eb54b5/org.projectnessie.nessie-integrations_nessie-spark-extensions-3.5_2.12-0.95.0.jar
+[2026-04-15T21:29:21.820+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:29:21 INFO SparkContext: Added file file:///home/***/.ivy2/jars/org.apache.hadoop_hadoop-aws-3.3.4.jar at spark://53aa898b95b0:45411/files/org.apache.hadoop_hadoop-aws-3.3.4.jar with timestamp 1776288560329
+[2026-04-15T21:29:21.821+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:29:21 INFO Utils: Copying /home/***/.ivy2/jars/org.apache.hadoop_hadoop-aws-3.3.4.jar to /tmp/spark-f70745e8-0759-4aad-89de-4b4cba51b866/userFiles-ecd24089-48c0-49dc-887f-fe2148eb54b5/org.apache.hadoop_hadoop-aws-3.3.4.jar
+[2026-04-15T21:29:21.859+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:29:21 INFO SparkContext: Added file file:///home/***/.ivy2/jars/com.amazonaws_aws-java-sdk-bundle-1.12.262.jar at spark://53aa898b95b0:45411/files/com.amazonaws_aws-java-sdk-bundle-1.12.262.jar with timestamp 1776288560329
+[2026-04-15T21:29:21.860+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:29:21 INFO Utils: Copying /home/***/.ivy2/jars/com.amazonaws_aws-java-sdk-bundle-1.12.262.jar to /tmp/spark-f70745e8-0759-4aad-89de-4b4cba51b866/userFiles-ecd24089-48c0-49dc-887f-fe2148eb54b5/com.amazonaws_aws-java-sdk-bundle-1.12.262.jar
+[2026-04-15T21:29:27.619+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:29:27 INFO SparkContext: Added file file:///home/***/.ivy2/jars/org.wildfly.openssl_wildfly-openssl-1.0.7.Final.jar at spark://53aa898b95b0:45411/files/org.wildfly.openssl_wildfly-openssl-1.0.7.Final.jar with timestamp 1776288560329
+[2026-04-15T21:29:27.620+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:29:27 INFO Utils: Copying /home/***/.ivy2/jars/org.wildfly.openssl_wildfly-openssl-1.0.7.Final.jar to /tmp/spark-f70745e8-0759-4aad-89de-4b4cba51b866/userFiles-ecd24089-48c0-49dc-887f-fe2148eb54b5/org.wildfly.openssl_wildfly-openssl-1.0.7.Final.jar
+[2026-04-15T21:29:27.920+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:29:27 INFO StandaloneAppClient$ClientEndpoint: Connecting to master spark://spark-master:7077...
+[2026-04-15T21:29:28.010+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:29:28 INFO TransportClientFactory: Successfully created connection to spark-master/172.20.0.7:7077 after 53 ms (0 ms spent in bootstraps)
+[2026-04-15T21:29:28.724+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:29:28 INFO StandaloneSchedulerBackend: Connected to Spark cluster with app ID app-20260415212928-0002
+[2026-04-15T21:29:28.734+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:29:28 INFO Utils: Successfully started service 'org.apache.spark.network.netty.NettyBlockTransferService' on port 44385.
+[2026-04-15T21:29:28.735+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:29:28 INFO NettyBlockTransferService: Server created on 53aa898b95b0 0.0.0.0:44385
+[2026-04-15T21:29:28.736+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:29:28 INFO BlockManager: Using org.apache.spark.storage.RandomBlockReplicationPolicy for block replication policy
+[2026-04-15T21:29:28.742+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:29:28 INFO BlockManagerMaster: Registering BlockManager BlockManagerId(driver, 53aa898b95b0, 44385, None)
+[2026-04-15T21:29:28.747+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:29:28 INFO BlockManagerMasterEndpoint: Registering block manager 53aa898b95b0:44385 with 434.4 MiB RAM, BlockManagerId(driver, 53aa898b95b0, 44385, None)
+[2026-04-15T21:29:28.751+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:29:28 INFO StandaloneAppClient$ClientEndpoint: Executor added: app-20260415212928-0002/0 on worker-20260415203513-172.20.0.6-45781 (172.20.0.6:45781) with 1 core(s)
+[2026-04-15T21:29:28.757+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:29:28 INFO BlockManagerMaster: Registered BlockManager BlockManagerId(driver, 53aa898b95b0, 44385, None)
+[2026-04-15T21:29:28.761+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:29:28 INFO BlockManager: Initialized BlockManager: BlockManagerId(driver, 53aa898b95b0, 44385, None)
+[2026-04-15T21:29:28.767+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:29:28 INFO StandaloneSchedulerBackend: Granted executor ID app-20260415212928-0002/0 on hostPort 172.20.0.6:45781 with 1 core(s), 1024.0 MiB RAM
+[2026-04-15T21:29:28.776+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:29:28 INFO StandaloneAppClient$ClientEndpoint: Executor added: app-20260415212928-0002/1 on worker-20260415203513-172.20.0.6-45781 (172.20.0.6:45781) with 1 core(s)
+[2026-04-15T21:29:28.780+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:29:28 INFO StandaloneSchedulerBackend: Granted executor ID app-20260415212928-0002/1 on hostPort 172.20.0.6:45781 with 1 core(s), 1024.0 MiB RAM
+[2026-04-15T21:29:29.096+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:29:29 INFO StandaloneSchedulerBackend: SchedulerBackend is ready for scheduling beginning after reached minRegisteredResourcesRatio: 0.0
+[2026-04-15T21:29:29.432+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:29:29 INFO StandaloneAppClient$ClientEndpoint: Executor updated: app-20260415212928-0002/1 is now RUNNING
+[2026-04-15T21:29:29.465+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:29:29 INFO StandaloneAppClient$ClientEndpoint: Executor updated: app-20260415212928-0002/0 is now RUNNING
+[2026-04-15T21:29:29.466+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 2026-04-15 21:29:29,436 INFO Spark version: 3.5.5
+[2026-04-15T21:29:29.466+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 2026-04-15 21:29:29,436 INFO Leyendo Bronze: s3a://bronze/users/2019/users_2019.parquet
+[2026-04-15T21:29:29.467+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:29:29 INFO SharedState: Setting hive.metastore.warehouse.dir ('null') to the value of spark.sql.warehouse.dir.
+[2026-04-15T21:29:29.469+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:29:29 INFO SharedState: Warehouse path is 'file:/opt/***/spark-warehouse'.
+[2026-04-15T21:29:32.688+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:29:32 WARN MetricsConfig: Cannot locate configuration: tried hadoop-metrics2-s3a-file-system.properties,hadoop-metrics2.properties
+[2026-04-15T21:29:32.707+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:29:32 INFO MetricsSystemImpl: Scheduled Metric snapshot period at 10 second(s).
+[2026-04-15T21:29:32.710+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:29:32 INFO MetricsSystemImpl: s3a-file-system metrics system started
+[2026-04-15T21:29:35.650+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:29:35 INFO InMemoryFileIndex: It took 92 ms to list leaf files for 1 paths.
+[2026-04-15T21:29:36.661+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:29:36 INFO SparkContext: Starting job: parquet at NativeMethodAccessorImpl.java:0
+[2026-04-15T21:29:36.742+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:29:36 INFO DAGScheduler: Got job 0 (parquet at NativeMethodAccessorImpl.java:0) with 1 output partitions
+[2026-04-15T21:29:36.744+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:29:36 INFO DAGScheduler: Final stage: ResultStage 0 (parquet at NativeMethodAccessorImpl.java:0)
+[2026-04-15T21:29:36.746+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:29:36 INFO DAGScheduler: Parents of final stage: List()
+[2026-04-15T21:29:36.749+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:29:36 INFO DAGScheduler: Missing parents: List()
+[2026-04-15T21:29:36.765+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:29:36 INFO DAGScheduler: Submitting ResultStage 0 (MapPartitionsRDD[1] at parquet at NativeMethodAccessorImpl.java:0), which has no missing parents
+[2026-04-15T21:29:36.895+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:29:36 INFO MemoryStore: Block broadcast_0 stored as values in memory (estimated size 108.4 KiB, free 434.3 MiB)
+[2026-04-15T21:29:37.153+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:29:37 INFO MemoryStore: Block broadcast_0_piece0 stored as bytes in memory (estimated size 39.5 KiB, free 434.3 MiB)
+[2026-04-15T21:29:37.161+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:29:37 INFO BlockManagerInfo: Added broadcast_0_piece0 in memory on 53aa898b95b0:44385 (size: 39.5 KiB, free: 434.4 MiB)
+[2026-04-15T21:29:37.184+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:29:37 INFO SparkContext: Created broadcast 0 from broadcast at DAGScheduler.scala:1585
+[2026-04-15T21:29:37.259+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:29:37 INFO DAGScheduler: Submitting 1 missing tasks from ResultStage 0 (MapPartitionsRDD[1] at parquet at NativeMethodAccessorImpl.java:0) (first 15 tasks are for partitions Vector(0))
+[2026-04-15T21:29:37.267+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:29:37 INFO TaskSchedulerImpl: Adding task set 0.0 with 1 tasks resource profile 0
+[2026-04-15T21:29:37.577+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:29:37 INFO StandaloneSchedulerBackend$StandaloneDriverEndpoint: Registered executor NettyRpcEndpointRef(spark-client://Executor) (172.20.0.6:53174) with ID 1,  ResourceProfileId 0
+[2026-04-15T21:29:37.594+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:29:37 INFO StandaloneSchedulerBackend$StandaloneDriverEndpoint: Registered executor NettyRpcEndpointRef(spark-client://Executor) (172.20.0.6:53188) with ID 0,  ResourceProfileId 0
+[2026-04-15T21:29:37.859+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:29:37 INFO BlockManagerMasterEndpoint: Registering block manager 172.20.0.6:41311 with 434.4 MiB RAM, BlockManagerId(0, 172.20.0.6, 41311, None)
+[2026-04-15T21:29:37.871+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:29:37 INFO BlockManagerMasterEndpoint: Registering block manager 172.20.0.6:35573 with 434.4 MiB RAM, BlockManagerId(1, 172.20.0.6, 35573, None)
+[2026-04-15T21:30:00.349+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:00 INFO TaskSetManager: Starting task 0.0 in stage 0.0 (TID 0) (172.20.0.6, executor 1, partition 0, PROCESS_LOCAL, 10265 bytes)
+[2026-04-15T21:30:00.726+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:00 INFO BlockManagerInfo: Added broadcast_0_piece0 in memory on 172.20.0.6:35573 (size: 39.5 KiB, free: 434.4 MiB)
+[2026-04-15T21:30:03.111+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:03 INFO TaskSetManager: Finished task 0.0 in stage 0.0 (TID 0) in 2788 ms on 172.20.0.6 (executor 1) (1/1)
+[2026-04-15T21:30:03.113+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:03 INFO TaskSchedulerImpl: Removed TaskSet 0.0, whose tasks have all completed, from pool
+[2026-04-15T21:30:03.118+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:03 INFO DAGScheduler: ResultStage 0 (parquet at NativeMethodAccessorImpl.java:0) finished in 26.321 s
+[2026-04-15T21:30:03.120+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:03 INFO DAGScheduler: Job 0 is finished. Cancelling potential speculative or zombie tasks for this job
+[2026-04-15T21:30:03.121+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:03 INFO TaskSchedulerImpl: Killing all running tasks in stage 0: Stage finished
+[2026-04-15T21:30:03.122+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:03 INFO DAGScheduler: Job 0 finished: parquet at NativeMethodAccessorImpl.java:0, took 26.474691 s
+[2026-04-15T21:30:03.630+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:03 INFO BlockManagerInfo: Removed broadcast_0_piece0 on 53aa898b95b0:44385 in memory (size: 39.5 KiB, free: 434.4 MiB)
+[2026-04-15T21:30:03.638+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:03 INFO BlockManagerInfo: Removed broadcast_0_piece0 on 172.20.0.6:35573 in memory (size: 39.5 KiB, free: 434.4 MiB)
+[2026-04-15T21:30:04.825+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:04 INFO FileSourceStrategy: Pushed Filters:
+[2026-04-15T21:30:04.830+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:04 INFO FileSourceStrategy: Post-Scan Filters:
+[2026-04-15T21:30:05.228+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:05 INFO CodeGenerator: Code generated in 169.581484 ms
+[2026-04-15T21:30:05.243+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:05 INFO MemoryStore: Block broadcast_1 stored as values in memory (estimated size 208.8 KiB, free 434.2 MiB)
+[2026-04-15T21:30:05.255+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:05 INFO MemoryStore: Block broadcast_1_piece0 stored as bytes in memory (estimated size 36.8 KiB, free 434.2 MiB)
+[2026-04-15T21:30:05.255+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:05 INFO BlockManagerInfo: Added broadcast_1_piece0 in memory on 53aa898b95b0:44385 (size: 36.8 KiB, free: 434.4 MiB)
+[2026-04-15T21:30:05.257+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:05 INFO SparkContext: Created broadcast 1 from count at NativeMethodAccessorImpl.java:0
+[2026-04-15T21:30:05.273+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:05 INFO FileSourceScanExec: Planning scan with bin packing, max size: 4194304 bytes, open cost is considered as scanning 4194304 bytes.
+[2026-04-15T21:30:05.340+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:05 INFO DAGScheduler: Registering RDD 5 (count at NativeMethodAccessorImpl.java:0) as input to shuffle 0
+[2026-04-15T21:30:05.346+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:05 INFO DAGScheduler: Got map stage job 1 (count at NativeMethodAccessorImpl.java:0) with 1 output partitions
+[2026-04-15T21:30:05.347+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:05 INFO DAGScheduler: Final stage: ShuffleMapStage 1 (count at NativeMethodAccessorImpl.java:0)
+[2026-04-15T21:30:05.349+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:05 INFO DAGScheduler: Parents of final stage: List()
+[2026-04-15T21:30:05.349+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:05 INFO DAGScheduler: Missing parents: List()
+[2026-04-15T21:30:05.350+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:05 INFO DAGScheduler: Submitting ShuffleMapStage 1 (MapPartitionsRDD[5] at count at NativeMethodAccessorImpl.java:0), which has no missing parents
+[2026-04-15T21:30:05.380+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:05 INFO MemoryStore: Block broadcast_2 stored as values in memory (estimated size 17.0 KiB, free 434.1 MiB)
+[2026-04-15T21:30:05.385+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:05 INFO MemoryStore: Block broadcast_2_piece0 stored as bytes in memory (estimated size 7.8 KiB, free 434.1 MiB)
+[2026-04-15T21:30:05.387+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:05 INFO BlockManagerInfo: Added broadcast_2_piece0 in memory on 53aa898b95b0:44385 (size: 7.8 KiB, free: 434.4 MiB)
+[2026-04-15T21:30:05.388+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:05 INFO SparkContext: Created broadcast 2 from broadcast at DAGScheduler.scala:1585
+[2026-04-15T21:30:05.390+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:05 INFO DAGScheduler: Submitting 1 missing tasks from ShuffleMapStage 1 (MapPartitionsRDD[5] at count at NativeMethodAccessorImpl.java:0) (first 15 tasks are for partitions Vector(0))
+[2026-04-15T21:30:05.392+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:05 INFO TaskSchedulerImpl: Adding task set 1.0 with 1 tasks resource profile 0
+[2026-04-15T21:30:05.396+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:05 INFO TaskSetManager: Starting task 0.0 in stage 1.0 (TID 1) (172.20.0.6, executor 1, partition 0, PROCESS_LOCAL, 10759 bytes)
+[2026-04-15T21:30:05.445+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:05 INFO BlockManagerInfo: Added broadcast_2_piece0 in memory on 172.20.0.6:35573 (size: 7.8 KiB, free: 434.4 MiB)
+[2026-04-15T21:30:05.940+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:05 INFO BlockManagerInfo: Added broadcast_1_piece0 in memory on 172.20.0.6:35573 (size: 36.8 KiB, free: 434.4 MiB)
+[2026-04-15T21:30:06.196+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:06 INFO TaskSetManager: Finished task 0.0 in stage 1.0 (TID 1) in 803 ms on 172.20.0.6 (executor 1) (1/1)
+[2026-04-15T21:30:06.197+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:06 INFO TaskSchedulerImpl: Removed TaskSet 1.0, whose tasks have all completed, from pool
+[2026-04-15T21:30:06.198+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:06 INFO DAGScheduler: ShuffleMapStage 1 (count at NativeMethodAccessorImpl.java:0) finished in 0.846 s
+[2026-04-15T21:30:06.202+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:06 INFO DAGScheduler: looking for newly runnable stages
+[2026-04-15T21:30:06.203+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:06 INFO DAGScheduler: running: Set()
+[2026-04-15T21:30:06.205+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:06 INFO DAGScheduler: waiting: Set()
+[2026-04-15T21:30:06.206+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:06 INFO DAGScheduler: failed: Set()
+[2026-04-15T21:30:06.241+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:06 INFO CodeGenerator: Code generated in 12.419008 ms
+[2026-04-15T21:30:06.262+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:06 INFO SparkContext: Starting job: count at NativeMethodAccessorImpl.java:0
+[2026-04-15T21:30:06.265+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:06 INFO DAGScheduler: Got job 2 (count at NativeMethodAccessorImpl.java:0) with 1 output partitions
+[2026-04-15T21:30:06.265+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:06 INFO DAGScheduler: Final stage: ResultStage 3 (count at NativeMethodAccessorImpl.java:0)
+[2026-04-15T21:30:06.270+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:06 INFO DAGScheduler: Parents of final stage: List(ShuffleMapStage 2)
+[2026-04-15T21:30:06.271+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:06 INFO DAGScheduler: Missing parents: List()
+[2026-04-15T21:30:06.271+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:06 INFO DAGScheduler: Submitting ResultStage 3 (MapPartitionsRDD[8] at count at NativeMethodAccessorImpl.java:0), which has no missing parents
+[2026-04-15T21:30:06.280+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:06 INFO MemoryStore: Block broadcast_3 stored as values in memory (estimated size 12.5 KiB, free 434.1 MiB)
+[2026-04-15T21:30:06.290+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:06 INFO MemoryStore: Block broadcast_3_piece0 stored as bytes in memory (estimated size 5.9 KiB, free 434.1 MiB)
+[2026-04-15T21:30:06.292+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:06 INFO BlockManagerInfo: Added broadcast_3_piece0 in memory on 53aa898b95b0:44385 (size: 5.9 KiB, free: 434.4 MiB)
+[2026-04-15T21:30:06.302+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:06 INFO BlockManagerInfo: Removed broadcast_2_piece0 on 53aa898b95b0:44385 in memory (size: 7.8 KiB, free: 434.4 MiB)
+[2026-04-15T21:30:06.305+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:06 INFO SparkContext: Created broadcast 3 from broadcast at DAGScheduler.scala:1585
+[2026-04-15T21:30:06.305+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:06 INFO DAGScheduler: Submitting 1 missing tasks from ResultStage 3 (MapPartitionsRDD[8] at count at NativeMethodAccessorImpl.java:0) (first 15 tasks are for partitions Vector(0))
+[2026-04-15T21:30:06.306+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:06 INFO TaskSchedulerImpl: Adding task set 3.0 with 1 tasks resource profile 0
+[2026-04-15T21:30:06.306+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:06 INFO BlockManagerInfo: Removed broadcast_2_piece0 on 172.20.0.6:35573 in memory (size: 7.8 KiB, free: 434.4 MiB)
+[2026-04-15T21:30:06.320+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:06 INFO TaskSetManager: Starting task 0.0 in stage 3.0 (TID 2) (172.20.0.6, executor 0, partition 0, NODE_LOCAL, 10165 bytes)
+[2026-04-15T21:30:06.663+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:06 INFO BlockManagerInfo: Added broadcast_3_piece0 in memory on 172.20.0.6:41311 (size: 5.9 KiB, free: 434.4 MiB)
+[2026-04-15T21:30:07.165+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:07 INFO MapOutputTrackerMasterEndpoint: Asked to send map output locations for shuffle 0 to 172.20.0.6:53188
+[2026-04-15T21:30:07.895+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:07 INFO TaskSetManager: Finished task 0.0 in stage 3.0 (TID 2) in 1580 ms on 172.20.0.6 (executor 0) (1/1)
+[2026-04-15T21:30:07.896+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:07 INFO TaskSchedulerImpl: Removed TaskSet 3.0, whose tasks have all completed, from pool
+[2026-04-15T21:30:07.897+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:07 INFO DAGScheduler: ResultStage 3 (count at NativeMethodAccessorImpl.java:0) finished in 1.619 s
+[2026-04-15T21:30:07.897+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:07 INFO DAGScheduler: Job 2 is finished. Cancelling potential speculative or zombie tasks for this job
+[2026-04-15T21:30:07.898+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:07 INFO TaskSchedulerImpl: Killing all running tasks in stage 3: Stage finished
+[2026-04-15T21:30:07.899+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:07 INFO DAGScheduler: Job 2 finished: count at NativeMethodAccessorImpl.java:0, took 1.635060 s
+[2026-04-15T21:30:07.909+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 2026-04-15 21:30:07,908 INFO   → 50,000 filas del año 2019
+[2026-04-15T21:30:07.909+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 2026-04-15 21:30:07,908 INFO Leyendo Bronze: s3a://bronze/users/2020/users_2020.parquet
+[2026-04-15T21:30:07.946+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:07 INFO InMemoryFileIndex: It took 13 ms to list leaf files for 1 paths.
+[2026-04-15T21:30:07.976+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:07 INFO SparkContext: Starting job: parquet at NativeMethodAccessorImpl.java:0
+[2026-04-15T21:30:07.978+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:07 INFO DAGScheduler: Got job 3 (parquet at NativeMethodAccessorImpl.java:0) with 1 output partitions
+[2026-04-15T21:30:07.980+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:07 INFO DAGScheduler: Final stage: ResultStage 4 (parquet at NativeMethodAccessorImpl.java:0)
+[2026-04-15T21:30:07.981+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:07 INFO DAGScheduler: Parents of final stage: List()
+[2026-04-15T21:30:07.981+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:07 INFO DAGScheduler: Missing parents: List()
+[2026-04-15T21:30:07.982+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:07 INFO DAGScheduler: Submitting ResultStage 4 (MapPartitionsRDD[10] at parquet at NativeMethodAccessorImpl.java:0), which has no missing parents
+[2026-04-15T21:30:07.991+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:07 INFO MemoryStore: Block broadcast_4 stored as values in memory (estimated size 108.4 KiB, free 434.0 MiB)
+[2026-04-15T21:30:07.998+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:07 INFO MemoryStore: Block broadcast_4_piece0 stored as bytes in memory (estimated size 39.5 KiB, free 434.0 MiB)
+[2026-04-15T21:30:08.003+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:08 INFO BlockManagerInfo: Added broadcast_4_piece0 in memory on 53aa898b95b0:44385 (size: 39.5 KiB, free: 434.3 MiB)
+[2026-04-15T21:30:08.010+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:08 INFO BlockManagerInfo: Removed broadcast_3_piece0 on 53aa898b95b0:44385 in memory (size: 5.9 KiB, free: 434.3 MiB)
+[2026-04-15T21:30:08.013+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:08 INFO SparkContext: Created broadcast 4 from broadcast at DAGScheduler.scala:1585
+[2026-04-15T21:30:08.014+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:08 INFO DAGScheduler: Submitting 1 missing tasks from ResultStage 4 (MapPartitionsRDD[10] at parquet at NativeMethodAccessorImpl.java:0) (first 15 tasks are for partitions Vector(0))
+[2026-04-15T21:30:08.014+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:08 INFO TaskSchedulerImpl: Adding task set 4.0 with 1 tasks resource profile 0
+[2026-04-15T21:30:08.016+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:08 INFO BlockManagerInfo: Removed broadcast_3_piece0 on 172.20.0.6:41311 in memory (size: 5.9 KiB, free: 434.4 MiB)
+[2026-04-15T21:30:08.024+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:08 INFO TaskSetManager: Starting task 0.0 in stage 4.0 (TID 3) (172.20.0.6, executor 0, partition 0, PROCESS_LOCAL, 10265 bytes)
+[2026-04-15T21:30:08.053+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:08 INFO BlockManagerInfo: Added broadcast_4_piece0 in memory on 172.20.0.6:41311 (size: 39.5 KiB, free: 434.4 MiB)
+[2026-04-15T21:30:09.790+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:09 INFO TaskSetManager: Finished task 0.0 in stage 4.0 (TID 3) in 1776 ms on 172.20.0.6 (executor 0) (1/1)
+[2026-04-15T21:30:09.791+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:09 INFO TaskSchedulerImpl: Removed TaskSet 4.0, whose tasks have all completed, from pool
+[2026-04-15T21:30:09.793+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:09 INFO DAGScheduler: ResultStage 4 (parquet at NativeMethodAccessorImpl.java:0) finished in 1.809 s
+[2026-04-15T21:30:09.793+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:09 INFO DAGScheduler: Job 3 is finished. Cancelling potential speculative or zombie tasks for this job
+[2026-04-15T21:30:09.794+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:09 INFO TaskSchedulerImpl: Killing all running tasks in stage 4: Stage finished
+[2026-04-15T21:30:09.795+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:09 INFO DAGScheduler: Job 3 finished: parquet at NativeMethodAccessorImpl.java:0, took 1.815127 s
+[2026-04-15T21:30:10.043+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:10 INFO FileSourceStrategy: Pushed Filters:
+[2026-04-15T21:30:10.044+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:10 INFO FileSourceStrategy: Post-Scan Filters:
+[2026-04-15T21:30:10.057+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:10 INFO MemoryStore: Block broadcast_5 stored as values in memory (estimated size 208.8 KiB, free 433.8 MiB)
+[2026-04-15T21:30:10.071+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:10 INFO MemoryStore: Block broadcast_5_piece0 stored as bytes in memory (estimated size 36.8 KiB, free 433.8 MiB)
+[2026-04-15T21:30:10.073+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:10 INFO BlockManagerInfo: Added broadcast_5_piece0 in memory on 53aa898b95b0:44385 (size: 36.8 KiB, free: 434.3 MiB)
+[2026-04-15T21:30:10.074+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:10 INFO SparkContext: Created broadcast 5 from count at NativeMethodAccessorImpl.java:0
+[2026-04-15T21:30:10.075+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:10 INFO BlockManagerInfo: Removed broadcast_4_piece0 on 172.20.0.6:41311 in memory (size: 39.5 KiB, free: 434.4 MiB)
+[2026-04-15T21:30:10.076+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:10 INFO FileSourceScanExec: Planning scan with bin packing, max size: 4194304 bytes, open cost is considered as scanning 4194304 bytes.
+[2026-04-15T21:30:10.081+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:10 INFO BlockManagerInfo: Removed broadcast_4_piece0 on 53aa898b95b0:44385 in memory (size: 39.5 KiB, free: 434.3 MiB)
+[2026-04-15T21:30:10.086+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:10 INFO DAGScheduler: Registering RDD 14 (count at NativeMethodAccessorImpl.java:0) as input to shuffle 1
+[2026-04-15T21:30:10.087+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:10 INFO DAGScheduler: Got map stage job 4 (count at NativeMethodAccessorImpl.java:0) with 1 output partitions
+[2026-04-15T21:30:10.087+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:10 INFO DAGScheduler: Final stage: ShuffleMapStage 5 (count at NativeMethodAccessorImpl.java:0)
+[2026-04-15T21:30:10.088+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:10 INFO DAGScheduler: Parents of final stage: List()
+[2026-04-15T21:30:10.089+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:10 INFO DAGScheduler: Missing parents: List()
+[2026-04-15T21:30:10.094+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:10 INFO DAGScheduler: Submitting ShuffleMapStage 5 (MapPartitionsRDD[14] at count at NativeMethodAccessorImpl.java:0), which has no missing parents
+[2026-04-15T21:30:10.096+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:10 INFO MemoryStore: Block broadcast_6 stored as values in memory (estimated size 17.0 KiB, free 433.9 MiB)
+[2026-04-15T21:30:10.097+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:10 INFO MemoryStore: Block broadcast_6_piece0 stored as bytes in memory (estimated size 7.8 KiB, free 433.9 MiB)
+[2026-04-15T21:30:10.097+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:10 INFO BlockManagerInfo: Added broadcast_6_piece0 in memory on 53aa898b95b0:44385 (size: 7.8 KiB, free: 434.3 MiB)
+[2026-04-15T21:30:10.099+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:10 INFO SparkContext: Created broadcast 6 from broadcast at DAGScheduler.scala:1585
+[2026-04-15T21:30:10.101+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:10 INFO DAGScheduler: Submitting 1 missing tasks from ShuffleMapStage 5 (MapPartitionsRDD[14] at count at NativeMethodAccessorImpl.java:0) (first 15 tasks are for partitions Vector(0))
+[2026-04-15T21:30:10.102+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:10 INFO TaskSchedulerImpl: Adding task set 5.0 with 1 tasks resource profile 0
+[2026-04-15T21:30:10.102+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:10 INFO TaskSetManager: Starting task 0.0 in stage 5.0 (TID 4) (172.20.0.6, executor 0, partition 0, PROCESS_LOCAL, 10759 bytes)
+[2026-04-15T21:30:10.128+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:10 INFO BlockManagerInfo: Added broadcast_6_piece0 in memory on 172.20.0.6:41311 (size: 7.8 KiB, free: 434.4 MiB)
+[2026-04-15T21:30:10.241+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:10 INFO BlockManagerInfo: Added broadcast_5_piece0 in memory on 172.20.0.6:41311 (size: 36.8 KiB, free: 434.4 MiB)
+[2026-04-15T21:30:10.549+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:10 INFO TaskSetManager: Finished task 0.0 in stage 5.0 (TID 4) in 451 ms on 172.20.0.6 (executor 0) (1/1)
+[2026-04-15T21:30:10.550+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:10 INFO TaskSchedulerImpl: Removed TaskSet 5.0, whose tasks have all completed, from pool
+[2026-04-15T21:30:10.554+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:10 INFO DAGScheduler: ShuffleMapStage 5 (count at NativeMethodAccessorImpl.java:0) finished in 0.460 s
+[2026-04-15T21:30:10.555+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:10 INFO DAGScheduler: looking for newly runnable stages
+[2026-04-15T21:30:10.556+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:10 INFO DAGScheduler: running: Set()
+[2026-04-15T21:30:10.557+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:10 INFO DAGScheduler: waiting: Set()
+[2026-04-15T21:30:10.559+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:10 INFO DAGScheduler: failed: Set()
+[2026-04-15T21:30:10.580+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:10 INFO SparkContext: Starting job: count at NativeMethodAccessorImpl.java:0
+[2026-04-15T21:30:10.582+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:10 INFO DAGScheduler: Got job 5 (count at NativeMethodAccessorImpl.java:0) with 1 output partitions
+[2026-04-15T21:30:10.583+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:10 INFO DAGScheduler: Final stage: ResultStage 7 (count at NativeMethodAccessorImpl.java:0)
+[2026-04-15T21:30:10.583+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:10 INFO DAGScheduler: Parents of final stage: List(ShuffleMapStage 6)
+[2026-04-15T21:30:10.584+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:10 INFO DAGScheduler: Missing parents: List()
+[2026-04-15T21:30:10.584+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:10 INFO DAGScheduler: Submitting ResultStage 7 (MapPartitionsRDD[17] at count at NativeMethodAccessorImpl.java:0), which has no missing parents
+[2026-04-15T21:30:10.585+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:10 INFO MemoryStore: Block broadcast_7 stored as values in memory (estimated size 12.5 KiB, free 433.9 MiB)
+[2026-04-15T21:30:10.593+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:10 INFO MemoryStore: Block broadcast_7_piece0 stored as bytes in memory (estimated size 5.9 KiB, free 433.9 MiB)
+[2026-04-15T21:30:10.596+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:10 INFO BlockManagerInfo: Added broadcast_7_piece0 in memory on 53aa898b95b0:44385 (size: 5.9 KiB, free: 434.3 MiB)
+[2026-04-15T21:30:10.597+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:10 INFO BlockManagerInfo: Removed broadcast_6_piece0 on 53aa898b95b0:44385 in memory (size: 7.8 KiB, free: 434.3 MiB)
+[2026-04-15T21:30:10.598+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:10 INFO SparkContext: Created broadcast 7 from broadcast at DAGScheduler.scala:1585
+[2026-04-15T21:30:10.599+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:10 INFO BlockManagerInfo: Removed broadcast_6_piece0 on 172.20.0.6:41311 in memory (size: 7.8 KiB, free: 434.4 MiB)
+[2026-04-15T21:30:10.602+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:10 INFO DAGScheduler: Submitting 1 missing tasks from ResultStage 7 (MapPartitionsRDD[17] at count at NativeMethodAccessorImpl.java:0) (first 15 tasks are for partitions Vector(0))
+[2026-04-15T21:30:10.604+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:10 INFO TaskSchedulerImpl: Adding task set 7.0 with 1 tasks resource profile 0
+[2026-04-15T21:30:10.606+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:10 INFO TaskSetManager: Starting task 0.0 in stage 7.0 (TID 5) (172.20.0.6, executor 1, partition 0, NODE_LOCAL, 10165 bytes)
+[2026-04-15T21:30:10.630+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:10 INFO BlockManagerInfo: Added broadcast_7_piece0 in memory on 172.20.0.6:35573 (size: 5.9 KiB, free: 434.4 MiB)
+[2026-04-15T21:30:10.648+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:10 INFO MapOutputTrackerMasterEndpoint: Asked to send map output locations for shuffle 1 to 172.20.0.6:53174
+[2026-04-15T21:30:10.698+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:10 INFO BlockManagerInfo: Removed broadcast_1_piece0 on 53aa898b95b0:44385 in memory (size: 36.8 KiB, free: 434.4 MiB)
+[2026-04-15T21:30:10.703+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:10 INFO BlockManagerInfo: Removed broadcast_1_piece0 on 172.20.0.6:35573 in memory (size: 36.8 KiB, free: 434.4 MiB)
+[2026-04-15T21:30:10.787+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:10 INFO TaskSetManager: Finished task 0.0 in stage 7.0 (TID 5) in 182 ms on 172.20.0.6 (executor 1) (1/1)
+[2026-04-15T21:30:10.788+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:10 INFO TaskSchedulerImpl: Removed TaskSet 7.0, whose tasks have all completed, from pool
+[2026-04-15T21:30:10.791+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:10 INFO DAGScheduler: ResultStage 7 (count at NativeMethodAccessorImpl.java:0) finished in 0.205 s
+[2026-04-15T21:30:10.792+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:10 INFO DAGScheduler: Job 5 is finished. Cancelling potential speculative or zombie tasks for this job
+[2026-04-15T21:30:10.792+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:10 INFO TaskSchedulerImpl: Killing all running tasks in stage 7: Stage finished
+[2026-04-15T21:30:10.793+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:10 INFO DAGScheduler: Job 5 finished: count at NativeMethodAccessorImpl.java:0, took 0.210570 s
+[2026-04-15T21:30:10.794+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 2026-04-15 21:30:10,793 INFO   → 50,000 filas del año 2020
+[2026-04-15T21:30:10.794+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 2026-04-15 21:30:10,793 INFO Leyendo Bronze: s3a://bronze/users/2021/users_2021.parquet
+[2026-04-15T21:30:10.839+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:10 INFO InMemoryFileIndex: It took 18 ms to list leaf files for 1 paths.
+[2026-04-15T21:30:10.867+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:10 INFO SparkContext: Starting job: parquet at NativeMethodAccessorImpl.java:0
+[2026-04-15T21:30:10.874+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:10 INFO DAGScheduler: Got job 6 (parquet at NativeMethodAccessorImpl.java:0) with 1 output partitions
+[2026-04-15T21:30:10.875+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:10 INFO DAGScheduler: Final stage: ResultStage 8 (parquet at NativeMethodAccessorImpl.java:0)
+[2026-04-15T21:30:10.876+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:10 INFO DAGScheduler: Parents of final stage: List()
+[2026-04-15T21:30:10.876+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:10 INFO DAGScheduler: Missing parents: List()
+[2026-04-15T21:30:10.876+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:10 INFO DAGScheduler: Submitting ResultStage 8 (MapPartitionsRDD[19] at parquet at NativeMethodAccessorImpl.java:0), which has no missing parents
+[2026-04-15T21:30:10.877+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:10 INFO MemoryStore: Block broadcast_8 stored as values in memory (estimated size 108.4 KiB, free 434.0 MiB)
+[2026-04-15T21:30:10.879+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:10 INFO MemoryStore: Block broadcast_8_piece0 stored as bytes in memory (estimated size 39.5 KiB, free 434.0 MiB)
+[2026-04-15T21:30:10.883+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:10 INFO BlockManagerInfo: Added broadcast_8_piece0 in memory on 53aa898b95b0:44385 (size: 39.5 KiB, free: 434.3 MiB)
+[2026-04-15T21:30:10.884+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:10 INFO SparkContext: Created broadcast 8 from broadcast at DAGScheduler.scala:1585
+[2026-04-15T21:30:10.885+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:10 INFO BlockManagerInfo: Removed broadcast_7_piece0 on 53aa898b95b0:44385 in memory (size: 5.9 KiB, free: 434.3 MiB)
+[2026-04-15T21:30:10.886+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:10 INFO DAGScheduler: Submitting 1 missing tasks from ResultStage 8 (MapPartitionsRDD[19] at parquet at NativeMethodAccessorImpl.java:0) (first 15 tasks are for partitions Vector(0))
+[2026-04-15T21:30:10.887+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:10 INFO TaskSchedulerImpl: Adding task set 8.0 with 1 tasks resource profile 0
+[2026-04-15T21:30:10.888+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:10 INFO TaskSetManager: Starting task 0.0 in stage 8.0 (TID 6) (172.20.0.6, executor 1, partition 0, PROCESS_LOCAL, 10265 bytes)
+[2026-04-15T21:30:10.888+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:10 INFO BlockManagerInfo: Removed broadcast_7_piece0 on 172.20.0.6:35573 in memory (size: 5.9 KiB, free: 434.4 MiB)
+[2026-04-15T21:30:10.904+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:10 INFO BlockManagerInfo: Removed broadcast_5_piece0 on 172.20.0.6:41311 in memory (size: 36.8 KiB, free: 434.4 MiB)
+[2026-04-15T21:30:10.909+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:10 INFO BlockManagerInfo: Removed broadcast_5_piece0 on 53aa898b95b0:44385 in memory (size: 36.8 KiB, free: 434.4 MiB)
+[2026-04-15T21:30:10.911+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:10 INFO BlockManagerInfo: Added broadcast_8_piece0 in memory on 172.20.0.6:35573 (size: 39.5 KiB, free: 434.4 MiB)
+[2026-04-15T21:30:11.015+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:11 INFO TaskSetManager: Finished task 0.0 in stage 8.0 (TID 6) in 132 ms on 172.20.0.6 (executor 1) (1/1)
+[2026-04-15T21:30:11.016+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:11 INFO TaskSchedulerImpl: Removed TaskSet 8.0, whose tasks have all completed, from pool
+[2026-04-15T21:30:11.021+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:11 INFO DAGScheduler: ResultStage 8 (parquet at NativeMethodAccessorImpl.java:0) finished in 0.147 s
+[2026-04-15T21:30:11.022+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:11 INFO DAGScheduler: Job 6 is finished. Cancelling potential speculative or zombie tasks for this job
+[2026-04-15T21:30:11.023+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:11 INFO TaskSchedulerImpl: Killing all running tasks in stage 8: Stage finished
+[2026-04-15T21:30:11.023+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:11 INFO DAGScheduler: Job 6 finished: parquet at NativeMethodAccessorImpl.java:0, took 0.150613 s
+[2026-04-15T21:30:11.224+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:11 INFO FileSourceStrategy: Pushed Filters:
+[2026-04-15T21:30:11.226+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:11 INFO FileSourceStrategy: Post-Scan Filters:
+[2026-04-15T21:30:11.245+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:11 INFO MemoryStore: Block broadcast_9 stored as values in memory (estimated size 208.8 KiB, free 434.1 MiB)
+[2026-04-15T21:30:11.259+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:11 INFO BlockManagerInfo: Removed broadcast_8_piece0 on 53aa898b95b0:44385 in memory (size: 39.5 KiB, free: 434.4 MiB)
+[2026-04-15T21:30:11.262+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:11 INFO BlockManagerInfo: Removed broadcast_8_piece0 on 172.20.0.6:35573 in memory (size: 39.5 KiB, free: 434.4 MiB)
+[2026-04-15T21:30:11.267+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:11 INFO MemoryStore: Block broadcast_9_piece0 stored as bytes in memory (estimated size 36.8 KiB, free 434.2 MiB)
+[2026-04-15T21:30:11.270+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:11 INFO BlockManagerInfo: Added broadcast_9_piece0 in memory on 53aa898b95b0:44385 (size: 36.8 KiB, free: 434.4 MiB)
+[2026-04-15T21:30:11.272+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:11 INFO SparkContext: Created broadcast 9 from count at NativeMethodAccessorImpl.java:0
+[2026-04-15T21:30:11.275+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:11 INFO FileSourceScanExec: Planning scan with bin packing, max size: 4194304 bytes, open cost is considered as scanning 4194304 bytes.
+[2026-04-15T21:30:11.282+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:11 INFO DAGScheduler: Registering RDD 23 (count at NativeMethodAccessorImpl.java:0) as input to shuffle 2
+[2026-04-15T21:30:11.284+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:11 INFO DAGScheduler: Got map stage job 7 (count at NativeMethodAccessorImpl.java:0) with 1 output partitions
+[2026-04-15T21:30:11.285+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:11 INFO DAGScheduler: Final stage: ShuffleMapStage 9 (count at NativeMethodAccessorImpl.java:0)
+[2026-04-15T21:30:11.286+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:11 INFO DAGScheduler: Parents of final stage: List()
+[2026-04-15T21:30:11.287+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:11 INFO DAGScheduler: Missing parents: List()
+[2026-04-15T21:30:11.288+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:11 INFO DAGScheduler: Submitting ShuffleMapStage 9 (MapPartitionsRDD[23] at count at NativeMethodAccessorImpl.java:0), which has no missing parents
+[2026-04-15T21:30:11.289+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:11 INFO MemoryStore: Block broadcast_10 stored as values in memory (estimated size 17.0 KiB, free 434.1 MiB)
+[2026-04-15T21:30:11.297+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:11 INFO MemoryStore: Block broadcast_10_piece0 stored as bytes in memory (estimated size 7.8 KiB, free 434.1 MiB)
+[2026-04-15T21:30:11.299+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:11 INFO BlockManagerInfo: Added broadcast_10_piece0 in memory on 53aa898b95b0:44385 (size: 7.8 KiB, free: 434.4 MiB)
+[2026-04-15T21:30:11.300+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:11 INFO SparkContext: Created broadcast 10 from broadcast at DAGScheduler.scala:1585
+[2026-04-15T21:30:11.301+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:11 INFO DAGScheduler: Submitting 1 missing tasks from ShuffleMapStage 9 (MapPartitionsRDD[23] at count at NativeMethodAccessorImpl.java:0) (first 15 tasks are for partitions Vector(0))
+[2026-04-15T21:30:11.302+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:11 INFO TaskSchedulerImpl: Adding task set 9.0 with 1 tasks resource profile 0
+[2026-04-15T21:30:11.303+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:11 INFO TaskSetManager: Starting task 0.0 in stage 9.0 (TID 7) (172.20.0.6, executor 1, partition 0, PROCESS_LOCAL, 10759 bytes)
+[2026-04-15T21:30:11.322+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:11 INFO BlockManagerInfo: Added broadcast_10_piece0 in memory on 172.20.0.6:35573 (size: 7.8 KiB, free: 434.4 MiB)
+[2026-04-15T21:30:11.342+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:11 INFO BlockManagerInfo: Added broadcast_9_piece0 in memory on 172.20.0.6:35573 (size: 36.8 KiB, free: 434.4 MiB)
+[2026-04-15T21:30:11.429+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:11 INFO TaskSetManager: Finished task 0.0 in stage 9.0 (TID 7) in 126 ms on 172.20.0.6 (executor 1) (1/1)
+[2026-04-15T21:30:11.434+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:11 INFO TaskSchedulerImpl: Removed TaskSet 9.0, whose tasks have all completed, from pool
+[2026-04-15T21:30:11.435+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:11 INFO DAGScheduler: ShuffleMapStage 9 (count at NativeMethodAccessorImpl.java:0) finished in 0.144 s
+[2026-04-15T21:30:11.436+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:11 INFO DAGScheduler: looking for newly runnable stages
+[2026-04-15T21:30:11.441+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:11 INFO DAGScheduler: running: Set()
+[2026-04-15T21:30:11.442+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:11 INFO DAGScheduler: waiting: Set()
+[2026-04-15T21:30:11.442+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:11 INFO DAGScheduler: failed: Set()
+[2026-04-15T21:30:11.452+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:11 INFO SparkContext: Starting job: count at NativeMethodAccessorImpl.java:0
+[2026-04-15T21:30:11.454+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:11 INFO DAGScheduler: Got job 8 (count at NativeMethodAccessorImpl.java:0) with 1 output partitions
+[2026-04-15T21:30:11.454+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:11 INFO DAGScheduler: Final stage: ResultStage 11 (count at NativeMethodAccessorImpl.java:0)
+[2026-04-15T21:30:11.455+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:11 INFO DAGScheduler: Parents of final stage: List(ShuffleMapStage 10)
+[2026-04-15T21:30:11.456+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:11 INFO DAGScheduler: Missing parents: List()
+[2026-04-15T21:30:11.456+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:11 INFO DAGScheduler: Submitting ResultStage 11 (MapPartitionsRDD[26] at count at NativeMethodAccessorImpl.java:0), which has no missing parents
+[2026-04-15T21:30:11.457+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:11 INFO MemoryStore: Block broadcast_11 stored as values in memory (estimated size 12.5 KiB, free 434.1 MiB)
+[2026-04-15T21:30:11.462+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:11 INFO MemoryStore: Block broadcast_11_piece0 stored as bytes in memory (estimated size 5.9 KiB, free 434.1 MiB)
+[2026-04-15T21:30:11.464+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:11 INFO BlockManagerInfo: Added broadcast_11_piece0 in memory on 53aa898b95b0:44385 (size: 5.9 KiB, free: 434.4 MiB)
+[2026-04-15T21:30:11.464+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:11 INFO BlockManagerInfo: Removed broadcast_10_piece0 on 53aa898b95b0:44385 in memory (size: 7.8 KiB, free: 434.4 MiB)
+[2026-04-15T21:30:11.465+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:11 INFO SparkContext: Created broadcast 11 from broadcast at DAGScheduler.scala:1585
+[2026-04-15T21:30:11.466+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:11 INFO DAGScheduler: Submitting 1 missing tasks from ResultStage 11 (MapPartitionsRDD[26] at count at NativeMethodAccessorImpl.java:0) (first 15 tasks are for partitions Vector(0))
+[2026-04-15T21:30:11.466+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:11 INFO TaskSchedulerImpl: Adding task set 11.0 with 1 tasks resource profile 0
+[2026-04-15T21:30:11.470+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:11 INFO TaskSetManager: Starting task 0.0 in stage 11.0 (TID 8) (172.20.0.6, executor 0, partition 0, NODE_LOCAL, 10165 bytes)
+[2026-04-15T21:30:11.474+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:11 INFO BlockManagerInfo: Removed broadcast_10_piece0 on 172.20.0.6:35573 in memory (size: 7.8 KiB, free: 434.4 MiB)
+[2026-04-15T21:30:11.490+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:11 INFO BlockManagerInfo: Added broadcast_11_piece0 in memory on 172.20.0.6:41311 (size: 5.9 KiB, free: 434.4 MiB)
+[2026-04-15T21:30:11.497+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:11 INFO MapOutputTrackerMasterEndpoint: Asked to send map output locations for shuffle 2 to 172.20.0.6:53188
+[2026-04-15T21:30:11.522+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:11 INFO TaskSetManager: Finished task 0.0 in stage 11.0 (TID 8) in 56 ms on 172.20.0.6 (executor 0) (1/1)
+[2026-04-15T21:30:11.524+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:11 INFO TaskSchedulerImpl: Removed TaskSet 11.0, whose tasks have all completed, from pool
+[2026-04-15T21:30:11.525+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:11 INFO DAGScheduler: ResultStage 11 (count at NativeMethodAccessorImpl.java:0) finished in 0.068 s
+[2026-04-15T21:30:11.526+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:11 INFO DAGScheduler: Job 8 is finished. Cancelling potential speculative or zombie tasks for this job
+[2026-04-15T21:30:11.526+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:11 INFO TaskSchedulerImpl: Killing all running tasks in stage 11: Stage finished
+[2026-04-15T21:30:11.527+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:11 INFO DAGScheduler: Job 8 finished: count at NativeMethodAccessorImpl.java:0, took 0.071472 s
+[2026-04-15T21:30:11.530+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 2026-04-15 21:30:11,526 INFO   → 10,000 filas del año 2021
+[2026-04-15T21:30:11.617+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:11 INFO FileSourceStrategy: Pushed Filters:
+[2026-04-15T21:30:11.618+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:11 INFO FileSourceStrategy: Post-Scan Filters:
+[2026-04-15T21:30:11.620+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:11 INFO FileSourceStrategy: Pushed Filters:
+[2026-04-15T21:30:11.626+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:11 INFO FileSourceStrategy: Post-Scan Filters:
+[2026-04-15T21:30:11.627+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:11 INFO FileSourceStrategy: Pushed Filters:
+[2026-04-15T21:30:11.627+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:11 INFO FileSourceStrategy: Post-Scan Filters:
+[2026-04-15T21:30:11.646+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:11 INFO MemoryStore: Block broadcast_12 stored as values in memory (estimated size 208.8 KiB, free 433.9 MiB)
+[2026-04-15T21:30:11.657+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:11 INFO BlockManagerInfo: Removed broadcast_11_piece0 on 53aa898b95b0:44385 in memory (size: 5.9 KiB, free: 434.4 MiB)
+[2026-04-15T21:30:11.663+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:11 INFO MemoryStore: Block broadcast_12_piece0 stored as bytes in memory (estimated size 36.8 KiB, free 433.9 MiB)
+[2026-04-15T21:30:11.666+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:11 INFO BlockManagerInfo: Removed broadcast_11_piece0 on 172.20.0.6:41311 in memory (size: 5.9 KiB, free: 434.4 MiB)
+[2026-04-15T21:30:11.668+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:11 INFO BlockManagerInfo: Added broadcast_12_piece0 in memory on 53aa898b95b0:44385 (size: 36.8 KiB, free: 434.3 MiB)
+[2026-04-15T21:30:11.669+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:11 INFO SparkContext: Created broadcast 12 from count at NativeMethodAccessorImpl.java:0
+[2026-04-15T21:30:11.670+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:11 INFO FileSourceScanExec: Planning scan with bin packing, max size: 4194304 bytes, open cost is considered as scanning 4194304 bytes.
+[2026-04-15T21:30:11.676+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:11 INFO MemoryStore: Block broadcast_13 stored as values in memory (estimated size 208.8 KiB, free 433.7 MiB)
+[2026-04-15T21:30:11.679+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:11 INFO BlockManagerInfo: Removed broadcast_9_piece0 on 53aa898b95b0:44385 in memory (size: 36.8 KiB, free: 434.4 MiB)
+[2026-04-15T21:30:11.687+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:11 INFO BlockManagerInfo: Removed broadcast_9_piece0 on 172.20.0.6:35573 in memory (size: 36.8 KiB, free: 434.4 MiB)
+[2026-04-15T21:30:11.691+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:11 INFO MemoryStore: Block broadcast_13_piece0 stored as bytes in memory (estimated size 36.8 KiB, free 433.9 MiB)
+[2026-04-15T21:30:11.694+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:11 INFO BlockManagerInfo: Added broadcast_13_piece0 in memory on 53aa898b95b0:44385 (size: 36.8 KiB, free: 434.3 MiB)
+[2026-04-15T21:30:11.695+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:11 INFO SparkContext: Created broadcast 13 from count at NativeMethodAccessorImpl.java:0
+[2026-04-15T21:30:11.696+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:11 INFO FileSourceScanExec: Planning scan with bin packing, max size: 4194304 bytes, open cost is considered as scanning 4194304 bytes.
+[2026-04-15T21:30:11.700+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:11 INFO MemoryStore: Block broadcast_14 stored as values in memory (estimated size 208.8 KiB, free 433.7 MiB)
+[2026-04-15T21:30:11.713+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:11 INFO MemoryStore: Block broadcast_14_piece0 stored as bytes in memory (estimated size 36.8 KiB, free 433.7 MiB)
+[2026-04-15T21:30:11.714+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:11 INFO BlockManagerInfo: Added broadcast_14_piece0 in memory on 53aa898b95b0:44385 (size: 36.8 KiB, free: 434.3 MiB)
+[2026-04-15T21:30:11.718+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:11 INFO SparkContext: Created broadcast 14 from count at NativeMethodAccessorImpl.java:0
+[2026-04-15T21:30:11.719+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:11 INFO FileSourceScanExec: Planning scan with bin packing, max size: 4194304 bytes, open cost is considered as scanning 4194304 bytes.
+[2026-04-15T21:30:11.735+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:11 INFO DAGScheduler: Registering RDD 35 (count at NativeMethodAccessorImpl.java:0) as input to shuffle 3
+[2026-04-15T21:30:11.738+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:11 INFO DAGScheduler: Got map stage job 9 (count at NativeMethodAccessorImpl.java:0) with 3 output partitions
+[2026-04-15T21:30:11.740+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:11 INFO DAGScheduler: Final stage: ShuffleMapStage 12 (count at NativeMethodAccessorImpl.java:0)
+[2026-04-15T21:30:11.740+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:11 INFO DAGScheduler: Parents of final stage: List()
+[2026-04-15T21:30:11.741+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:11 INFO DAGScheduler: Missing parents: List()
+[2026-04-15T21:30:11.742+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:11 INFO DAGScheduler: Submitting ShuffleMapStage 12 (MapPartitionsRDD[35] at count at NativeMethodAccessorImpl.java:0), which has no missing parents
+[2026-04-15T21:30:11.744+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:11 INFO MemoryStore: Block broadcast_15 stored as values in memory (estimated size 18.7 KiB, free 433.7 MiB)
+[2026-04-15T21:30:11.755+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:11 INFO MemoryStore: Block broadcast_15_piece0 stored as bytes in memory (estimated size 8.4 KiB, free 433.7 MiB)
+[2026-04-15T21:30:11.756+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:11 INFO BlockManagerInfo: Added broadcast_15_piece0 in memory on 53aa898b95b0:44385 (size: 8.4 KiB, free: 434.3 MiB)
+[2026-04-15T21:30:11.757+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:11 INFO SparkContext: Created broadcast 15 from broadcast at DAGScheduler.scala:1585
+[2026-04-15T21:30:11.758+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:11 INFO DAGScheduler: Submitting 3 missing tasks from ShuffleMapStage 12 (MapPartitionsRDD[35] at count at NativeMethodAccessorImpl.java:0) (first 15 tasks are for partitions Vector(0, 1, 2))
+[2026-04-15T21:30:11.759+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:11 INFO TaskSchedulerImpl: Adding task set 12.0 with 3 tasks resource profile 0
+[2026-04-15T21:30:11.766+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:11 INFO TaskSetManager: Starting task 0.0 in stage 12.0 (TID 9) (172.20.0.6, executor 1, partition 0, PROCESS_LOCAL, 10868 bytes)
+[2026-04-15T21:30:11.767+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:11 INFO TaskSetManager: Starting task 1.0 in stage 12.0 (TID 10) (172.20.0.6, executor 0, partition 1, PROCESS_LOCAL, 10868 bytes)
+[2026-04-15T21:30:11.790+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:11 INFO BlockManagerInfo: Added broadcast_15_piece0 in memory on 172.20.0.6:35573 (size: 8.4 KiB, free: 434.4 MiB)
+[2026-04-15T21:30:11.798+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:11 INFO BlockManagerInfo: Added broadcast_15_piece0 in memory on 172.20.0.6:41311 (size: 8.4 KiB, free: 434.4 MiB)
+[2026-04-15T21:30:11.826+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:11 INFO BlockManagerInfo: Added broadcast_12_piece0 in memory on 172.20.0.6:35573 (size: 36.8 KiB, free: 434.4 MiB)
+[2026-04-15T21:30:11.829+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:11 INFO BlockManagerInfo: Added broadcast_13_piece0 in memory on 172.20.0.6:41311 (size: 36.8 KiB, free: 434.4 MiB)
+[2026-04-15T21:30:11.912+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:11 INFO TaskSetManager: Starting task 2.0 in stage 12.0 (TID 11) (172.20.0.6, executor 0, partition 2, PROCESS_LOCAL, 10868 bytes)
+[2026-04-15T21:30:11.918+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:11 INFO TaskSetManager: Finished task 1.0 in stage 12.0 (TID 10) in 151 ms on 172.20.0.6 (executor 0) (1/3)
+[2026-04-15T21:30:11.924+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:11 INFO TaskSetManager: Finished task 0.0 in stage 12.0 (TID 9) in 160 ms on 172.20.0.6 (executor 1) (2/3)
+[2026-04-15T21:30:11.951+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:11 INFO BlockManagerInfo: Added broadcast_14_piece0 in memory on 172.20.0.6:41311 (size: 36.8 KiB, free: 434.3 MiB)
+[2026-04-15T21:30:12.024+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:12 INFO TaskSetManager: Finished task 2.0 in stage 12.0 (TID 11) in 113 ms on 172.20.0.6 (executor 0) (3/3)
+[2026-04-15T21:30:12.025+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:12 INFO TaskSchedulerImpl: Removed TaskSet 12.0, whose tasks have all completed, from pool
+[2026-04-15T21:30:12.027+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:12 INFO DAGScheduler: ShuffleMapStage 12 (count at NativeMethodAccessorImpl.java:0) finished in 0.287 s
+[2026-04-15T21:30:12.034+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:12 INFO DAGScheduler: looking for newly runnable stages
+[2026-04-15T21:30:12.035+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:12 INFO DAGScheduler: running: Set()
+[2026-04-15T21:30:12.035+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:12 INFO DAGScheduler: waiting: Set()
+[2026-04-15T21:30:12.036+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:12 INFO DAGScheduler: failed: Set()
+[2026-04-15T21:30:12.051+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:12 INFO SparkContext: Starting job: count at NativeMethodAccessorImpl.java:0
+[2026-04-15T21:30:12.054+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:12 INFO DAGScheduler: Got job 10 (count at NativeMethodAccessorImpl.java:0) with 1 output partitions
+[2026-04-15T21:30:12.055+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:12 INFO DAGScheduler: Final stage: ResultStage 14 (count at NativeMethodAccessorImpl.java:0)
+[2026-04-15T21:30:12.057+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:12 INFO DAGScheduler: Parents of final stage: List(ShuffleMapStage 13)
+[2026-04-15T21:30:12.058+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:12 INFO DAGScheduler: Missing parents: List()
+[2026-04-15T21:30:12.059+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:12 INFO DAGScheduler: Submitting ResultStage 14 (MapPartitionsRDD[38] at count at NativeMethodAccessorImpl.java:0), which has no missing parents
+[2026-04-15T21:30:12.060+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:12 INFO MemoryStore: Block broadcast_16 stored as values in memory (estimated size 12.5 KiB, free 433.6 MiB)
+[2026-04-15T21:30:12.064+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:12 INFO MemoryStore: Block broadcast_16_piece0 stored as bytes in memory (estimated size 5.9 KiB, free 433.6 MiB)
+[2026-04-15T21:30:12.064+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:12 INFO BlockManagerInfo: Added broadcast_16_piece0 in memory on 53aa898b95b0:44385 (size: 5.9 KiB, free: 434.3 MiB)
+[2026-04-15T21:30:12.065+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:12 INFO SparkContext: Created broadcast 16 from broadcast at DAGScheduler.scala:1585
+[2026-04-15T21:30:12.065+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:12 INFO DAGScheduler: Submitting 1 missing tasks from ResultStage 14 (MapPartitionsRDD[38] at count at NativeMethodAccessorImpl.java:0) (first 15 tasks are for partitions Vector(0))
+[2026-04-15T21:30:12.066+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:12 INFO TaskSchedulerImpl: Adding task set 14.0 with 1 tasks resource profile 0
+[2026-04-15T21:30:12.067+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:12 INFO TaskSetManager: Starting task 0.0 in stage 14.0 (TID 12) (172.20.0.6, executor 1, partition 0, NODE_LOCAL, 10165 bytes)
+[2026-04-15T21:30:12.085+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:12 INFO BlockManagerInfo: Added broadcast_16_piece0 in memory on 172.20.0.6:35573 (size: 5.9 KiB, free: 434.4 MiB)
+[2026-04-15T21:30:12.091+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:12 INFO MapOutputTrackerMasterEndpoint: Asked to send map output locations for shuffle 3 to 172.20.0.6:53174
+[2026-04-15T21:30:12.106+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:12 INFO TaskSetManager: Finished task 0.0 in stage 14.0 (TID 12) in 40 ms on 172.20.0.6 (executor 1) (1/1)
+[2026-04-15T21:30:12.107+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:12 INFO TaskSchedulerImpl: Removed TaskSet 14.0, whose tasks have all completed, from pool
+[2026-04-15T21:30:12.108+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:12 INFO DAGScheduler: ResultStage 14 (count at NativeMethodAccessorImpl.java:0) finished in 0.049 s
+[2026-04-15T21:30:12.109+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:12 INFO DAGScheduler: Job 10 is finished. Cancelling potential speculative or zombie tasks for this job
+[2026-04-15T21:30:12.109+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:12 INFO TaskSchedulerImpl: Killing all running tasks in stage 14: Stage finished
+[2026-04-15T21:30:12.110+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:12 INFO DAGScheduler: Job 10 finished: count at NativeMethodAccessorImpl.java:0, took 0.057098 s
+[2026-04-15T21:30:12.111+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 2026-04-15 21:30:12,110 INFO Total filas Bronze (3 años): 110,000
+[2026-04-15T21:30:12.579+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:12 INFO FileSourceStrategy: Pushed Filters:
+[2026-04-15T21:30:12.582+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:12 INFO FileSourceStrategy: Post-Scan Filters:
+[2026-04-15T21:30:12.582+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:12 INFO FileSourceStrategy: Pushed Filters:
+[2026-04-15T21:30:12.584+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:12 INFO FileSourceStrategy: Post-Scan Filters:
+[2026-04-15T21:30:12.587+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:12 INFO FileSourceStrategy: Pushed Filters:
+[2026-04-15T21:30:12.588+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:12 INFO FileSourceStrategy: Post-Scan Filters:
+[2026-04-15T21:30:12.654+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:12 INFO CodeGenerator: Code generated in 24.628814 ms
+[2026-04-15T21:30:12.687+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:12 INFO CodeGenerator: Code generated in 23.130531 ms
+[2026-04-15T21:30:12.692+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:12 INFO MemoryStore: Block broadcast_17 stored as values in memory (estimated size 209.1 KiB, free 433.4 MiB)
+[2026-04-15T21:30:12.711+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:12 INFO MemoryStore: Block broadcast_17_piece0 stored as bytes in memory (estimated size 37.1 KiB, free 433.4 MiB)
+[2026-04-15T21:30:12.711+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:12 INFO BlockManagerInfo: Added broadcast_17_piece0 in memory on 53aa898b95b0:44385 (size: 37.1 KiB, free: 434.2 MiB)
+[2026-04-15T21:30:12.712+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:12 INFO SparkContext: Created broadcast 17 from count at NativeMethodAccessorImpl.java:0
+[2026-04-15T21:30:12.713+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:12 INFO FileSourceScanExec: Planning scan with bin packing, max size: 4194304 bytes, open cost is considered as scanning 4194304 bytes.
+[2026-04-15T21:30:12.738+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:12 INFO CodeGenerator: Code generated in 17.504675 ms
+[2026-04-15T21:30:12.742+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:12 INFO MemoryStore: Block broadcast_18 stored as values in memory (estimated size 209.1 KiB, free 433.2 MiB)
+[2026-04-15T21:30:12.750+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:12 INFO MemoryStore: Block broadcast_18_piece0 stored as bytes in memory (estimated size 37.1 KiB, free 433.2 MiB)
+[2026-04-15T21:30:12.750+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:12 INFO BlockManagerInfo: Added broadcast_18_piece0 in memory on 53aa898b95b0:44385 (size: 37.1 KiB, free: 434.2 MiB)
+[2026-04-15T21:30:12.751+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:12 INFO SparkContext: Created broadcast 18 from count at NativeMethodAccessorImpl.java:0
+[2026-04-15T21:30:12.752+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:12 INFO FileSourceScanExec: Planning scan with bin packing, max size: 4194304 bytes, open cost is considered as scanning 4194304 bytes.
+[2026-04-15T21:30:12.777+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:12 INFO CodeGenerator: Code generated in 12.074008 ms
+[2026-04-15T21:30:12.781+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:12 INFO MemoryStore: Block broadcast_19 stored as values in memory (estimated size 209.1 KiB, free 433.0 MiB)
+[2026-04-15T21:30:12.790+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:12 INFO MemoryStore: Block broadcast_19_piece0 stored as bytes in memory (estimated size 37.0 KiB, free 432.9 MiB)
+[2026-04-15T21:30:12.791+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:12 INFO BlockManagerInfo: Added broadcast_19_piece0 in memory on 53aa898b95b0:44385 (size: 37.0 KiB, free: 434.2 MiB)
+[2026-04-15T21:30:12.793+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:12 INFO SparkContext: Created broadcast 19 from count at NativeMethodAccessorImpl.java:0
+[2026-04-15T21:30:12.795+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:12 INFO FileSourceScanExec: Planning scan with bin packing, max size: 4194304 bytes, open cost is considered as scanning 4194304 bytes.
+[2026-04-15T21:30:12.846+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:12 INFO DAGScheduler: Registering RDD 51 (count at NativeMethodAccessorImpl.java:0) as input to shuffle 4
+[2026-04-15T21:30:12.847+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:12 INFO DAGScheduler: Got map stage job 11 (count at NativeMethodAccessorImpl.java:0) with 3 output partitions
+[2026-04-15T21:30:12.849+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:12 INFO DAGScheduler: Final stage: ShuffleMapStage 15 (count at NativeMethodAccessorImpl.java:0)
+[2026-04-15T21:30:12.850+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:12 INFO DAGScheduler: Parents of final stage: List()
+[2026-04-15T21:30:12.851+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:12 INFO DAGScheduler: Missing parents: List()
+[2026-04-15T21:30:12.852+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:12 INFO DAGScheduler: Submitting ShuffleMapStage 15 (MapPartitionsRDD[51] at count at NativeMethodAccessorImpl.java:0), which has no missing parents
+[2026-04-15T21:30:12.878+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:12 INFO MemoryStore: Block broadcast_20 stored as values in memory (estimated size 47.7 KiB, free 432.9 MiB)
+[2026-04-15T21:30:12.880+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:12 INFO MemoryStore: Block broadcast_20_piece0 stored as bytes in memory (estimated size 17.6 KiB, free 432.9 MiB)
+[2026-04-15T21:30:12.882+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:12 INFO BlockManagerInfo: Added broadcast_20_piece0 in memory on 53aa898b95b0:44385 (size: 17.6 KiB, free: 434.2 MiB)
+[2026-04-15T21:30:12.882+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:12 INFO SparkContext: Created broadcast 20 from broadcast at DAGScheduler.scala:1585
+[2026-04-15T21:30:12.883+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:12 INFO DAGScheduler: Submitting 3 missing tasks from ShuffleMapStage 15 (MapPartitionsRDD[51] at count at NativeMethodAccessorImpl.java:0) (first 15 tasks are for partitions Vector(0, 1, 2))
+[2026-04-15T21:30:12.883+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:12 INFO TaskSchedulerImpl: Adding task set 15.0 with 3 tasks resource profile 0
+[2026-04-15T21:30:12.884+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:12 INFO TaskSetManager: Starting task 0.0 in stage 15.0 (TID 13) (172.20.0.6, executor 0, partition 0, PROCESS_LOCAL, 10868 bytes)
+[2026-04-15T21:30:12.885+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:12 INFO TaskSetManager: Starting task 1.0 in stage 15.0 (TID 14) (172.20.0.6, executor 1, partition 1, PROCESS_LOCAL, 10868 bytes)
+[2026-04-15T21:30:12.903+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:12 INFO BlockManagerInfo: Added broadcast_20_piece0 in memory on 172.20.0.6:35573 (size: 17.6 KiB, free: 434.3 MiB)
+[2026-04-15T21:30:12.905+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:12 INFO BlockManagerInfo: Added broadcast_20_piece0 in memory on 172.20.0.6:41311 (size: 17.6 KiB, free: 434.3 MiB)
+[2026-04-15T21:30:13.208+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:13 INFO BlockManagerInfo: Added broadcast_18_piece0 in memory on 172.20.0.6:35573 (size: 37.1 KiB, free: 434.3 MiB)
+[2026-04-15T21:30:13.213+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:13 INFO BlockManagerInfo: Added broadcast_17_piece0 in memory on 172.20.0.6:41311 (size: 37.1 KiB, free: 434.3 MiB)
+[2026-04-15T21:30:14.369+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:14 INFO TaskSetManager: Starting task 2.0 in stage 15.0 (TID 15) (172.20.0.6, executor 1, partition 2, PROCESS_LOCAL, 10868 bytes)
+[2026-04-15T21:30:14.371+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:14 INFO TaskSetManager: Finished task 1.0 in stage 15.0 (TID 14) in 1487 ms on 172.20.0.6 (executor 1) (1/3)
+[2026-04-15T21:30:14.386+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:14 INFO TaskSetManager: Finished task 0.0 in stage 15.0 (TID 13) in 1503 ms on 172.20.0.6 (executor 0) (2/3)
+[2026-04-15T21:30:14.445+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:14 INFO BlockManagerInfo: Added broadcast_19_piece0 in memory on 172.20.0.6:35573 (size: 37.0 KiB, free: 434.3 MiB)
+[2026-04-15T21:30:14.558+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:14 INFO TaskSetManager: Finished task 2.0 in stage 15.0 (TID 15) in 189 ms on 172.20.0.6 (executor 1) (3/3)
+[2026-04-15T21:30:14.561+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:14 INFO TaskSchedulerImpl: Removed TaskSet 15.0, whose tasks have all completed, from pool
+[2026-04-15T21:30:14.561+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:14 INFO DAGScheduler: ShuffleMapStage 15 (count at NativeMethodAccessorImpl.java:0) finished in 1.711 s
+[2026-04-15T21:30:14.562+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:14 INFO DAGScheduler: looking for newly runnable stages
+[2026-04-15T21:30:14.563+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:14 INFO DAGScheduler: running: Set()
+[2026-04-15T21:30:14.563+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:14 INFO DAGScheduler: waiting: Set()
+[2026-04-15T21:30:14.564+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:14 INFO DAGScheduler: failed: Set()
+[2026-04-15T21:30:14.584+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:14 INFO ShufflePartitionsUtil: For shuffle(4), advisory target size: 67108864, actual target size 1048576, minimum partition size: 1048576
+[2026-04-15T21:30:14.639+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:14 INFO CodeGenerator: Code generated in 20.299455 ms
+[2026-04-15T21:30:14.660+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:14 INFO CodeGenerator: Code generated in 15.6 ms
+[2026-04-15T21:30:14.704+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:14 INFO DAGScheduler: Registering RDD 57 (count at NativeMethodAccessorImpl.java:0) as input to shuffle 5
+[2026-04-15T21:30:14.705+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:14 INFO DAGScheduler: Got map stage job 12 (count at NativeMethodAccessorImpl.java:0) with 1 output partitions
+[2026-04-15T21:30:14.706+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:14 INFO DAGScheduler: Final stage: ShuffleMapStage 17 (count at NativeMethodAccessorImpl.java:0)
+[2026-04-15T21:30:14.714+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:14 INFO DAGScheduler: Parents of final stage: List(ShuffleMapStage 16)
+[2026-04-15T21:30:14.717+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:14 INFO DAGScheduler: Missing parents: List()
+[2026-04-15T21:30:14.718+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:14 INFO DAGScheduler: Submitting ShuffleMapStage 17 (MapPartitionsRDD[57] at count at NativeMethodAccessorImpl.java:0), which has no missing parents
+[2026-04-15T21:30:14.720+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:14 INFO MemoryStore: Block broadcast_21 stored as values in memory (estimated size 45.7 KiB, free 432.8 MiB)
+[2026-04-15T21:30:14.722+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:14 INFO MemoryStore: Block broadcast_21_piece0 stored as bytes in memory (estimated size 20.7 KiB, free 432.8 MiB)
+[2026-04-15T21:30:14.724+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:14 INFO BlockManagerInfo: Added broadcast_21_piece0 in memory on 53aa898b95b0:44385 (size: 20.7 KiB, free: 434.1 MiB)
+[2026-04-15T21:30:14.725+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:14 INFO SparkContext: Created broadcast 21 from broadcast at DAGScheduler.scala:1585
+[2026-04-15T21:30:14.726+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:14 INFO DAGScheduler: Submitting 1 missing tasks from ShuffleMapStage 17 (MapPartitionsRDD[57] at count at NativeMethodAccessorImpl.java:0) (first 15 tasks are for partitions Vector(0))
+[2026-04-15T21:30:14.730+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:14 INFO TaskSchedulerImpl: Adding task set 17.0 with 1 tasks resource profile 0
+[2026-04-15T21:30:14.733+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:14 INFO TaskSetManager: Starting task 0.0 in stage 17.0 (TID 16) (172.20.0.6, executor 1, partition 0, NODE_LOCAL, 10154 bytes)
+[2026-04-15T21:30:14.740+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:14 INFO BlockManagerInfo: Added broadcast_21_piece0 in memory on 172.20.0.6:35573 (size: 20.7 KiB, free: 434.2 MiB)
+[2026-04-15T21:30:14.815+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:14 INFO MapOutputTrackerMasterEndpoint: Asked to send map output locations for shuffle 4 to 172.20.0.6:53174
+[2026-04-15T21:30:15.190+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:15 INFO TaskSetManager: Finished task 0.0 in stage 17.0 (TID 16) in 474 ms on 172.20.0.6 (executor 1) (1/1)
+[2026-04-15T21:30:15.191+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:15 INFO TaskSchedulerImpl: Removed TaskSet 17.0, whose tasks have all completed, from pool
+[2026-04-15T21:30:15.197+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:15 INFO DAGScheduler: ShuffleMapStage 17 (count at NativeMethodAccessorImpl.java:0) finished in 0.485 s
+[2026-04-15T21:30:15.198+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:15 INFO DAGScheduler: looking for newly runnable stages
+[2026-04-15T21:30:15.201+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:15 INFO DAGScheduler: running: Set()
+[2026-04-15T21:30:15.202+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:15 INFO DAGScheduler: waiting: Set()
+[2026-04-15T21:30:15.202+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:15 INFO DAGScheduler: failed: Set()
+[2026-04-15T21:30:15.224+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:15 INFO CodeGenerator: Code generated in 14.845123 ms
+[2026-04-15T21:30:15.283+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:15 INFO SparkContext: Starting job: count at NativeMethodAccessorImpl.java:0
+[2026-04-15T21:30:15.287+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:15 INFO DAGScheduler: Got job 13 (count at NativeMethodAccessorImpl.java:0) with 1 output partitions
+[2026-04-15T21:30:15.289+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:15 INFO DAGScheduler: Final stage: ResultStage 20 (count at NativeMethodAccessorImpl.java:0)
+[2026-04-15T21:30:15.291+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:15 INFO DAGScheduler: Parents of final stage: List(ShuffleMapStage 19)
+[2026-04-15T21:30:15.293+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:15 INFO DAGScheduler: Missing parents: List()
+[2026-04-15T21:30:15.294+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:15 INFO DAGScheduler: Submitting ResultStage 20 (MapPartitionsRDD[60] at count at NativeMethodAccessorImpl.java:0), which has no missing parents
+[2026-04-15T21:30:15.299+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:15 INFO MemoryStore: Block broadcast_22 stored as values in memory (estimated size 12.5 KiB, free 432.8 MiB)
+[2026-04-15T21:30:15.306+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:15 INFO MemoryStore: Block broadcast_22_piece0 stored as bytes in memory (estimated size 5.9 KiB, free 432.8 MiB)
+[2026-04-15T21:30:15.308+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:15 INFO BlockManagerInfo: Added broadcast_22_piece0 in memory on 53aa898b95b0:44385 (size: 5.9 KiB, free: 434.1 MiB)
+[2026-04-15T21:30:15.311+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:15 INFO SparkContext: Created broadcast 22 from broadcast at DAGScheduler.scala:1585
+[2026-04-15T21:30:15.312+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:15 INFO DAGScheduler: Submitting 1 missing tasks from ResultStage 20 (MapPartitionsRDD[60] at count at NativeMethodAccessorImpl.java:0) (first 15 tasks are for partitions Vector(0))
+[2026-04-15T21:30:15.313+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:15 INFO TaskSchedulerImpl: Adding task set 20.0 with 1 tasks resource profile 0
+[2026-04-15T21:30:15.314+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:15 INFO TaskSetManager: Starting task 0.0 in stage 20.0 (TID 17) (172.20.0.6, executor 1, partition 0, NODE_LOCAL, 10165 bytes)
+[2026-04-15T21:30:15.345+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:15 INFO BlockManagerInfo: Added broadcast_22_piece0 in memory on 172.20.0.6:35573 (size: 5.9 KiB, free: 434.2 MiB)
+[2026-04-15T21:30:15.357+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:15 INFO MapOutputTrackerMasterEndpoint: Asked to send map output locations for shuffle 5 to 172.20.0.6:53174
+[2026-04-15T21:30:15.402+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:15 INFO TaskSetManager: Finished task 0.0 in stage 20.0 (TID 17) in 93 ms on 172.20.0.6 (executor 1) (1/1)
+[2026-04-15T21:30:15.403+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:15 INFO TaskSchedulerImpl: Removed TaskSet 20.0, whose tasks have all completed, from pool
+[2026-04-15T21:30:15.409+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:15 INFO DAGScheduler: ResultStage 20 (count at NativeMethodAccessorImpl.java:0) finished in 0.110 s
+[2026-04-15T21:30:15.416+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:15 INFO DAGScheduler: Job 13 is finished. Cancelling potential speculative or zombie tasks for this job
+[2026-04-15T21:30:15.420+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:15 INFO TaskSchedulerImpl: Killing all running tasks in stage 20: Stage finished
+[2026-04-15T21:30:15.433+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:15 INFO DAGScheduler: Job 13 finished: count at NativeMethodAccessorImpl.java:0, took 0.129215 s
+[2026-04-15T21:30:15.434+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 2026-04-15 21:30:15,417 INFO Filas Silver tras dedupe por id: 110,000
+[2026-04-15T21:30:16.134+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:16 INFO CatalogUtil: Loading custom FileIO implementation: org.apache.iceberg.hadoop.HadoopFileIO
+[2026-04-15T21:30:17.598+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 2026-04-15 21:30:17,598 INFO Namespace 'nessie.silver' listo.
+[2026-04-15T21:30:17.862+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 2026-04-15 21:30:17,862 INFO Creando tabla 'nessie.silver.users_hist'...
+[2026-04-15T21:30:18.024+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:18 INFO BaseMetastoreCatalog: Table properties set at catalog level through catalog properties: {gc.enabled=false, write.metadata.delete-after-commit.enabled=false}
+[2026-04-15T21:30:18.028+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:18 INFO BaseMetastoreCatalog: Table properties enforced at catalog level through catalog properties: {}
+[2026-04-15T21:30:18.207+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:18 INFO SparkWrite: Requesting 0 bytes advisory partition size for table silver.users_hist
+[2026-04-15T21:30:18.208+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:18 INFO SparkWrite: Requesting UnspecifiedDistribution as write distribution for table silver.users_hist
+[2026-04-15T21:30:18.210+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:18 INFO SparkWrite: Requesting [] as write ordering for table silver.users_hist
+[2026-04-15T21:30:18.244+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:18 INFO MemoryStore: Block broadcast_23 stored as values in memory (estimated size 32.0 KiB, free 432.7 MiB)
+[2026-04-15T21:30:18.255+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:18 INFO MemoryStore: Block broadcast_23_piece0 stored as bytes in memory (estimated size 30.4 KiB, free 432.7 MiB)
+[2026-04-15T21:30:18.256+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:18 INFO BlockManagerInfo: Added broadcast_23_piece0 in memory on 53aa898b95b0:44385 (size: 30.4 KiB, free: 434.1 MiB)
+[2026-04-15T21:30:18.257+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:18 INFO SparkContext: Created broadcast 23 from broadcast at SparkWrite.java:193
+[2026-04-15T21:30:18.259+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:18 INFO AppendDataExec: Start processing data source write support: IcebergBatchWrite(table=silver.users_hist, format=PARQUET). The input RDD has 1 partitions.
+[2026-04-15T21:30:18.270+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:18 INFO SparkContext: Starting job: createOrReplace at NativeMethodAccessorImpl.java:0
+[2026-04-15T21:30:18.271+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:18 INFO DAGScheduler: Got job 14 (createOrReplace at NativeMethodAccessorImpl.java:0) with 1 output partitions
+[2026-04-15T21:30:18.272+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:18 INFO DAGScheduler: Final stage: ResultStage 21 (createOrReplace at NativeMethodAccessorImpl.java:0)
+[2026-04-15T21:30:18.274+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:18 INFO DAGScheduler: Parents of final stage: List()
+[2026-04-15T21:30:18.276+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:18 INFO DAGScheduler: Missing parents: List()
+[2026-04-15T21:30:18.277+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:18 INFO DAGScheduler: Submitting ResultStage 21 (ParallelCollectionRDD[63] at createOrReplace at NativeMethodAccessorImpl.java:0), which has no missing parents
+[2026-04-15T21:30:18.278+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:18 INFO MemoryStore: Block broadcast_24 stored as values in memory (estimated size 6.5 KiB, free 432.7 MiB)
+[2026-04-15T21:30:18.278+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:18 INFO MemoryStore: Block broadcast_24_piece0 stored as bytes in memory (estimated size 3.8 KiB, free 432.7 MiB)
+[2026-04-15T21:30:18.279+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:18 INFO BlockManagerInfo: Added broadcast_24_piece0 in memory on 53aa898b95b0:44385 (size: 3.8 KiB, free: 434.1 MiB)
+[2026-04-15T21:30:18.280+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:18 INFO SparkContext: Created broadcast 24 from broadcast at DAGScheduler.scala:1585
+[2026-04-15T21:30:18.280+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:18 INFO DAGScheduler: Submitting 1 missing tasks from ResultStage 21 (ParallelCollectionRDD[63] at createOrReplace at NativeMethodAccessorImpl.java:0) (first 15 tasks are for partitions Vector(0))
+[2026-04-15T21:30:18.281+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:18 INFO TaskSchedulerImpl: Adding task set 21.0 with 1 tasks resource profile 0
+[2026-04-15T21:30:18.282+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:18 INFO TaskSetManager: Starting task 0.0 in stage 21.0 (TID 18) (172.20.0.6, executor 1, partition 0, PROCESS_LOCAL, 10186 bytes)
+[2026-04-15T21:30:18.297+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:18 INFO BlockManagerInfo: Added broadcast_24_piece0 in memory on 172.20.0.6:35573 (size: 3.8 KiB, free: 434.2 MiB)
+[2026-04-15T21:30:18.484+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:18 INFO BlockManagerInfo: Added broadcast_23_piece0 in memory on 172.20.0.6:35573 (size: 30.4 KiB, free: 434.2 MiB)
+[2026-04-15T21:30:19.538+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:19 INFO TaskSetManager: Finished task 0.0 in stage 21.0 (TID 18) in 1256 ms on 172.20.0.6 (executor 1) (1/1)
+[2026-04-15T21:30:19.539+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:19 INFO TaskSchedulerImpl: Removed TaskSet 21.0, whose tasks have all completed, from pool
+[2026-04-15T21:30:19.540+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:19 INFO DAGScheduler: ResultStage 21 (createOrReplace at NativeMethodAccessorImpl.java:0) finished in 1.267 s
+[2026-04-15T21:30:19.542+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:19 INFO DAGScheduler: Job 14 is finished. Cancelling potential speculative or zombie tasks for this job
+[2026-04-15T21:30:19.543+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:19 INFO TaskSchedulerImpl: Killing all running tasks in stage 21: Stage finished
+[2026-04-15T21:30:19.543+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:19 INFO DAGScheduler: Job 14 finished: createOrReplace at NativeMethodAccessorImpl.java:0, took 1.269747 s
+[2026-04-15T21:30:19.544+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:19 INFO AppendDataExec: Data source write support IcebergBatchWrite(table=silver.users_hist, format=PARQUET) is committing.
+[2026-04-15T21:30:19.578+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:19 INFO SparkWrite: Committing append with 0 new data files to table silver.users_hist
+[2026-04-15T21:30:19.791+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:19 ERROR AppendDataExec: Data source write support IcebergBatchWrite(table=silver.users_hist, format=PARQUET) is aborting.
+[2026-04-15T21:30:19.792+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:19 WARN SparkWrite: Skipping cleanup of written files
+[2026-04-15T21:30:19.797+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:19 ERROR AppendDataExec: Data source write support IcebergBatchWrite(table=silver.users_hist, format=PARQUET) aborted.
+[2026-04-15T21:30:19.799+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:19 ERROR Utils: Aborting task
+[2026-04-15T21:30:19.800+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] org.apache.iceberg.exceptions.RuntimeIOException: Failed to create file: s3a://iceberg/silver/users_hist_8c643a90-273a-4a7b-a8bd-63bdad504828/metadata/snap-744024110038615587-1-270abf61-fbcb-428d-a7a5-b22e6d8bf79e.avro
+[2026-04-15T21:30:19.801+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	at org.apache.iceberg.hadoop.HadoopOutputFile.createOrOverwrite(HadoopOutputFile.java:87)
+[2026-04-15T21:30:19.802+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	at org.apache.iceberg.avro.AvroFileAppender.<init>(AvroFileAppender.java:56)
+[2026-04-15T21:30:19.803+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	at org.apache.iceberg.avro.Avro$WriteBuilder.build(Avro.java:197)
+[2026-04-15T21:30:19.804+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	at org.apache.iceberg.ManifestListWriter$V2Writer.newAppender(ManifestListWriter.java:100)
+[2026-04-15T21:30:19.805+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	at org.apache.iceberg.ManifestListWriter.<init>(ManifestListWriter.java:35)
+[2026-04-15T21:30:19.805+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	at org.apache.iceberg.ManifestListWriter.<init>(ManifestListWriter.java:31)
+[2026-04-15T21:30:19.806+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	at org.apache.iceberg.ManifestListWriter$V2Writer.<init>(ManifestListWriter.java:77)
+[2026-04-15T21:30:19.806+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	at org.apache.iceberg.ManifestLists.write(ManifestLists.java:67)
+[2026-04-15T21:30:19.807+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	at org.apache.iceberg.SnapshotProducer.apply(SnapshotProducer.java:241)
+[2026-04-15T21:30:19.807+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	at org.apache.iceberg.SnapshotProducer.lambda$commit$2(SnapshotProducer.java:386)
+[2026-04-15T21:30:19.808+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	at org.apache.iceberg.util.Tasks$Builder.runTaskWithRetry(Tasks.java:413)
+[2026-04-15T21:30:19.808+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	at org.apache.iceberg.util.Tasks$Builder.runSingleThreaded(Tasks.java:219)
+[2026-04-15T21:30:19.809+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	at org.apache.iceberg.util.Tasks$Builder.run(Tasks.java:203)
+[2026-04-15T21:30:19.809+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	at org.apache.iceberg.util.Tasks$Builder.run(Tasks.java:196)
+[2026-04-15T21:30:19.811+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	at org.apache.iceberg.SnapshotProducer.commit(SnapshotProducer.java:384)
+[2026-04-15T21:30:19.812+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	at org.apache.iceberg.spark.source.SparkWrite.commitOperation(SparkWrite.java:233)
+[2026-04-15T21:30:19.814+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	at org.apache.iceberg.spark.source.SparkWrite.access$1300(SparkWrite.java:84)
+[2026-04-15T21:30:19.814+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	at org.apache.iceberg.spark.source.SparkWrite$BatchAppend.commit(SparkWrite.java:301)
+[2026-04-15T21:30:19.815+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	at org.apache.spark.sql.execution.datasources.v2.V2TableWriteExec.writeWithV2(WriteToDataSourceV2Exec.scala:404)
+[2026-04-15T21:30:19.816+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	at org.apache.spark.sql.execution.datasources.v2.V2TableWriteExec.writeWithV2$(WriteToDataSourceV2Exec.scala:364)
+[2026-04-15T21:30:19.816+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	at org.apache.spark.sql.execution.datasources.v2.AppendDataExec.writeWithV2(WriteToDataSourceV2Exec.scala:230)
+[2026-04-15T21:30:19.817+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	at org.apache.spark.sql.execution.datasources.v2.V2ExistingTableWriteExec.run(WriteToDataSourceV2Exec.scala:342)
+[2026-04-15T21:30:19.817+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	at org.apache.spark.sql.execution.datasources.v2.V2ExistingTableWriteExec.run$(WriteToDataSourceV2Exec.scala:341)
+[2026-04-15T21:30:19.817+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	at org.apache.spark.sql.execution.datasources.v2.AppendDataExec.run(WriteToDataSourceV2Exec.scala:230)
+[2026-04-15T21:30:19.818+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	at org.apache.spark.sql.execution.datasources.v2.V2CommandExec.result$lzycompute(V2CommandExec.scala:43)
+[2026-04-15T21:30:19.818+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	at org.apache.spark.sql.execution.datasources.v2.V2CommandExec.result(V2CommandExec.scala:43)
+[2026-04-15T21:30:19.818+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	at org.apache.spark.sql.execution.datasources.v2.V2CommandExec.executeCollect(V2CommandExec.scala:49)
+[2026-04-15T21:30:19.819+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	at org.apache.spark.sql.execution.QueryExecution$$anonfun$eagerlyExecuteCommands$1.$anonfun$applyOrElse$1(QueryExecution.scala:107)
+[2026-04-15T21:30:19.819+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	at org.apache.spark.sql.execution.SQLExecution$.$anonfun$withNewExecutionId$6(SQLExecution.scala:125)
+[2026-04-15T21:30:19.819+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	at org.apache.spark.sql.execution.SQLExecution$.withSQLConfPropagated(SQLExecution.scala:201)
+[2026-04-15T21:30:19.820+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	at org.apache.spark.sql.execution.SQLExecution$.$anonfun$withNewExecutionId$1(SQLExecution.scala:108)
+[2026-04-15T21:30:19.820+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	at org.apache.spark.sql.SparkSession.withActive(SparkSession.scala:900)
+[2026-04-15T21:30:19.821+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	at org.apache.spark.sql.execution.SQLExecution$.withNewExecutionId(SQLExecution.scala:66)
+[2026-04-15T21:30:19.821+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	at org.apache.spark.sql.execution.QueryExecution$$anonfun$eagerlyExecuteCommands$1.applyOrElse(QueryExecution.scala:107)
+[2026-04-15T21:30:19.821+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	at org.apache.spark.sql.execution.QueryExecution$$anonfun$eagerlyExecuteCommands$1.applyOrElse(QueryExecution.scala:98)
+[2026-04-15T21:30:19.822+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	at org.apache.spark.sql.catalyst.trees.TreeNode.$anonfun$transformDownWithPruning$1(TreeNode.scala:461)
+[2026-04-15T21:30:19.822+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	at org.apache.spark.sql.catalyst.trees.CurrentOrigin$.withOrigin(origin.scala:76)
+[2026-04-15T21:30:19.824+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	at org.apache.spark.sql.catalyst.trees.TreeNode.transformDownWithPruning(TreeNode.scala:461)
+[2026-04-15T21:30:19.825+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	at org.apache.spark.sql.catalyst.plans.logical.LogicalPlan.org$apache$spark$sql$catalyst$plans$logical$AnalysisHelper$$super$transformDownWithPruning(LogicalPlan.scala:32)
+[2026-04-15T21:30:19.825+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	at org.apache.spark.sql.catalyst.plans.logical.AnalysisHelper.transformDownWithPruning(AnalysisHelper.scala:267)
+[2026-04-15T21:30:19.826+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	at org.apache.spark.sql.catalyst.plans.logical.AnalysisHelper.transformDownWithPruning$(AnalysisHelper.scala:263)
+[2026-04-15T21:30:19.827+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	at org.apache.spark.sql.catalyst.plans.logical.LogicalPlan.transformDownWithPruning(LogicalPlan.scala:32)
+[2026-04-15T21:30:19.828+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	at org.apache.spark.sql.catalyst.plans.logical.LogicalPlan.transformDownWithPruning(LogicalPlan.scala:32)
+[2026-04-15T21:30:19.828+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	at org.apache.spark.sql.catalyst.trees.TreeNode.transformDown(TreeNode.scala:437)
+[2026-04-15T21:30:19.828+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	at org.apache.spark.sql.execution.QueryExecution.eagerlyExecuteCommands(QueryExecution.scala:98)
+[2026-04-15T21:30:19.829+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	at org.apache.spark.sql.execution.QueryExecution.commandExecuted$lzycompute(QueryExecution.scala:85)
+[2026-04-15T21:30:19.829+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	at org.apache.spark.sql.execution.QueryExecution.commandExecuted(QueryExecution.scala:83)
+[2026-04-15T21:30:19.829+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	at org.apache.spark.sql.execution.QueryExecution.assertCommandExecuted(QueryExecution.scala:142)
+[2026-04-15T21:30:19.830+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	at org.apache.spark.sql.execution.datasources.v2.V2CreateTableAsSelectBaseExec.$anonfun$writeToTable$1(WriteToDataSourceV2Exec.scala:582)
+[2026-04-15T21:30:19.830+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	at org.apache.spark.util.Utils$.tryWithSafeFinallyAndFailureCallbacks(Utils.scala:1397)
+[2026-04-15T21:30:19.831+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	at org.apache.spark.sql.execution.datasources.v2.V2CreateTableAsSelectBaseExec.writeToTable(WriteToDataSourceV2Exec.scala:578)
+[2026-04-15T21:30:19.831+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	at org.apache.spark.sql.execution.datasources.v2.V2CreateTableAsSelectBaseExec.writeToTable$(WriteToDataSourceV2Exec.scala:572)
+[2026-04-15T21:30:19.831+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	at org.apache.spark.sql.execution.datasources.v2.AtomicReplaceTableAsSelectExec.writeToTable(WriteToDataSourceV2Exec.scala:186)
+[2026-04-15T21:30:19.832+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	at org.apache.spark.sql.execution.datasources.v2.AtomicReplaceTableAsSelectExec.run(WriteToDataSourceV2Exec.scala:221)
+[2026-04-15T21:30:19.832+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	at org.apache.spark.sql.execution.datasources.v2.V2CommandExec.result$lzycompute(V2CommandExec.scala:43)
+[2026-04-15T21:30:19.833+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	at org.apache.spark.sql.execution.datasources.v2.V2CommandExec.result(V2CommandExec.scala:43)
+[2026-04-15T21:30:19.834+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	at org.apache.spark.sql.execution.datasources.v2.V2CommandExec.executeCollect(V2CommandExec.scala:49)
+[2026-04-15T21:30:19.834+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	at org.apache.spark.sql.execution.QueryExecution$$anonfun$eagerlyExecuteCommands$1.$anonfun$applyOrElse$1(QueryExecution.scala:107)
+[2026-04-15T21:30:19.835+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	at org.apache.spark.sql.execution.SQLExecution$.$anonfun$withNewExecutionId$6(SQLExecution.scala:125)
+[2026-04-15T21:30:19.835+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	at org.apache.spark.sql.execution.SQLExecution$.withSQLConfPropagated(SQLExecution.scala:201)
+[2026-04-15T21:30:19.836+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	at org.apache.spark.sql.execution.SQLExecution$.$anonfun$withNewExecutionId$1(SQLExecution.scala:108)
+[2026-04-15T21:30:19.837+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	at org.apache.spark.sql.SparkSession.withActive(SparkSession.scala:900)
+[2026-04-15T21:30:19.837+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	at org.apache.spark.sql.execution.SQLExecution$.withNewExecutionId(SQLExecution.scala:66)
+[2026-04-15T21:30:19.838+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	at org.apache.spark.sql.execution.QueryExecution$$anonfun$eagerlyExecuteCommands$1.applyOrElse(QueryExecution.scala:107)
+[2026-04-15T21:30:19.839+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	at org.apache.spark.sql.execution.QueryExecution$$anonfun$eagerlyExecuteCommands$1.applyOrElse(QueryExecution.scala:98)
+[2026-04-15T21:30:19.840+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	at org.apache.spark.sql.catalyst.trees.TreeNode.$anonfun$transformDownWithPruning$1(TreeNode.scala:461)
+[2026-04-15T21:30:19.841+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	at org.apache.spark.sql.catalyst.trees.CurrentOrigin$.withOrigin(origin.scala:76)
+[2026-04-15T21:30:19.841+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	at org.apache.spark.sql.catalyst.trees.TreeNode.transformDownWithPruning(TreeNode.scala:461)
+[2026-04-15T21:30:19.842+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	at org.apache.spark.sql.catalyst.plans.logical.LogicalPlan.org$apache$spark$sql$catalyst$plans$logical$AnalysisHelper$$super$transformDownWithPruning(LogicalPlan.scala:32)
+[2026-04-15T21:30:19.843+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	at org.apache.spark.sql.catalyst.plans.logical.AnalysisHelper.transformDownWithPruning(AnalysisHelper.scala:267)
+[2026-04-15T21:30:19.845+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	at org.apache.spark.sql.catalyst.plans.logical.AnalysisHelper.transformDownWithPruning$(AnalysisHelper.scala:263)
+[2026-04-15T21:30:19.846+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	at org.apache.spark.sql.catalyst.plans.logical.LogicalPlan.transformDownWithPruning(LogicalPlan.scala:32)
+[2026-04-15T21:30:19.847+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	at org.apache.spark.sql.catalyst.plans.logical.LogicalPlan.transformDownWithPruning(LogicalPlan.scala:32)
+[2026-04-15T21:30:19.847+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	at org.apache.spark.sql.catalyst.trees.TreeNode.transformDown(TreeNode.scala:437)
+[2026-04-15T21:30:19.848+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	at org.apache.spark.sql.execution.QueryExecution.eagerlyExecuteCommands(QueryExecution.scala:98)
+[2026-04-15T21:30:19.849+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	at org.apache.spark.sql.execution.QueryExecution.commandExecuted$lzycompute(QueryExecution.scala:85)
+[2026-04-15T21:30:19.849+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	at org.apache.spark.sql.execution.QueryExecution.commandExecuted(QueryExecution.scala:83)
+[2026-04-15T21:30:19.850+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	at org.apache.spark.sql.execution.QueryExecution.assertCommandExecuted(QueryExecution.scala:142)
+[2026-04-15T21:30:19.851+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	at org.apache.spark.sql.DataFrameWriterV2.runCommand(DataFrameWriterV2.scala:201)
+[2026-04-15T21:30:19.851+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	at org.apache.spark.sql.DataFrameWriterV2.internalReplace(DataFrameWriterV2.scala:213)
+[2026-04-15T21:30:19.852+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	at org.apache.spark.sql.DataFrameWriterV2.createOrReplace(DataFrameWriterV2.scala:135)
+[2026-04-15T21:30:19.853+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+[2026-04-15T21:30:19.853+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)
+[2026-04-15T21:30:19.853+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+[2026-04-15T21:30:19.854+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	at java.base/java.lang.reflect.Method.invoke(Method.java:569)
+[2026-04-15T21:30:19.854+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	at py4j.reflection.MethodInvoker.invoke(MethodInvoker.java:244)
+[2026-04-15T21:30:19.854+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	at py4j.reflection.ReflectionEngine.invoke(ReflectionEngine.java:374)
+[2026-04-15T21:30:19.855+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	at py4j.Gateway.invoke(Gateway.java:282)
+[2026-04-15T21:30:19.855+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	at py4j.commands.AbstractCommand.invokeMethod(AbstractCommand.java:132)
+[2026-04-15T21:30:19.856+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	at py4j.commands.CallCommand.execute(CallCommand.java:79)
+[2026-04-15T21:30:19.856+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	at py4j.ClientServerConnection.waitForCommands(ClientServerConnection.java:182)
+[2026-04-15T21:30:19.857+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	at py4j.ClientServerConnection.run(ClientServerConnection.java:106)
+[2026-04-15T21:30:19.857+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	at java.base/java.lang.Thread.run(Thread.java:840)
+[2026-04-15T21:30:19.858+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] Caused by: org.apache.hadoop.fs.s3a.UnknownStoreException: `s3a://iceberg/silver/users_hist_8c643a90-273a-4a7b-a8bd-63bdad504828/metadata/snap-744024110038615587-1-270abf61-fbcb-428d-a7a5-b22e6d8bf79e.avro': getFileStatus on s3a://iceberg/silver/users_hist_8c643a90-273a-4a7b-a8bd-63bdad504828/metadata/snap-744024110038615587-1-270abf61-fbcb-428d-a7a5-b22e6d8bf79e.avro: com.amazonaws.services.s3.model.AmazonS3Exception: The specified bucket does not exist (Service: Amazon S3; Status Code: 404; Error Code: NoSuchBucket; Request ID: 18A6A516A79E1983; S3 Extended Request ID: dd9025bab4ad464b049177c95eb6ebf374d3b3fd1af9251148b658df7ac2e3e8; Proxy: null), S3 Extended Request ID: dd9025bab4ad464b049177c95eb6ebf374d3b3fd1af9251148b658df7ac2e3e8:NoSuchBucket: The specified bucket does not exist (Service: Amazon S3; Status Code: 404; Error Code: NoSuchBucket; Request ID: 18A6A516A79E1983; S3 Extended Request ID: dd9025bab4ad464b049177c95eb6ebf374d3b3fd1af9251148b658df7ac2e3e8; Proxy: null)
+[2026-04-15T21:30:19.860+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	at org.apache.hadoop.fs.s3a.S3AUtils.translateException(S3AUtils.java:263)
+[2026-04-15T21:30:19.860+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	at org.apache.hadoop.fs.s3a.S3AUtils.translateException(S3AUtils.java:175)
+[2026-04-15T21:30:19.861+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	at org.apache.hadoop.fs.s3a.S3AFileSystem.s3GetFileStatus(S3AFileSystem.java:3858)
+[2026-04-15T21:30:19.862+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	at org.apache.hadoop.fs.s3a.S3AFileSystem.innerGetFileStatus(S3AFileSystem.java:3688)
+[2026-04-15T21:30:19.863+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	at org.apache.hadoop.fs.s3a.S3AFileSystem.innerCreateFile(S3AFileSystem.java:1682)
+[2026-04-15T21:30:19.865+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	at org.apache.hadoop.fs.s3a.S3AFileSystem.lambda$create$6(S3AFileSystem.java:1646)
+[2026-04-15T21:30:19.865+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	at org.apache.hadoop.fs.statistics.impl.IOStatisticsBinding.lambda$trackDurationOfOperation$5(IOStatisticsBinding.java:499)
+[2026-04-15T21:30:19.866+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	at org.apache.hadoop.fs.statistics.impl.IOStatisticsBinding.trackDuration(IOStatisticsBinding.java:444)
+[2026-04-15T21:30:19.866+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	at org.apache.hadoop.fs.s3a.S3AFileSystem.trackDurationAndSpan(S3AFileSystem.java:2337)
+[2026-04-15T21:30:19.866+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	at org.apache.hadoop.fs.s3a.S3AFileSystem.trackDurationAndSpan(S3AFileSystem.java:2356)
+[2026-04-15T21:30:19.867+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	at org.apache.hadoop.fs.s3a.S3AFileSystem.create(S3AFileSystem.java:1645)
+[2026-04-15T21:30:19.867+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	at org.apache.hadoop.fs.FileSystem.create(FileSystem.java:1195)
+[2026-04-15T21:30:19.867+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	at org.apache.hadoop.fs.FileSystem.create(FileSystem.java:1175)
+[2026-04-15T21:30:19.868+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	at org.apache.hadoop.fs.FileSystem.create(FileSystem.java:1064)
+[2026-04-15T21:30:19.868+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	at org.apache.iceberg.hadoop.HadoopOutputFile.createOrOverwrite(HadoopOutputFile.java:85)
+[2026-04-15T21:30:19.868+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	... 92 more
+[2026-04-15T21:30:19.869+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] Caused by: com.amazonaws.services.s3.model.AmazonS3Exception: The specified bucket does not exist (Service: Amazon S3; Status Code: 404; Error Code: NoSuchBucket; Request ID: 18A6A516A79E1983; S3 Extended Request ID: dd9025bab4ad464b049177c95eb6ebf374d3b3fd1af9251148b658df7ac2e3e8; Proxy: null), S3 Extended Request ID: dd9025bab4ad464b049177c95eb6ebf374d3b3fd1af9251148b658df7ac2e3e8
+[2026-04-15T21:30:19.870+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	at com.amazonaws.http.AmazonHttpClient$RequestExecutor.handleErrorResponse(AmazonHttpClient.java:1879)
+[2026-04-15T21:30:19.871+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	at com.amazonaws.http.AmazonHttpClient$RequestExecutor.handleServiceErrorResponse(AmazonHttpClient.java:1418)
+[2026-04-15T21:30:19.871+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	at com.amazonaws.http.AmazonHttpClient$RequestExecutor.executeOneRequest(AmazonHttpClient.java:1387)
+[2026-04-15T21:30:19.872+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	at com.amazonaws.http.AmazonHttpClient$RequestExecutor.executeHelper(AmazonHttpClient.java:1157)
+[2026-04-15T21:30:19.873+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	at com.amazonaws.http.AmazonHttpClient$RequestExecutor.doExecute(AmazonHttpClient.java:814)
+[2026-04-15T21:30:19.874+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	at com.amazonaws.http.AmazonHttpClient$RequestExecutor.executeWithTimer(AmazonHttpClient.java:781)
+[2026-04-15T21:30:19.875+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	at com.amazonaws.http.AmazonHttpClient$RequestExecutor.execute(AmazonHttpClient.java:755)
+[2026-04-15T21:30:19.876+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	at com.amazonaws.http.AmazonHttpClient$RequestExecutor.access$500(AmazonHttpClient.java:715)
+[2026-04-15T21:30:19.877+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	at com.amazonaws.http.AmazonHttpClient$RequestExecutionBuilderImpl.execute(AmazonHttpClient.java:697)
+[2026-04-15T21:30:19.877+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	at com.amazonaws.http.AmazonHttpClient.execute(AmazonHttpClient.java:561)
+[2026-04-15T21:30:19.877+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	at com.amazonaws.http.AmazonHttpClient.execute(AmazonHttpClient.java:541)
+[2026-04-15T21:30:19.877+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	at com.amazonaws.services.s3.AmazonS3Client.invoke(AmazonS3Client.java:5456)
+[2026-04-15T21:30:19.878+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	at com.amazonaws.services.s3.AmazonS3Client.invoke(AmazonS3Client.java:5403)
+[2026-04-15T21:30:19.878+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	at com.amazonaws.services.s3.AmazonS3Client.invoke(AmazonS3Client.java:5397)
+[2026-04-15T21:30:19.879+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	at com.amazonaws.services.s3.AmazonS3Client.listObjectsV2(AmazonS3Client.java:971)
+[2026-04-15T21:30:19.879+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	at org.apache.hadoop.fs.s3a.S3AFileSystem.lambda$listObjects$11(S3AFileSystem.java:2595)
+[2026-04-15T21:30:19.879+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	at org.apache.hadoop.fs.statistics.impl.IOStatisticsBinding.lambda$trackDurationOfOperation$5(IOStatisticsBinding.java:499)
+[2026-04-15T21:30:19.880+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	at org.apache.hadoop.fs.s3a.Invoker.retryUntranslated(Invoker.java:414)
+[2026-04-15T21:30:19.880+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	at org.apache.hadoop.fs.s3a.Invoker.retryUntranslated(Invoker.java:377)
+[2026-04-15T21:30:19.880+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	at org.apache.hadoop.fs.s3a.S3AFileSystem.listObjects(S3AFileSystem.java:2586)
+[2026-04-15T21:30:19.882+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	at org.apache.hadoop.fs.s3a.S3AFileSystem.s3GetFileStatus(S3AFileSystem.java:3832)
+[2026-04-15T21:30:19.883+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	... 104 more
+[2026-04-15T21:30:20.031+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] Traceback (most recent call last):
+[2026-04-15T21:30:20.033+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist]   File "/opt/***/scripts/silver_transform.py", line 200, in create_table_if_not_exists
+[2026-04-15T21:30:20.039+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist]     spark.sql(f"DESCRIBE TABLE {full_table}")
+[2026-04-15T21:30:20.040+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist]   File "/opt/spark/python/lib/pyspark.zip/pyspark/sql/session.py", line 1631, in sql
+[2026-04-15T21:30:20.042+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist]   File "/opt/spark/python/lib/py4j-0.10.9.7-src.zip/py4j/java_gateway.py", line 1322, in __call__
+[2026-04-15T21:30:20.045+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist]   File "/opt/spark/python/lib/pyspark.zip/pyspark/errors/exceptions/captured.py", line 185, in deco
+[2026-04-15T21:30:20.054+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] pyspark.errors.exceptions.captured.AnalysisException: [TABLE_OR_VIEW_NOT_FOUND] The table or view `nessie`.`silver`.`users_hist` cannot be found. Verify the spelling and correctness of the schema and catalog.
+[2026-04-15T21:30:20.054+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] If you did not qualify the name with a schema, verify the current_schema() output, or qualify the name with the correct schema and catalog.
+[2026-04-15T21:30:20.055+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] To tolerate the error on drop use DROP VIEW IF EXISTS or DROP TABLE IF EXISTS.; line 1 pos 15;
+[2026-04-15T21:30:20.056+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 'DescribeRelation false, [col_name#914, data_type#915, comment#916]
+[2026-04-15T21:30:20.057+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] +- 'UnresolvedTableOrView [nessie, silver, users_hist], DESCRIBE TABLE, true
+[2026-04-15T21:30:20.059+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 
+[2026-04-15T21:30:20.059+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 
+[2026-04-15T21:30:20.059+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] During handling of the above exception, another exception occurred:
+[2026-04-15T21:30:20.060+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 
+[2026-04-15T21:30:20.060+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] Traceback (most recent call last):
+[2026-04-15T21:30:20.061+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist]   File "/opt/***/scripts/silver_transform.py", line 291, in <module>
+[2026-04-15T21:30:20.061+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist]     main()
+[2026-04-15T21:30:20.062+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist]   File "/opt/***/scripts/silver_transform.py", line 274, in main
+[2026-04-15T21:30:20.063+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist]     create_table_if_not_exists(spark, SILVER_NS, "users_hist", df_silver)
+[2026-04-15T21:30:20.064+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist]   File "/opt/***/scripts/silver_transform.py", line 209, in create_table_if_not_exists
+[2026-04-15T21:30:20.067+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist]     .createOrReplace()
+[2026-04-15T21:30:20.067+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist]      ^^^^^^^^^^^^^^^^^
+[2026-04-15T21:30:20.068+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist]   File "/opt/spark/python/lib/pyspark.zip/pyspark/sql/readwriter.py", line 2100, in createOrReplace
+[2026-04-15T21:30:20.069+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist]   File "/opt/spark/python/lib/py4j-0.10.9.7-src.zip/py4j/java_gateway.py", line 1322, in __call__
+[2026-04-15T21:30:20.070+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist]   File "/opt/spark/python/lib/pyspark.zip/pyspark/errors/exceptions/captured.py", line 179, in deco
+[2026-04-15T21:30:20.070+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist]   File "/opt/spark/python/lib/py4j-0.10.9.7-src.zip/py4j/protocol.py", line 326, in get_return_value
+[2026-04-15T21:30:20.114+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] py4j.protocol.Py4JJavaError: An error occurred while calling o407.createOrReplace.
+[2026-04-15T21:30:20.114+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] : org.apache.iceberg.exceptions.RuntimeIOException: Failed to create file: s3a://iceberg/silver/users_hist_8c643a90-273a-4a7b-a8bd-63bdad504828/metadata/snap-744024110038615587-1-270abf61-fbcb-428d-a7a5-b22e6d8bf79e.avro
+[2026-04-15T21:30:20.115+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	at org.apache.iceberg.hadoop.HadoopOutputFile.createOrOverwrite(HadoopOutputFile.java:87)
+[2026-04-15T21:30:20.115+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	at org.apache.iceberg.avro.AvroFileAppender.<init>(AvroFileAppender.java:56)
+[2026-04-15T21:30:20.115+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	at org.apache.iceberg.avro.Avro$WriteBuilder.build(Avro.java:197)
+[2026-04-15T21:30:20.116+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	at org.apache.iceberg.ManifestListWriter$V2Writer.newAppender(ManifestListWriter.java:100)
+[2026-04-15T21:30:20.118+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	at org.apache.iceberg.ManifestListWriter.<init>(ManifestListWriter.java:35)
+[2026-04-15T21:30:20.119+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	at org.apache.iceberg.ManifestListWriter.<init>(ManifestListWriter.java:31)
+[2026-04-15T21:30:20.119+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	at org.apache.iceberg.ManifestListWriter$V2Writer.<init>(ManifestListWriter.java:77)
+[2026-04-15T21:30:20.120+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	at org.apache.iceberg.ManifestLists.write(ManifestLists.java:67)
+[2026-04-15T21:30:20.121+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	at org.apache.iceberg.SnapshotProducer.apply(SnapshotProducer.java:241)
+[2026-04-15T21:30:20.121+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	at org.apache.iceberg.SnapshotProducer.lambda$commit$2(SnapshotProducer.java:386)
+[2026-04-15T21:30:20.121+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	at org.apache.iceberg.util.Tasks$Builder.runTaskWithRetry(Tasks.java:413)
+[2026-04-15T21:30:20.123+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	at org.apache.iceberg.util.Tasks$Builder.runSingleThreaded(Tasks.java:219)
+[2026-04-15T21:30:20.123+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	at org.apache.iceberg.util.Tasks$Builder.run(Tasks.java:203)
+[2026-04-15T21:30:20.123+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	at org.apache.iceberg.util.Tasks$Builder.run(Tasks.java:196)
+[2026-04-15T21:30:20.124+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	at org.apache.iceberg.SnapshotProducer.commit(SnapshotProducer.java:384)
+[2026-04-15T21:30:20.124+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	at org.apache.iceberg.spark.source.SparkWrite.commitOperation(SparkWrite.java:233)
+[2026-04-15T21:30:20.124+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	at org.apache.iceberg.spark.source.SparkWrite.access$1300(SparkWrite.java:84)
+[2026-04-15T21:30:20.125+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	at org.apache.iceberg.spark.source.SparkWrite$BatchAppend.commit(SparkWrite.java:301)
+[2026-04-15T21:30:20.125+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	at org.apache.spark.sql.execution.datasources.v2.V2TableWriteExec.writeWithV2(WriteToDataSourceV2Exec.scala:404)
+[2026-04-15T21:30:20.125+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	at org.apache.spark.sql.execution.datasources.v2.V2TableWriteExec.writeWithV2$(WriteToDataSourceV2Exec.scala:364)
+[2026-04-15T21:30:20.126+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	at org.apache.spark.sql.execution.datasources.v2.AppendDataExec.writeWithV2(WriteToDataSourceV2Exec.scala:230)
+[2026-04-15T21:30:20.126+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	at org.apache.spark.sql.execution.datasources.v2.V2ExistingTableWriteExec.run(WriteToDataSourceV2Exec.scala:342)
+[2026-04-15T21:30:20.127+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	at org.apache.spark.sql.execution.datasources.v2.V2ExistingTableWriteExec.run$(WriteToDataSourceV2Exec.scala:341)
+[2026-04-15T21:30:20.127+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	at org.apache.spark.sql.execution.datasources.v2.AppendDataExec.run(WriteToDataSourceV2Exec.scala:230)
+[2026-04-15T21:30:20.128+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	at org.apache.spark.sql.execution.datasources.v2.V2CommandExec.result$lzycompute(V2CommandExec.scala:43)
+[2026-04-15T21:30:20.129+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	at org.apache.spark.sql.execution.datasources.v2.V2CommandExec.result(V2CommandExec.scala:43)
+[2026-04-15T21:30:20.129+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	at org.apache.spark.sql.execution.datasources.v2.V2CommandExec.executeCollect(V2CommandExec.scala:49)
+[2026-04-15T21:30:20.129+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	at org.apache.spark.sql.execution.QueryExecution$$anonfun$eagerlyExecuteCommands$1.$anonfun$applyOrElse$1(QueryExecution.scala:107)
+[2026-04-15T21:30:20.130+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	at org.apache.spark.sql.execution.SQLExecution$.$anonfun$withNewExecutionId$6(SQLExecution.scala:125)
+[2026-04-15T21:30:20.130+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	at org.apache.spark.sql.execution.SQLExecution$.withSQLConfPropagated(SQLExecution.scala:201)
+[2026-04-15T21:30:20.130+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	at org.apache.spark.sql.execution.SQLExecution$.$anonfun$withNewExecutionId$1(SQLExecution.scala:108)
+[2026-04-15T21:30:20.131+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	at org.apache.spark.sql.SparkSession.withActive(SparkSession.scala:900)
+[2026-04-15T21:30:20.131+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	at org.apache.spark.sql.execution.SQLExecution$.withNewExecutionId(SQLExecution.scala:66)
+[2026-04-15T21:30:20.133+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	at org.apache.spark.sql.execution.QueryExecution$$anonfun$eagerlyExecuteCommands$1.applyOrElse(QueryExecution.scala:107)
+[2026-04-15T21:30:20.134+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	at org.apache.spark.sql.execution.QueryExecution$$anonfun$eagerlyExecuteCommands$1.applyOrElse(QueryExecution.scala:98)
+[2026-04-15T21:30:20.135+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	at org.apache.spark.sql.catalyst.trees.TreeNode.$anonfun$transformDownWithPruning$1(TreeNode.scala:461)
+[2026-04-15T21:30:20.136+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	at org.apache.spark.sql.catalyst.trees.CurrentOrigin$.withOrigin(origin.scala:76)
+[2026-04-15T21:30:20.136+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	at org.apache.spark.sql.catalyst.trees.TreeNode.transformDownWithPruning(TreeNode.scala:461)
+[2026-04-15T21:30:20.136+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	at org.apache.spark.sql.catalyst.plans.logical.LogicalPlan.org$apache$spark$sql$catalyst$plans$logical$AnalysisHelper$$super$transformDownWithPruning(LogicalPlan.scala:32)
+[2026-04-15T21:30:20.137+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	at org.apache.spark.sql.catalyst.plans.logical.AnalysisHelper.transformDownWithPruning(AnalysisHelper.scala:267)
+[2026-04-15T21:30:20.138+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	at org.apache.spark.sql.catalyst.plans.logical.AnalysisHelper.transformDownWithPruning$(AnalysisHelper.scala:263)
+[2026-04-15T21:30:20.139+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	at org.apache.spark.sql.catalyst.plans.logical.LogicalPlan.transformDownWithPruning(LogicalPlan.scala:32)
+[2026-04-15T21:30:20.139+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	at org.apache.spark.sql.catalyst.plans.logical.LogicalPlan.transformDownWithPruning(LogicalPlan.scala:32)
+[2026-04-15T21:30:20.140+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	at org.apache.spark.sql.catalyst.trees.TreeNode.transformDown(TreeNode.scala:437)
+[2026-04-15T21:30:20.140+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	at org.apache.spark.sql.execution.QueryExecution.eagerlyExecuteCommands(QueryExecution.scala:98)
+[2026-04-15T21:30:20.140+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	at org.apache.spark.sql.execution.QueryExecution.commandExecuted$lzycompute(QueryExecution.scala:85)
+[2026-04-15T21:30:20.141+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	at org.apache.spark.sql.execution.QueryExecution.commandExecuted(QueryExecution.scala:83)
+[2026-04-15T21:30:20.141+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	at org.apache.spark.sql.execution.QueryExecution.assertCommandExecuted(QueryExecution.scala:142)
+[2026-04-15T21:30:20.142+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	at org.apache.spark.sql.execution.datasources.v2.V2CreateTableAsSelectBaseExec.$anonfun$writeToTable$1(WriteToDataSourceV2Exec.scala:582)
+[2026-04-15T21:30:20.143+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	at org.apache.spark.util.Utils$.tryWithSafeFinallyAndFailureCallbacks(Utils.scala:1397)
+[2026-04-15T21:30:20.143+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	at org.apache.spark.sql.execution.datasources.v2.V2CreateTableAsSelectBaseExec.writeToTable(WriteToDataSourceV2Exec.scala:578)
+[2026-04-15T21:30:20.144+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	at org.apache.spark.sql.execution.datasources.v2.V2CreateTableAsSelectBaseExec.writeToTable$(WriteToDataSourceV2Exec.scala:572)
+[2026-04-15T21:30:20.144+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	at org.apache.spark.sql.execution.datasources.v2.AtomicReplaceTableAsSelectExec.writeToTable(WriteToDataSourceV2Exec.scala:186)
+[2026-04-15T21:30:20.144+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	at org.apache.spark.sql.execution.datasources.v2.AtomicReplaceTableAsSelectExec.run(WriteToDataSourceV2Exec.scala:221)
+[2026-04-15T21:30:20.145+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	at org.apache.spark.sql.execution.datasources.v2.V2CommandExec.result$lzycompute(V2CommandExec.scala:43)
+[2026-04-15T21:30:20.145+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	at org.apache.spark.sql.execution.datasources.v2.V2CommandExec.result(V2CommandExec.scala:43)
+[2026-04-15T21:30:20.146+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	at org.apache.spark.sql.execution.datasources.v2.V2CommandExec.executeCollect(V2CommandExec.scala:49)
+[2026-04-15T21:30:20.146+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	at org.apache.spark.sql.execution.QueryExecution$$anonfun$eagerlyExecuteCommands$1.$anonfun$applyOrElse$1(QueryExecution.scala:107)
+[2026-04-15T21:30:20.146+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	at org.apache.spark.sql.execution.SQLExecution$.$anonfun$withNewExecutionId$6(SQLExecution.scala:125)
+[2026-04-15T21:30:20.147+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	at org.apache.spark.sql.execution.SQLExecution$.withSQLConfPropagated(SQLExecution.scala:201)
+[2026-04-15T21:30:20.148+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	at org.apache.spark.sql.execution.SQLExecution$.$anonfun$withNewExecutionId$1(SQLExecution.scala:108)
+[2026-04-15T21:30:20.149+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	at org.apache.spark.sql.SparkSession.withActive(SparkSession.scala:900)
+[2026-04-15T21:30:20.150+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	at org.apache.spark.sql.execution.SQLExecution$.withNewExecutionId(SQLExecution.scala:66)
+[2026-04-15T21:30:20.150+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	at org.apache.spark.sql.execution.QueryExecution$$anonfun$eagerlyExecuteCommands$1.applyOrElse(QueryExecution.scala:107)
+[2026-04-15T21:30:20.151+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	at org.apache.spark.sql.execution.QueryExecution$$anonfun$eagerlyExecuteCommands$1.applyOrElse(QueryExecution.scala:98)
+[2026-04-15T21:30:20.151+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	at org.apache.spark.sql.catalyst.trees.TreeNode.$anonfun$transformDownWithPruning$1(TreeNode.scala:461)
+[2026-04-15T21:30:20.151+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	at org.apache.spark.sql.catalyst.trees.CurrentOrigin$.withOrigin(origin.scala:76)
+[2026-04-15T21:30:20.152+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	at org.apache.spark.sql.catalyst.trees.TreeNode.transformDownWithPruning(TreeNode.scala:461)
+[2026-04-15T21:30:20.152+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	at org.apache.spark.sql.catalyst.plans.logical.LogicalPlan.org$apache$spark$sql$catalyst$plans$logical$AnalysisHelper$$super$transformDownWithPruning(LogicalPlan.scala:32)
+[2026-04-15T21:30:20.154+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	at org.apache.spark.sql.catalyst.plans.logical.AnalysisHelper.transformDownWithPruning(AnalysisHelper.scala:267)
+[2026-04-15T21:30:20.154+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	at org.apache.spark.sql.catalyst.plans.logical.AnalysisHelper.transformDownWithPruning$(AnalysisHelper.scala:263)
+[2026-04-15T21:30:20.154+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	at org.apache.spark.sql.catalyst.plans.logical.LogicalPlan.transformDownWithPruning(LogicalPlan.scala:32)
+[2026-04-15T21:30:20.154+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	at org.apache.spark.sql.catalyst.plans.logical.LogicalPlan.transformDownWithPruning(LogicalPlan.scala:32)
+[2026-04-15T21:30:20.155+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	at org.apache.spark.sql.catalyst.trees.TreeNode.transformDown(TreeNode.scala:437)
+[2026-04-15T21:30:20.155+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	at org.apache.spark.sql.execution.QueryExecution.eagerlyExecuteCommands(QueryExecution.scala:98)
+[2026-04-15T21:30:20.155+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	at org.apache.spark.sql.execution.QueryExecution.commandExecuted$lzycompute(QueryExecution.scala:85)
+[2026-04-15T21:30:20.156+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	at org.apache.spark.sql.execution.QueryExecution.commandExecuted(QueryExecution.scala:83)
+[2026-04-15T21:30:20.156+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	at org.apache.spark.sql.execution.QueryExecution.assertCommandExecuted(QueryExecution.scala:142)
+[2026-04-15T21:30:20.156+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	at org.apache.spark.sql.DataFrameWriterV2.runCommand(DataFrameWriterV2.scala:201)
+[2026-04-15T21:30:20.156+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	at org.apache.spark.sql.DataFrameWriterV2.internalReplace(DataFrameWriterV2.scala:213)
+[2026-04-15T21:30:20.157+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	at org.apache.spark.sql.DataFrameWriterV2.createOrReplace(DataFrameWriterV2.scala:135)
+[2026-04-15T21:30:20.157+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+[2026-04-15T21:30:20.157+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)
+[2026-04-15T21:30:20.158+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+[2026-04-15T21:30:20.159+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	at java.base/java.lang.reflect.Method.invoke(Method.java:569)
+[2026-04-15T21:30:20.161+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	at py4j.reflection.MethodInvoker.invoke(MethodInvoker.java:244)
+[2026-04-15T21:30:20.161+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	at py4j.reflection.ReflectionEngine.invoke(ReflectionEngine.java:374)
+[2026-04-15T21:30:20.162+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	at py4j.Gateway.invoke(Gateway.java:282)
+[2026-04-15T21:30:20.162+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	at py4j.commands.AbstractCommand.invokeMethod(AbstractCommand.java:132)
+[2026-04-15T21:30:20.163+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	at py4j.commands.CallCommand.execute(CallCommand.java:79)
+[2026-04-15T21:30:20.163+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	at py4j.ClientServerConnection.waitForCommands(ClientServerConnection.java:182)
+[2026-04-15T21:30:20.164+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	at py4j.ClientServerConnection.run(ClientServerConnection.java:106)
+[2026-04-15T21:30:20.164+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	at java.base/java.lang.Thread.run(Thread.java:840)
+[2026-04-15T21:30:20.164+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] Caused by: org.apache.hadoop.fs.s3a.UnknownStoreException: `s3a://iceberg/silver/users_hist_8c643a90-273a-4a7b-a8bd-63bdad504828/metadata/snap-744024110038615587-1-270abf61-fbcb-428d-a7a5-b22e6d8bf79e.avro': getFileStatus on s3a://iceberg/silver/users_hist_8c643a90-273a-4a7b-a8bd-63bdad504828/metadata/snap-744024110038615587-1-270abf61-fbcb-428d-a7a5-b22e6d8bf79e.avro: com.amazonaws.services.s3.model.AmazonS3Exception: The specified bucket does not exist (Service: Amazon S3; Status Code: 404; Error Code: NoSuchBucket; Request ID: 18A6A516A79E1983; S3 Extended Request ID: dd9025bab4ad464b049177c95eb6ebf374d3b3fd1af9251148b658df7ac2e3e8; Proxy: null), S3 Extended Request ID: dd9025bab4ad464b049177c95eb6ebf374d3b3fd1af9251148b658df7ac2e3e8:NoSuchBucket: The specified bucket does not exist (Service: Amazon S3; Status Code: 404; Error Code: NoSuchBucket; Request ID: 18A6A516A79E1983; S3 Extended Request ID: dd9025bab4ad464b049177c95eb6ebf374d3b3fd1af9251148b658df7ac2e3e8; Proxy: null)
+[2026-04-15T21:30:20.165+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	at org.apache.hadoop.fs.s3a.S3AUtils.translateException(S3AUtils.java:263)
+[2026-04-15T21:30:20.165+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	at org.apache.hadoop.fs.s3a.S3AUtils.translateException(S3AUtils.java:175)
+[2026-04-15T21:30:20.166+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	at org.apache.hadoop.fs.s3a.S3AFileSystem.s3GetFileStatus(S3AFileSystem.java:3858)
+[2026-04-15T21:30:20.166+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	at org.apache.hadoop.fs.s3a.S3AFileSystem.innerGetFileStatus(S3AFileSystem.java:3688)
+[2026-04-15T21:30:20.167+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	at org.apache.hadoop.fs.s3a.S3AFileSystem.innerCreateFile(S3AFileSystem.java:1682)
+[2026-04-15T21:30:20.167+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	at org.apache.hadoop.fs.s3a.S3AFileSystem.lambda$create$6(S3AFileSystem.java:1646)
+[2026-04-15T21:30:20.168+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	at org.apache.hadoop.fs.statistics.impl.IOStatisticsBinding.lambda$trackDurationOfOperation$5(IOStatisticsBinding.java:499)
+[2026-04-15T21:30:20.168+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	at org.apache.hadoop.fs.statistics.impl.IOStatisticsBinding.trackDuration(IOStatisticsBinding.java:444)
+[2026-04-15T21:30:20.169+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	at org.apache.hadoop.fs.s3a.S3AFileSystem.trackDurationAndSpan(S3AFileSystem.java:2337)
+[2026-04-15T21:30:20.170+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	at org.apache.hadoop.fs.s3a.S3AFileSystem.trackDurationAndSpan(S3AFileSystem.java:2356)
+[2026-04-15T21:30:20.171+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	at org.apache.hadoop.fs.s3a.S3AFileSystem.create(S3AFileSystem.java:1645)
+[2026-04-15T21:30:20.172+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	at org.apache.hadoop.fs.FileSystem.create(FileSystem.java:1195)
+[2026-04-15T21:30:20.172+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	at org.apache.hadoop.fs.FileSystem.create(FileSystem.java:1175)
+[2026-04-15T21:30:20.173+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	at org.apache.hadoop.fs.FileSystem.create(FileSystem.java:1064)
+[2026-04-15T21:30:20.173+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	at org.apache.iceberg.hadoop.HadoopOutputFile.createOrOverwrite(HadoopOutputFile.java:85)
+[2026-04-15T21:30:20.173+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	... 92 more
+[2026-04-15T21:30:20.174+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] Caused by: com.amazonaws.services.s3.model.AmazonS3Exception: The specified bucket does not exist (Service: Amazon S3; Status Code: 404; Error Code: NoSuchBucket; Request ID: 18A6A516A79E1983; S3 Extended Request ID: dd9025bab4ad464b049177c95eb6ebf374d3b3fd1af9251148b658df7ac2e3e8; Proxy: null), S3 Extended Request ID: dd9025bab4ad464b049177c95eb6ebf374d3b3fd1af9251148b658df7ac2e3e8
+[2026-04-15T21:30:20.174+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	at com.amazonaws.http.AmazonHttpClient$RequestExecutor.handleErrorResponse(AmazonHttpClient.java:1879)
+[2026-04-15T21:30:20.175+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	at com.amazonaws.http.AmazonHttpClient$RequestExecutor.handleServiceErrorResponse(AmazonHttpClient.java:1418)
+[2026-04-15T21:30:20.175+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	at com.amazonaws.http.AmazonHttpClient$RequestExecutor.executeOneRequest(AmazonHttpClient.java:1387)
+[2026-04-15T21:30:20.176+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	at com.amazonaws.http.AmazonHttpClient$RequestExecutor.executeHelper(AmazonHttpClient.java:1157)
+[2026-04-15T21:30:20.176+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	at com.amazonaws.http.AmazonHttpClient$RequestExecutor.doExecute(AmazonHttpClient.java:814)
+[2026-04-15T21:30:20.177+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	at com.amazonaws.http.AmazonHttpClient$RequestExecutor.executeWithTimer(AmazonHttpClient.java:781)
+[2026-04-15T21:30:20.177+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	at com.amazonaws.http.AmazonHttpClient$RequestExecutor.execute(AmazonHttpClient.java:755)
+[2026-04-15T21:30:20.179+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	at com.amazonaws.http.AmazonHttpClient$RequestExecutor.access$500(AmazonHttpClient.java:715)
+[2026-04-15T21:30:20.181+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	at com.amazonaws.http.AmazonHttpClient$RequestExecutionBuilderImpl.execute(AmazonHttpClient.java:697)
+[2026-04-15T21:30:20.182+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	at com.amazonaws.http.AmazonHttpClient.execute(AmazonHttpClient.java:561)
+[2026-04-15T21:30:20.183+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	at com.amazonaws.http.AmazonHttpClient.execute(AmazonHttpClient.java:541)
+[2026-04-15T21:30:20.183+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	at com.amazonaws.services.s3.AmazonS3Client.invoke(AmazonS3Client.java:5456)
+[2026-04-15T21:30:20.183+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	at com.amazonaws.services.s3.AmazonS3Client.invoke(AmazonS3Client.java:5403)
+[2026-04-15T21:30:20.184+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	at com.amazonaws.services.s3.AmazonS3Client.invoke(AmazonS3Client.java:5397)
+[2026-04-15T21:30:20.184+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	at com.amazonaws.services.s3.AmazonS3Client.listObjectsV2(AmazonS3Client.java:971)
+[2026-04-15T21:30:20.185+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	at org.apache.hadoop.fs.s3a.S3AFileSystem.lambda$listObjects$11(S3AFileSystem.java:2595)
+[2026-04-15T21:30:20.185+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	at org.apache.hadoop.fs.statistics.impl.IOStatisticsBinding.lambda$trackDurationOfOperation$5(IOStatisticsBinding.java:499)
+[2026-04-15T21:30:20.186+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	at org.apache.hadoop.fs.s3a.Invoker.retryUntranslated(Invoker.java:414)
+[2026-04-15T21:30:20.186+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	at org.apache.hadoop.fs.s3a.Invoker.retryUntranslated(Invoker.java:377)
+[2026-04-15T21:30:20.187+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	at org.apache.hadoop.fs.s3a.S3AFileSystem.listObjects(S3AFileSystem.java:2586)
+[2026-04-15T21:30:20.187+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	at org.apache.hadoop.fs.s3a.S3AFileSystem.s3GetFileStatus(S3AFileSystem.java:3832)
+[2026-04-15T21:30:20.187+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 	... 104 more
+[2026-04-15T21:30:20.188+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 
+[2026-04-15T21:30:20.188+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 2026-04-15 21:30:20,114 INFO Closing down clientserver connection
+[2026-04-15T21:30:20.281+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:20 INFO SparkContext: Invoking stop() from shutdown hook
+[2026-04-15T21:30:20.282+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:20 INFO SparkContext: SparkContext is stopping with exitCode 0.
+[2026-04-15T21:30:20.302+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:20 INFO SparkUI: Stopped Spark web UI at http://53aa898b95b0:4040
+[2026-04-15T21:30:20.307+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:20 INFO StandaloneSchedulerBackend: Shutting down all executors
+[2026-04-15T21:30:20.309+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:20 INFO StandaloneSchedulerBackend$StandaloneDriverEndpoint: Asking each executor to shut down
+[2026-04-15T21:30:20.337+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:20 INFO MapOutputTrackerMasterEndpoint: MapOutputTrackerMasterEndpoint stopped!
+[2026-04-15T21:30:20.419+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:20 INFO MemoryStore: MemoryStore cleared
+[2026-04-15T21:30:20.423+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:20 INFO BlockManager: BlockManager stopped
+[2026-04-15T21:30:20.448+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:20 INFO BlockManagerMaster: BlockManagerMaster stopped
+[2026-04-15T21:30:20.454+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:20 INFO OutputCommitCoordinator$OutputCommitCoordinatorEndpoint: OutputCommitCoordinator stopped!
+[2026-04-15T21:30:20.500+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:20 INFO SparkContext: Successfully stopped SparkContext
+[2026-04-15T21:30:20.502+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:20 INFO ShutdownHookManager: Shutdown hook called
+[2026-04-15T21:30:20.504+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:20 INFO ShutdownHookManager: Deleting directory /tmp/spark-ce1e7f17-276c-4531-b003-ed1ac6953c28
+[2026-04-15T21:30:20.519+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:20 INFO ShutdownHookManager: Deleting directory /tmp/spark-f70745e8-0759-4aad-89de-4b4cba51b866
+[2026-04-15T21:30:20.548+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:20 INFO ShutdownHookManager: Deleting directory /tmp/spark-f70745e8-0759-4aad-89de-4b4cba51b866/pyspark-b16b53e7-0c20-4403-bfe2-cc9b556ce0c0
+[2026-04-15T21:30:20.587+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:20 INFO MetricsSystemImpl: Stopping s3a-file-system metrics system...
+[2026-04-15T21:30:20.588+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:20 INFO MetricsSystemImpl: s3a-file-system metrics system stopped.
+[2026-04-15T21:30:20.589+0000] {stackoverflow_pipeline.py:192} INFO - [silver_users_hist] 26/04/15 21:30:20 INFO MetricsSystemImpl: s3a-file-system metrics system shutdown complete.
+[2026-04-15T21:30:21.010+0000] {taskinstance.py:3311} ERROR - Task failed with exception
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 762, in _execute_task
+    result = _execute_callable(context=context, **execute_callable_kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 733, in _execute_callable
+    return ExecutionCallableRunner(
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/utils/operator_helpers.py", line 252, in run
+    return self.func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/baseoperator.py", line 417, in wrapper
+    return func(self, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/operators/python.py", line 238, in execute
+    return_value = self.execute_callable()
+                   ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/operators/python.py", line 256, in execute_callable
+    return runner.run(*self.op_args, **self.op_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/utils/operator_helpers.py", line 252, in run
+    return self.func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/airflow/dags/stackoverflow_pipeline.py", line 229, in silver_transform_callable
+    _run_spark_submit("/opt/airflow/scripts/silver_transform.py",
+  File "/opt/airflow/dags/stackoverflow_pipeline.py", line 216, in _run_spark_submit
+    _stream_subprocess(cmd, env, name)
+  File "/opt/airflow/dags/stackoverflow_pipeline.py", line 196, in _stream_subprocess
+    raise RuntimeError(f"Spark job {name} failed with rc={rc}")
+RuntimeError: Spark job silver_users_hist failed with rc=1
+[2026-04-15T21:30:21.081+0000] {taskinstance.py:1225} INFO - Marking task as FAILED. dag_id=stackoverflow_pipeline, task_id=silver_transform, run_id=manual__2026-04-15T21:21:46.793838+00:00, execution_date=20260415T212146, start_date=20260415T212913, end_date=20260415T213021
+[2026-04-15T21:30:21.138+0000] {taskinstance.py:340} INFO - ::group::Post task execution logs
+[2026-04-15T21:30:21.142+0000] {standard_task_runner.py:124} ERROR - Failed to execute job 5 for task silver_transform (Spark job silver_users_hist failed with rc=1; 2280)
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/task/task_runner/standard_task_runner.py", line 117, in _start_by_fork
+    ret = args.func(args, dag=self.dag)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/cli/cli_config.py", line 49, in command
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/utils/cli.py", line 116, in wrapper
+    return f(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/cli/commands/task_command.py", line 483, in task_run
+    task_return_code = _run_task_by_selected_method(args, _dag, ti)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/cli/commands/task_command.py", line 256, in _run_task_by_selected_method
+    return _run_raw_task(args, ti)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/cli/commands/task_command.py", line 341, in _run_raw_task
+    return ti._run_raw_task(
+           ^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/utils/session.py", line 97, in wrapper
+    return func(*args, session=session, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 3005, in _run_raw_task
+    return _run_raw_task(
+           ^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 273, in _run_raw_task
+    TaskInstance._execute_task_with_callbacks(
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 3159, in _execute_task_with_callbacks
+    result = self._execute_task(context, task_orig)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 3183, in _execute_task
+    return _execute_task(self, context, task_orig)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 762, in _execute_task
+    result = _execute_callable(context=context, **execute_callable_kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 733, in _execute_callable
+    return ExecutionCallableRunner(
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/utils/operator_helpers.py", line 252, in run
+    return self.func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/baseoperator.py", line 417, in wrapper
+    return func(self, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/operators/python.py", line 238, in execute
+    return_value = self.execute_callable()
+                   ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/operators/python.py", line 256, in execute_callable
+    return runner.run(*self.op_args, **self.op_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/utils/operator_helpers.py", line 252, in run
+    return self.func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/airflow/dags/stackoverflow_pipeline.py", line 229, in silver_transform_callable
+    _run_spark_submit("/opt/airflow/scripts/silver_transform.py",
+  File "/opt/airflow/dags/stackoverflow_pipeline.py", line 216, in _run_spark_submit
+    _stream_subprocess(cmd, env, name)
+  File "/opt/airflow/dags/stackoverflow_pipeline.py", line 196, in _stream_subprocess
+    raise RuntimeError(f"Spark job {name} failed with rc={rc}")
+RuntimeError: Spark job silver_users_hist failed with rc=1
+[2026-04-15T21:30:21.202+0000] {local_task_job_runner.py:266} INFO - Task exited with return code 1
+[2026-04-15T21:30:21.277+0000] {taskinstance.py:3895} INFO - 0 downstream tasks scheduled from follow-on schedule check
+[2026-04-15T21:30:21.283+0000] {local_task_job_runner.py:245} INFO - ::endgroup::

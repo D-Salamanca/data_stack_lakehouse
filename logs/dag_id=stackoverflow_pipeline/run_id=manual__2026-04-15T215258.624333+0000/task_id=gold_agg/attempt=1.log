@@ -1,0 +1,286 @@
+[2026-04-15T21:54:53.454+0000] {local_task_job_runner.py:123} INFO - ::group::Pre task execution logs
+[2026-04-15T21:54:53.471+0000] {taskinstance.py:2613} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: stackoverflow_pipeline.gold_agg manual__2026-04-15T21:52:58.624333+00:00 [queued]>
+[2026-04-15T21:54:53.481+0000] {taskinstance.py:2613} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: stackoverflow_pipeline.gold_agg manual__2026-04-15T21:52:58.624333+00:00 [queued]>
+[2026-04-15T21:54:53.482+0000] {taskinstance.py:2866} INFO - Starting attempt 1 of 2
+[2026-04-15T21:54:53.495+0000] {taskinstance.py:2889} INFO - Executing <Task(PythonOperator): gold_agg> on 2026-04-15 21:52:58.624333+00:00
+[2026-04-15T21:54:53.503+0000] {logging_mixin.py:190} WARNING - /home/***/.local/lib/python3.12/site-packages/***/task/task_runner/standard_task_runner.py:70 DeprecationWarning: This process (pid=3771) is multi-threaded, use of fork() may lead to deadlocks in the child.
+[2026-04-15T21:54:53.502+0000] {standard_task_runner.py:104} INFO - Running: ['***', 'tasks', 'run', 'stackoverflow_pipeline', 'gold_agg', 'manual__2026-04-15T21:52:58.624333+00:00', '--job-id', '8', '--raw', '--subdir', 'DAGS_FOLDER/stackoverflow_pipeline.py', '--cfg-path', '/tmp/tmpu88o9o00']
+[2026-04-15T21:54:53.504+0000] {standard_task_runner.py:72} INFO - Started process 3772 to run task
+[2026-04-15T21:54:53.504+0000] {standard_task_runner.py:105} INFO - Job 8: Subtask gold_agg
+[2026-04-15T21:54:53.563+0000] {task_command.py:467} INFO - Running <TaskInstance: stackoverflow_pipeline.gold_agg manual__2026-04-15T21:52:58.624333+00:00 [running]> on host 53aa898b95b0
+[2026-04-15T21:54:53.630+0000] {taskinstance.py:3132} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='fhbd-grupo' AIRFLOW_CTX_DAG_ID='stackoverflow_pipeline' AIRFLOW_CTX_TASK_ID='gold_agg' AIRFLOW_CTX_EXECUTION_DATE='2026-04-15T21:52:58.624333+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2026-04-15T21:52:58.624333+00:00'
+[2026-04-15T21:54:53.632+0000] {taskinstance.py:731} INFO - ::endgroup::
+[2026-04-15T21:54:53.655+0000] {stackoverflow_pipeline.py:184} INFO - [gold_cant_post_x_user_hist] Running: /opt/spark/bin/spark-submit --master local[1] --conf spark.submit.deployMode=client --conf spark.driver.bindAddress=0.0.0.0 --conf spark.driver.memory=1500m --conf spark.sql.shuffle.partitions=2 --conf spark.sql.extensions=org.apache.iceberg.spark.extensions.IcebergSparkSessionExtensions,org.projectnessie.spark.extensions.NessieSparkSessionExtensions --conf spark.sql.catalog.nessie=org.apache.iceberg.spark.SparkCatalog --conf spark.sql.catalog.nessie.catalog-impl=org.apache.iceberg.nessie.NessieCatalog --conf spark.sql.catalog.nessie.uri=http://proyecto2-nessie:19120/api/v1 --conf spark.sql.catalog.nessie.ref=main --conf spark.sql.catalog.nessie.authentication.type=NONE --conf spark.sql.catalog.nessie.warehouse=s3a://iceberg/ --conf spark.hadoop.fs.s3a.endpoint=http://proyecto2-minio:9000 --conf spark.hadoop.fs.s3a.access.key=minioadmin --conf spark.hadoop.fs.s3a.secret.key=minioadmin123 --conf spark.hadoop.fs.s3a.path.style.access=true --conf spark.hadoop.fs.s3a.impl=org.apache.hadoop.fs.s3a.S3AFileSystem --conf spark.hadoop.fs.s3a.aws.credentials.provider=org.apache.hadoop.fs.s3a.SimpleAWSCredentialsProvider --conf spark.hadoop.fs.s3a.connection.ssl.enabled=false --conf spark.driver.maxResultSize=512m --conf spark.memory.fraction=0.5 --conf spark.sql.iceberg.vectorization.enabled=false --conf spark.driver.extraJavaOptions=-Xss4m --packages org.apache.iceberg:iceberg-spark-runtime-3.5_2.12:1.6.1,org.projectnessie.nessie-integrations:nessie-spark-extensions-3.5_2.12:0.95.0,org.apache.hadoop:hadoop-aws:3.3.4,com.amazonaws:aws-java-sdk-bundle:1.12.262 --name gold_cant_post_x_user_hist /opt/***/scripts/gold_agg.py
+[2026-04-15T21:54:53.668+0000] {stackoverflow_pipeline.py:192} INFO - [gold_cant_post_x_user_hist] /opt/spark/bin/load-spark-env.sh: line 68: ps: command not found
+[2026-04-15T21:54:55.382+0000] {stackoverflow_pipeline.py:192} INFO - [gold_cant_post_x_user_hist] :: loading settings :: url = jar:file:/opt/spark/jars/ivy-2.5.1.jar!/org/apache/ivy/core/settings/ivysettings.xml
+[2026-04-15T21:54:55.482+0000] {stackoverflow_pipeline.py:192} INFO - [gold_cant_post_x_user_hist] Ivy Default Cache set to: /home/***/.ivy2/cache
+[2026-04-15T21:54:55.483+0000] {stackoverflow_pipeline.py:192} INFO - [gold_cant_post_x_user_hist] The jars for the packages stored in: /home/***/.ivy2/jars
+[2026-04-15T21:54:55.488+0000] {stackoverflow_pipeline.py:192} INFO - [gold_cant_post_x_user_hist] org.apache.iceberg#iceberg-spark-runtime-3.5_2.12 added as a dependency
+[2026-04-15T21:54:55.489+0000] {stackoverflow_pipeline.py:192} INFO - [gold_cant_post_x_user_hist] org.projectnessie.nessie-integrations#nessie-spark-extensions-3.5_2.12 added as a dependency
+[2026-04-15T21:54:55.489+0000] {stackoverflow_pipeline.py:192} INFO - [gold_cant_post_x_user_hist] org.apache.hadoop#hadoop-aws added as a dependency
+[2026-04-15T21:54:55.490+0000] {stackoverflow_pipeline.py:192} INFO - [gold_cant_post_x_user_hist] com.amazonaws#aws-java-sdk-bundle added as a dependency
+[2026-04-15T21:54:55.490+0000] {stackoverflow_pipeline.py:192} INFO - [gold_cant_post_x_user_hist] :: resolving dependencies :: org.apache.spark#spark-submit-parent-b3d4fd35-78fc-4e56-a63b-083ea3c1c684;1.0
+[2026-04-15T21:54:55.490+0000] {stackoverflow_pipeline.py:192} INFO - [gold_cant_post_x_user_hist] 	confs: [default]
+[2026-04-15T21:54:55.612+0000] {stackoverflow_pipeline.py:192} INFO - [gold_cant_post_x_user_hist] 	found org.apache.iceberg#iceberg-spark-runtime-3.5_2.12;1.6.1 in central
+[2026-04-15T21:54:55.632+0000] {stackoverflow_pipeline.py:192} INFO - [gold_cant_post_x_user_hist] 	found org.projectnessie.nessie-integrations#nessie-spark-extensions-3.5_2.12;0.95.0 in central
+[2026-04-15T21:54:55.675+0000] {stackoverflow_pipeline.py:192} INFO - [gold_cant_post_x_user_hist] 	found org.apache.hadoop#hadoop-aws;3.3.4 in central
+[2026-04-15T21:54:55.696+0000] {stackoverflow_pipeline.py:192} INFO - [gold_cant_post_x_user_hist] 	found com.amazonaws#aws-java-sdk-bundle;1.12.262 in central
+[2026-04-15T21:54:55.716+0000] {stackoverflow_pipeline.py:192} INFO - [gold_cant_post_x_user_hist] 	found org.wildfly.openssl#wildfly-openssl;1.0.7.Final in central
+[2026-04-15T21:54:55.738+0000] {stackoverflow_pipeline.py:192} INFO - [gold_cant_post_x_user_hist] :: resolution report :: resolve 237ms :: artifacts dl 12ms
+[2026-04-15T21:54:55.739+0000] {stackoverflow_pipeline.py:192} INFO - [gold_cant_post_x_user_hist] 	:: modules in use:
+[2026-04-15T21:54:55.741+0000] {stackoverflow_pipeline.py:192} INFO - [gold_cant_post_x_user_hist] 	com.amazonaws#aws-java-sdk-bundle;1.12.262 from central in [default]
+[2026-04-15T21:54:55.742+0000] {stackoverflow_pipeline.py:192} INFO - [gold_cant_post_x_user_hist] 	org.apache.hadoop#hadoop-aws;3.3.4 from central in [default]
+[2026-04-15T21:54:55.743+0000] {stackoverflow_pipeline.py:192} INFO - [gold_cant_post_x_user_hist] 	org.apache.iceberg#iceberg-spark-runtime-3.5_2.12;1.6.1 from central in [default]
+[2026-04-15T21:54:55.743+0000] {stackoverflow_pipeline.py:192} INFO - [gold_cant_post_x_user_hist] 	org.projectnessie.nessie-integrations#nessie-spark-extensions-3.5_2.12;0.95.0 from central in [default]
+[2026-04-15T21:54:55.744+0000] {stackoverflow_pipeline.py:192} INFO - [gold_cant_post_x_user_hist] 	org.wildfly.openssl#wildfly-openssl;1.0.7.Final from central in [default]
+[2026-04-15T21:54:55.745+0000] {stackoverflow_pipeline.py:192} INFO - [gold_cant_post_x_user_hist] 	---------------------------------------------------------------------
+[2026-04-15T21:54:55.745+0000] {stackoverflow_pipeline.py:192} INFO - [gold_cant_post_x_user_hist] 	|                  |            modules            ||   artifacts   |
+[2026-04-15T21:54:55.746+0000] {stackoverflow_pipeline.py:192} INFO - [gold_cant_post_x_user_hist] 	|       conf       | number| search|dwnlded|evicted|| number|dwnlded|
+[2026-04-15T21:54:55.746+0000] {stackoverflow_pipeline.py:192} INFO - [gold_cant_post_x_user_hist] 	---------------------------------------------------------------------
+[2026-04-15T21:54:55.747+0000] {stackoverflow_pipeline.py:192} INFO - [gold_cant_post_x_user_hist] 	|      default     |   5   |   0   |   0   |   0   ||   5   |   0   |
+[2026-04-15T21:54:55.747+0000] {stackoverflow_pipeline.py:192} INFO - [gold_cant_post_x_user_hist] 	---------------------------------------------------------------------
+[2026-04-15T21:54:55.748+0000] {stackoverflow_pipeline.py:192} INFO - [gold_cant_post_x_user_hist] :: retrieving :: org.apache.spark#spark-submit-parent-b3d4fd35-78fc-4e56-a63b-083ea3c1c684
+[2026-04-15T21:54:55.748+0000] {stackoverflow_pipeline.py:192} INFO - [gold_cant_post_x_user_hist] 	confs: [default]
+[2026-04-15T21:54:55.751+0000] {stackoverflow_pipeline.py:192} INFO - [gold_cant_post_x_user_hist] 	0 artifacts copied, 5 already retrieved (0kB/5ms)
+[2026-04-15T21:54:55.967+0000] {stackoverflow_pipeline.py:192} INFO - [gold_cant_post_x_user_hist] 26/04/15 21:54:55 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+[2026-04-15T21:54:57.387+0000] {stackoverflow_pipeline.py:192} INFO - [gold_cant_post_x_user_hist] /opt/***/scripts/gold_agg.py:37: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+[2026-04-15T21:54:57.388+0000] {stackoverflow_pipeline.py:192} INFO - [gold_cant_post_x_user_hist]   FECHA_CARGUE   = datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S")
+[2026-04-15T21:54:57.389+0000] {stackoverflow_pipeline.py:192} INFO - [gold_cant_post_x_user_hist] 2026-04-15 21:54:57,387 INFO ============================================================
+[2026-04-15T21:54:57.390+0000] {stackoverflow_pipeline.py:192} INFO - [gold_cant_post_x_user_hist] 2026-04-15 21:54:57,387 INFO GOLD AGG — cant_post_x_user_hist ★
+[2026-04-15T21:54:57.390+0000] {stackoverflow_pipeline.py:192} INFO - [gold_cant_post_x_user_hist] 2026-04-15 21:54:57,387 INFO Fuentes: nessie.silver.post_hist + nessie.silver.users_hist
+[2026-04-15T21:54:57.391+0000] {stackoverflow_pipeline.py:192} INFO - [gold_cant_post_x_user_hist] 2026-04-15 21:54:57,387 INFO ============================================================
+[2026-04-15T21:54:57.650+0000] {stackoverflow_pipeline.py:192} INFO - [gold_cant_post_x_user_hist] 26/04/15 21:54:57 INFO SparkContext: Running Spark version 3.5.5
+[2026-04-15T21:54:57.651+0000] {stackoverflow_pipeline.py:192} INFO - [gold_cant_post_x_user_hist] 26/04/15 21:54:57 INFO SparkContext: OS info Linux, 6.6.87.2-microsoft-standard-WSL2, amd64
+[2026-04-15T21:54:57.653+0000] {stackoverflow_pipeline.py:192} INFO - [gold_cant_post_x_user_hist] 26/04/15 21:54:57 INFO SparkContext: Java version 17.0.18
+[2026-04-15T21:54:57.686+0000] {stackoverflow_pipeline.py:192} INFO - [gold_cant_post_x_user_hist] 26/04/15 21:54:57 INFO ResourceUtils: ==============================================================
+[2026-04-15T21:54:57.690+0000] {stackoverflow_pipeline.py:192} INFO - [gold_cant_post_x_user_hist] 26/04/15 21:54:57 INFO ResourceUtils: No custom resources configured for spark.driver.
+[2026-04-15T21:54:57.691+0000] {stackoverflow_pipeline.py:192} INFO - [gold_cant_post_x_user_hist] 26/04/15 21:54:57 INFO ResourceUtils: ==============================================================
+[2026-04-15T21:54:57.691+0000] {stackoverflow_pipeline.py:192} INFO - [gold_cant_post_x_user_hist] 26/04/15 21:54:57 INFO SparkContext: Submitted application: gold_agg
+[2026-04-15T21:54:57.714+0000] {stackoverflow_pipeline.py:192} INFO - [gold_cant_post_x_user_hist] 26/04/15 21:54:57 INFO ResourceProfile: Default ResourceProfile created, executor resources: Map(cores -> name: cores, amount: 1, script: , vendor: , memory -> name: memory, amount: 1024, script: , vendor: , offHeap -> name: offHeap, amount: 0, script: , vendor: ), task resources: Map(cpus -> name: cpus, amount: 1.0)
+[2026-04-15T21:54:57.723+0000] {stackoverflow_pipeline.py:192} INFO - [gold_cant_post_x_user_hist] 26/04/15 21:54:57 INFO ResourceProfile: Limiting resource is cpu
+[2026-04-15T21:54:57.725+0000] {stackoverflow_pipeline.py:192} INFO - [gold_cant_post_x_user_hist] 26/04/15 21:54:57 INFO ResourceProfileManager: Added ResourceProfile id: 0
+[2026-04-15T21:54:57.795+0000] {stackoverflow_pipeline.py:192} INFO - [gold_cant_post_x_user_hist] 26/04/15 21:54:57 INFO SecurityManager: Changing view acls to: ***
+[2026-04-15T21:54:57.797+0000] {stackoverflow_pipeline.py:192} INFO - [gold_cant_post_x_user_hist] 26/04/15 21:54:57 INFO SecurityManager: Changing modify acls to: ***
+[2026-04-15T21:54:57.802+0000] {stackoverflow_pipeline.py:192} INFO - [gold_cant_post_x_user_hist] 26/04/15 21:54:57 INFO SecurityManager: Changing view acls groups to:
+[2026-04-15T21:54:57.802+0000] {stackoverflow_pipeline.py:192} INFO - [gold_cant_post_x_user_hist] 26/04/15 21:54:57 INFO SecurityManager: Changing modify acls groups to:
+[2026-04-15T21:54:57.803+0000] {stackoverflow_pipeline.py:192} INFO - [gold_cant_post_x_user_hist] 26/04/15 21:54:57 INFO SecurityManager: SecurityManager: authentication disabled; ui acls disabled; users with view permissions: ***; groups with view permissions: EMPTY; users with modify permissions: ***; groups with modify permissions: EMPTY
+[2026-04-15T21:54:58.153+0000] {stackoverflow_pipeline.py:192} INFO - [gold_cant_post_x_user_hist] 26/04/15 21:54:58 INFO Utils: Successfully started service 'sparkDriver' on port 43159.
+[2026-04-15T21:54:58.185+0000] {stackoverflow_pipeline.py:192} INFO - [gold_cant_post_x_user_hist] 26/04/15 21:54:58 INFO SparkEnv: Registering MapOutputTracker
+[2026-04-15T21:54:58.218+0000] {stackoverflow_pipeline.py:192} INFO - [gold_cant_post_x_user_hist] 26/04/15 21:54:58 INFO SparkEnv: Registering BlockManagerMaster
+[2026-04-15T21:54:58.235+0000] {stackoverflow_pipeline.py:192} INFO - [gold_cant_post_x_user_hist] 26/04/15 21:54:58 INFO BlockManagerMasterEndpoint: Using org.apache.spark.storage.DefaultTopologyMapper for getting topology information
+[2026-04-15T21:54:58.237+0000] {stackoverflow_pipeline.py:192} INFO - [gold_cant_post_x_user_hist] 26/04/15 21:54:58 INFO BlockManagerMasterEndpoint: BlockManagerMasterEndpoint up
+[2026-04-15T21:54:58.242+0000] {stackoverflow_pipeline.py:192} INFO - [gold_cant_post_x_user_hist] 26/04/15 21:54:58 INFO SparkEnv: Registering BlockManagerMasterHeartbeat
+[2026-04-15T21:54:58.268+0000] {stackoverflow_pipeline.py:192} INFO - [gold_cant_post_x_user_hist] 26/04/15 21:54:58 INFO DiskBlockManager: Created local directory at /tmp/blockmgr-baf0e27f-2a4d-4060-add2-fc9d47b978c8
+[2026-04-15T21:54:58.288+0000] {stackoverflow_pipeline.py:192} INFO - [gold_cant_post_x_user_hist] 26/04/15 21:54:58 INFO MemoryStore: MemoryStore started with capacity 600.0 MiB
+[2026-04-15T21:54:58.314+0000] {stackoverflow_pipeline.py:192} INFO - [gold_cant_post_x_user_hist] 26/04/15 21:54:58 INFO SparkEnv: Registering OutputCommitCoordinator
+[2026-04-15T21:54:58.436+0000] {stackoverflow_pipeline.py:192} INFO - [gold_cant_post_x_user_hist] 26/04/15 21:54:58 INFO JettyUtils: Start Jetty 0.0.0.0:4040 for SparkUI
+[2026-04-15T21:54:58.491+0000] {stackoverflow_pipeline.py:192} INFO - [gold_cant_post_x_user_hist] 26/04/15 21:54:58 INFO Utils: Successfully started service 'SparkUI' on port 4040.
+[2026-04-15T21:54:58.528+0000] {stackoverflow_pipeline.py:192} INFO - [gold_cant_post_x_user_hist] 26/04/15 21:54:58 INFO SparkContext: Added JAR file:///home/***/.ivy2/jars/org.apache.iceberg_iceberg-spark-runtime-3.5_2.12-1.6.1.jar at spark://53aa898b95b0:43159/jars/org.apache.iceberg_iceberg-spark-runtime-3.5_2.12-1.6.1.jar with timestamp 1776290097629
+[2026-04-15T21:54:58.529+0000] {stackoverflow_pipeline.py:192} INFO - [gold_cant_post_x_user_hist] 26/04/15 21:54:58 INFO SparkContext: Added JAR file:///home/***/.ivy2/jars/org.projectnessie.nessie-integrations_nessie-spark-extensions-3.5_2.12-0.95.0.jar at spark://53aa898b95b0:43159/jars/org.projectnessie.nessie-integrations_nessie-spark-extensions-3.5_2.12-0.95.0.jar with timestamp 1776290097629
+[2026-04-15T21:54:58.530+0000] {stackoverflow_pipeline.py:192} INFO - [gold_cant_post_x_user_hist] 26/04/15 21:54:58 INFO SparkContext: Added JAR file:///home/***/.ivy2/jars/org.apache.hadoop_hadoop-aws-3.3.4.jar at spark://53aa898b95b0:43159/jars/org.apache.hadoop_hadoop-aws-3.3.4.jar with timestamp 1776290097629
+[2026-04-15T21:54:58.530+0000] {stackoverflow_pipeline.py:192} INFO - [gold_cant_post_x_user_hist] 26/04/15 21:54:58 INFO SparkContext: Added JAR file:///home/***/.ivy2/jars/com.amazonaws_aws-java-sdk-bundle-1.12.262.jar at spark://53aa898b95b0:43159/jars/com.amazonaws_aws-java-sdk-bundle-1.12.262.jar with timestamp 1776290097629
+[2026-04-15T21:54:58.531+0000] {stackoverflow_pipeline.py:192} INFO - [gold_cant_post_x_user_hist] 26/04/15 21:54:58 INFO SparkContext: Added JAR file:///home/***/.ivy2/jars/org.wildfly.openssl_wildfly-openssl-1.0.7.Final.jar at spark://53aa898b95b0:43159/jars/org.wildfly.openssl_wildfly-openssl-1.0.7.Final.jar with timestamp 1776290097629
+[2026-04-15T21:54:58.534+0000] {stackoverflow_pipeline.py:192} INFO - [gold_cant_post_x_user_hist] 26/04/15 21:54:58 INFO SparkContext: Added file file:///home/***/.ivy2/jars/org.apache.iceberg_iceberg-spark-runtime-3.5_2.12-1.6.1.jar at file:///home/***/.ivy2/jars/org.apache.iceberg_iceberg-spark-runtime-3.5_2.12-1.6.1.jar with timestamp 1776290097629
+[2026-04-15T21:54:58.535+0000] {stackoverflow_pipeline.py:192} INFO - [gold_cant_post_x_user_hist] 26/04/15 21:54:58 INFO Utils: Copying /home/***/.ivy2/jars/org.apache.iceberg_iceberg-spark-runtime-3.5_2.12-1.6.1.jar to /tmp/spark-2ee20d35-73ef-4755-8d4c-50ecc6d65c19/userFiles-962e5e95-db5d-4e72-a963-e3088005ecc0/org.apache.iceberg_iceberg-spark-runtime-3.5_2.12-1.6.1.jar
+[2026-04-15T21:54:58.587+0000] {stackoverflow_pipeline.py:192} INFO - [gold_cant_post_x_user_hist] 26/04/15 21:54:58 INFO SparkContext: Added file file:///home/***/.ivy2/jars/org.projectnessie.nessie-integrations_nessie-spark-extensions-3.5_2.12-0.95.0.jar at file:///home/***/.ivy2/jars/org.projectnessie.nessie-integrations_nessie-spark-extensions-3.5_2.12-0.95.0.jar with timestamp 1776290097629
+[2026-04-15T21:54:58.588+0000] {stackoverflow_pipeline.py:192} INFO - [gold_cant_post_x_user_hist] 26/04/15 21:54:58 INFO Utils: Copying /home/***/.ivy2/jars/org.projectnessie.nessie-integrations_nessie-spark-extensions-3.5_2.12-0.95.0.jar to /tmp/spark-2ee20d35-73ef-4755-8d4c-50ecc6d65c19/userFiles-962e5e95-db5d-4e72-a963-e3088005ecc0/org.projectnessie.nessie-integrations_nessie-spark-extensions-3.5_2.12-0.95.0.jar
+[2026-04-15T21:54:58.598+0000] {stackoverflow_pipeline.py:192} INFO - [gold_cant_post_x_user_hist] 26/04/15 21:54:58 INFO SparkContext: Added file file:///home/***/.ivy2/jars/org.apache.hadoop_hadoop-aws-3.3.4.jar at file:///home/***/.ivy2/jars/org.apache.hadoop_hadoop-aws-3.3.4.jar with timestamp 1776290097629
+[2026-04-15T21:54:58.599+0000] {stackoverflow_pipeline.py:192} INFO - [gold_cant_post_x_user_hist] 26/04/15 21:54:58 INFO Utils: Copying /home/***/.ivy2/jars/org.apache.hadoop_hadoop-aws-3.3.4.jar to /tmp/spark-2ee20d35-73ef-4755-8d4c-50ecc6d65c19/userFiles-962e5e95-db5d-4e72-a963-e3088005ecc0/org.apache.hadoop_hadoop-aws-3.3.4.jar
+[2026-04-15T21:54:58.608+0000] {stackoverflow_pipeline.py:192} INFO - [gold_cant_post_x_user_hist] 26/04/15 21:54:58 INFO SparkContext: Added file file:///home/***/.ivy2/jars/com.amazonaws_aws-java-sdk-bundle-1.12.262.jar at file:///home/***/.ivy2/jars/com.amazonaws_aws-java-sdk-bundle-1.12.262.jar with timestamp 1776290097629
+[2026-04-15T21:54:58.609+0000] {stackoverflow_pipeline.py:192} INFO - [gold_cant_post_x_user_hist] 26/04/15 21:54:58 INFO Utils: Copying /home/***/.ivy2/jars/com.amazonaws_aws-java-sdk-bundle-1.12.262.jar to /tmp/spark-2ee20d35-73ef-4755-8d4c-50ecc6d65c19/userFiles-962e5e95-db5d-4e72-a963-e3088005ecc0/com.amazonaws_aws-java-sdk-bundle-1.12.262.jar
+[2026-04-15T21:54:58.839+0000] {stackoverflow_pipeline.py:192} INFO - [gold_cant_post_x_user_hist] 26/04/15 21:54:58 INFO SparkContext: Added file file:///home/***/.ivy2/jars/org.wildfly.openssl_wildfly-openssl-1.0.7.Final.jar at file:///home/***/.ivy2/jars/org.wildfly.openssl_wildfly-openssl-1.0.7.Final.jar with timestamp 1776290097629
+[2026-04-15T21:54:58.839+0000] {stackoverflow_pipeline.py:192} INFO - [gold_cant_post_x_user_hist] 26/04/15 21:54:58 INFO Utils: Copying /home/***/.ivy2/jars/org.wildfly.openssl_wildfly-openssl-1.0.7.Final.jar to /tmp/spark-2ee20d35-73ef-4755-8d4c-50ecc6d65c19/userFiles-962e5e95-db5d-4e72-a963-e3088005ecc0/org.wildfly.openssl_wildfly-openssl-1.0.7.Final.jar
+[2026-04-15T21:54:58.901+0000] {stackoverflow_pipeline.py:192} INFO - [gold_cant_post_x_user_hist] 26/04/15 21:54:58 INFO Executor: Starting executor ID driver on host 53aa898b95b0
+[2026-04-15T21:54:58.902+0000] {stackoverflow_pipeline.py:192} INFO - [gold_cant_post_x_user_hist] 26/04/15 21:54:58 INFO Executor: OS info Linux, 6.6.87.2-microsoft-standard-WSL2, amd64
+[2026-04-15T21:54:58.902+0000] {stackoverflow_pipeline.py:192} INFO - [gold_cant_post_x_user_hist] 26/04/15 21:54:58 INFO Executor: Java version 17.0.18
+[2026-04-15T21:54:58.907+0000] {stackoverflow_pipeline.py:192} INFO - [gold_cant_post_x_user_hist] 26/04/15 21:54:58 INFO Executor: Starting executor with user classpath (userClassPathFirst = false): ''
+[2026-04-15T21:54:58.907+0000] {stackoverflow_pipeline.py:192} INFO - [gold_cant_post_x_user_hist] 26/04/15 21:54:58 INFO Executor: Created or updated repl class loader org.apache.spark.util.MutableURLClassLoader@1d2f1108 for default.
+[2026-04-15T21:54:58.918+0000] {stackoverflow_pipeline.py:192} INFO - [gold_cant_post_x_user_hist] 26/04/15 21:54:58 INFO Executor: Fetching file:///home/***/.ivy2/jars/org.projectnessie.nessie-integrations_nessie-spark-extensions-3.5_2.12-0.95.0.jar with timestamp 1776290097629
+[2026-04-15T21:54:58.943+0000] {stackoverflow_pipeline.py:192} INFO - [gold_cant_post_x_user_hist] 26/04/15 21:54:58 INFO Utils: /home/***/.ivy2/jars/org.projectnessie.nessie-integrations_nessie-spark-extensions-3.5_2.12-0.95.0.jar has been previously copied to /tmp/spark-2ee20d35-73ef-4755-8d4c-50ecc6d65c19/userFiles-962e5e95-db5d-4e72-a963-e3088005ecc0/org.projectnessie.nessie-integrations_nessie-spark-extensions-3.5_2.12-0.95.0.jar
+[2026-04-15T21:54:58.950+0000] {stackoverflow_pipeline.py:192} INFO - [gold_cant_post_x_user_hist] 26/04/15 21:54:58 INFO Executor: Fetching file:///home/***/.ivy2/jars/org.apache.hadoop_hadoop-aws-3.3.4.jar with timestamp 1776290097629
+[2026-04-15T21:54:58.951+0000] {stackoverflow_pipeline.py:192} INFO - [gold_cant_post_x_user_hist] 26/04/15 21:54:58 INFO Utils: /home/***/.ivy2/jars/org.apache.hadoop_hadoop-aws-3.3.4.jar has been previously copied to /tmp/spark-2ee20d35-73ef-4755-8d4c-50ecc6d65c19/userFiles-962e5e95-db5d-4e72-a963-e3088005ecc0/org.apache.hadoop_hadoop-aws-3.3.4.jar
+[2026-04-15T21:54:58.956+0000] {stackoverflow_pipeline.py:192} INFO - [gold_cant_post_x_user_hist] 26/04/15 21:54:58 INFO Executor: Fetching file:///home/***/.ivy2/jars/org.apache.iceberg_iceberg-spark-runtime-3.5_2.12-1.6.1.jar with timestamp 1776290097629
+[2026-04-15T21:54:58.974+0000] {stackoverflow_pipeline.py:192} INFO - [gold_cant_post_x_user_hist] 26/04/15 21:54:58 INFO Utils: /home/***/.ivy2/jars/org.apache.iceberg_iceberg-spark-runtime-3.5_2.12-1.6.1.jar has been previously copied to /tmp/spark-2ee20d35-73ef-4755-8d4c-50ecc6d65c19/userFiles-962e5e95-db5d-4e72-a963-e3088005ecc0/org.apache.iceberg_iceberg-spark-runtime-3.5_2.12-1.6.1.jar
+[2026-04-15T21:54:58.981+0000] {stackoverflow_pipeline.py:192} INFO - [gold_cant_post_x_user_hist] 26/04/15 21:54:58 INFO Executor: Fetching file:///home/***/.ivy2/jars/org.wildfly.openssl_wildfly-openssl-1.0.7.Final.jar with timestamp 1776290097629
+[2026-04-15T21:54:58.982+0000] {stackoverflow_pipeline.py:192} INFO - [gold_cant_post_x_user_hist] 26/04/15 21:54:58 INFO Utils: /home/***/.ivy2/jars/org.wildfly.openssl_wildfly-openssl-1.0.7.Final.jar has been previously copied to /tmp/spark-2ee20d35-73ef-4755-8d4c-50ecc6d65c19/userFiles-962e5e95-db5d-4e72-a963-e3088005ecc0/org.wildfly.openssl_wildfly-openssl-1.0.7.Final.jar
+[2026-04-15T21:54:58.988+0000] {stackoverflow_pipeline.py:192} INFO - [gold_cant_post_x_user_hist] 26/04/15 21:54:58 INFO Executor: Fetching file:///home/***/.ivy2/jars/com.amazonaws_aws-java-sdk-bundle-1.12.262.jar with timestamp 1776290097629
+[2026-04-15T21:54:59.111+0000] {stackoverflow_pipeline.py:192} INFO - [gold_cant_post_x_user_hist] 26/04/15 21:54:59 INFO Utils: /home/***/.ivy2/jars/com.amazonaws_aws-java-sdk-bundle-1.12.262.jar has been previously copied to /tmp/spark-2ee20d35-73ef-4755-8d4c-50ecc6d65c19/userFiles-962e5e95-db5d-4e72-a963-e3088005ecc0/com.amazonaws_aws-java-sdk-bundle-1.12.262.jar
+[2026-04-15T21:54:59.126+0000] {stackoverflow_pipeline.py:192} INFO - [gold_cant_post_x_user_hist] 26/04/15 21:54:59 INFO Executor: Fetching spark://53aa898b95b0:43159/jars/org.projectnessie.nessie-integrations_nessie-spark-extensions-3.5_2.12-0.95.0.jar with timestamp 1776290097629
+[2026-04-15T21:54:59.165+0000] {stackoverflow_pipeline.py:192} INFO - [gold_cant_post_x_user_hist] 26/04/15 21:54:59 INFO TransportClientFactory: Successfully created connection to 53aa898b95b0/172.20.0.10:43159 after 25 ms (0 ms spent in bootstraps)
+[2026-04-15T21:54:59.171+0000] {stackoverflow_pipeline.py:192} INFO - [gold_cant_post_x_user_hist] 26/04/15 21:54:59 INFO Utils: Fetching spark://53aa898b95b0:43159/jars/org.projectnessie.nessie-integrations_nessie-spark-extensions-3.5_2.12-0.95.0.jar to /tmp/spark-2ee20d35-73ef-4755-8d4c-50ecc6d65c19/userFiles-962e5e95-db5d-4e72-a963-e3088005ecc0/fetchFileTemp10598467146066798447.tmp
+[2026-04-15T21:54:59.203+0000] {stackoverflow_pipeline.py:192} INFO - [gold_cant_post_x_user_hist] 26/04/15 21:54:59 INFO Utils: /tmp/spark-2ee20d35-73ef-4755-8d4c-50ecc6d65c19/userFiles-962e5e95-db5d-4e72-a963-e3088005ecc0/fetchFileTemp10598467146066798447.tmp has been previously copied to /tmp/spark-2ee20d35-73ef-4755-8d4c-50ecc6d65c19/userFiles-962e5e95-db5d-4e72-a963-e3088005ecc0/org.projectnessie.nessie-integrations_nessie-spark-extensions-3.5_2.12-0.95.0.jar
+[2026-04-15T21:54:59.230+0000] {stackoverflow_pipeline.py:192} INFO - [gold_cant_post_x_user_hist] 26/04/15 21:54:59 INFO Executor: Adding file:/tmp/spark-2ee20d35-73ef-4755-8d4c-50ecc6d65c19/userFiles-962e5e95-db5d-4e72-a963-e3088005ecc0/org.projectnessie.nessie-integrations_nessie-spark-extensions-3.5_2.12-0.95.0.jar to class loader default
+[2026-04-15T21:54:59.231+0000] {stackoverflow_pipeline.py:192} INFO - [gold_cant_post_x_user_hist] 26/04/15 21:54:59 INFO Executor: Fetching spark://53aa898b95b0:43159/jars/org.apache.iceberg_iceberg-spark-runtime-3.5_2.12-1.6.1.jar with timestamp 1776290097629
+[2026-04-15T21:54:59.232+0000] {stackoverflow_pipeline.py:192} INFO - [gold_cant_post_x_user_hist] 26/04/15 21:54:59 INFO Utils: Fetching spark://53aa898b95b0:43159/jars/org.apache.iceberg_iceberg-spark-runtime-3.5_2.12-1.6.1.jar to /tmp/spark-2ee20d35-73ef-4755-8d4c-50ecc6d65c19/userFiles-962e5e95-db5d-4e72-a963-e3088005ecc0/fetchFileTemp15758279594070916276.tmp
+[2026-04-15T21:54:59.346+0000] {stackoverflow_pipeline.py:192} INFO - [gold_cant_post_x_user_hist] 26/04/15 21:54:59 INFO Utils: /tmp/spark-2ee20d35-73ef-4755-8d4c-50ecc6d65c19/userFiles-962e5e95-db5d-4e72-a963-e3088005ecc0/fetchFileTemp15758279594070916276.tmp has been previously copied to /tmp/spark-2ee20d35-73ef-4755-8d4c-50ecc6d65c19/userFiles-962e5e95-db5d-4e72-a963-e3088005ecc0/org.apache.iceberg_iceberg-spark-runtime-3.5_2.12-1.6.1.jar
+[2026-04-15T21:54:59.863+0000] {stackoverflow_pipeline.py:192} INFO - [gold_cant_post_x_user_hist] 26/04/15 21:54:59 INFO Executor: Adding file:/tmp/spark-2ee20d35-73ef-4755-8d4c-50ecc6d65c19/userFiles-962e5e95-db5d-4e72-a963-e3088005ecc0/org.apache.iceberg_iceberg-spark-runtime-3.5_2.12-1.6.1.jar to class loader default
+[2026-04-15T21:54:59.865+0000] {stackoverflow_pipeline.py:192} INFO - [gold_cant_post_x_user_hist] 26/04/15 21:54:59 INFO Executor: Fetching spark://53aa898b95b0:43159/jars/org.wildfly.openssl_wildfly-openssl-1.0.7.Final.jar with timestamp 1776290097629
+[2026-04-15T21:54:59.867+0000] {stackoverflow_pipeline.py:192} INFO - [gold_cant_post_x_user_hist] 26/04/15 21:54:59 INFO Utils: Fetching spark://53aa898b95b0:43159/jars/org.wildfly.openssl_wildfly-openssl-1.0.7.Final.jar to /tmp/spark-2ee20d35-73ef-4755-8d4c-50ecc6d65c19/userFiles-962e5e95-db5d-4e72-a963-e3088005ecc0/fetchFileTemp6273704547195237642.tmp
+[2026-04-15T21:54:59.869+0000] {stackoverflow_pipeline.py:192} INFO - [gold_cant_post_x_user_hist] 26/04/15 21:54:59 INFO Utils: /tmp/spark-2ee20d35-73ef-4755-8d4c-50ecc6d65c19/userFiles-962e5e95-db5d-4e72-a963-e3088005ecc0/fetchFileTemp6273704547195237642.tmp has been previously copied to /tmp/spark-2ee20d35-73ef-4755-8d4c-50ecc6d65c19/userFiles-962e5e95-db5d-4e72-a963-e3088005ecc0/org.wildfly.openssl_wildfly-openssl-1.0.7.Final.jar
+[2026-04-15T21:54:59.894+0000] {stackoverflow_pipeline.py:192} INFO - [gold_cant_post_x_user_hist] 26/04/15 21:54:59 INFO Executor: Adding file:/tmp/spark-2ee20d35-73ef-4755-8d4c-50ecc6d65c19/userFiles-962e5e95-db5d-4e72-a963-e3088005ecc0/org.wildfly.openssl_wildfly-openssl-1.0.7.Final.jar to class loader default
+[2026-04-15T21:54:59.895+0000] {stackoverflow_pipeline.py:192} INFO - [gold_cant_post_x_user_hist] 26/04/15 21:54:59 INFO Executor: Fetching spark://53aa898b95b0:43159/jars/com.amazonaws_aws-java-sdk-bundle-1.12.262.jar with timestamp 1776290097629
+[2026-04-15T21:54:59.896+0000] {stackoverflow_pipeline.py:192} INFO - [gold_cant_post_x_user_hist] 26/04/15 21:54:59 INFO Utils: Fetching spark://53aa898b95b0:43159/jars/com.amazonaws_aws-java-sdk-bundle-1.12.262.jar to /tmp/spark-2ee20d35-73ef-4755-8d4c-50ecc6d65c19/userFiles-962e5e95-db5d-4e72-a963-e3088005ecc0/fetchFileTemp5480987373098289970.tmp
+[2026-04-15T21:55:00.766+0000] {stackoverflow_pipeline.py:192} INFO - [gold_cant_post_x_user_hist] 26/04/15 21:55:00 INFO Utils: /tmp/spark-2ee20d35-73ef-4755-8d4c-50ecc6d65c19/userFiles-962e5e95-db5d-4e72-a963-e3088005ecc0/fetchFileTemp5480987373098289970.tmp has been previously copied to /tmp/spark-2ee20d35-73ef-4755-8d4c-50ecc6d65c19/userFiles-962e5e95-db5d-4e72-a963-e3088005ecc0/com.amazonaws_aws-java-sdk-bundle-1.12.262.jar
+[2026-04-15T21:55:02.086+0000] {stackoverflow_pipeline.py:192} INFO - [gold_cant_post_x_user_hist] 26/04/15 21:55:02 INFO Executor: Adding file:/tmp/spark-2ee20d35-73ef-4755-8d4c-50ecc6d65c19/userFiles-962e5e95-db5d-4e72-a963-e3088005ecc0/com.amazonaws_aws-java-sdk-bundle-1.12.262.jar to class loader default
+[2026-04-15T21:55:02.088+0000] {stackoverflow_pipeline.py:192} INFO - [gold_cant_post_x_user_hist] 26/04/15 21:55:02 INFO Executor: Fetching spark://53aa898b95b0:43159/jars/org.apache.hadoop_hadoop-aws-3.3.4.jar with timestamp 1776290097629
+[2026-04-15T21:55:02.088+0000] {stackoverflow_pipeline.py:192} INFO - [gold_cant_post_x_user_hist] 26/04/15 21:55:02 INFO Utils: Fetching spark://53aa898b95b0:43159/jars/org.apache.hadoop_hadoop-aws-3.3.4.jar to /tmp/spark-2ee20d35-73ef-4755-8d4c-50ecc6d65c19/userFiles-962e5e95-db5d-4e72-a963-e3088005ecc0/fetchFileTemp12711286889003876353.tmp
+[2026-04-15T21:55:02.092+0000] {stackoverflow_pipeline.py:192} INFO - [gold_cant_post_x_user_hist] 26/04/15 21:55:02 INFO Utils: /tmp/spark-2ee20d35-73ef-4755-8d4c-50ecc6d65c19/userFiles-962e5e95-db5d-4e72-a963-e3088005ecc0/fetchFileTemp12711286889003876353.tmp has been previously copied to /tmp/spark-2ee20d35-73ef-4755-8d4c-50ecc6d65c19/userFiles-962e5e95-db5d-4e72-a963-e3088005ecc0/org.apache.hadoop_hadoop-aws-3.3.4.jar
+[2026-04-15T21:55:02.115+0000] {stackoverflow_pipeline.py:192} INFO - [gold_cant_post_x_user_hist] 26/04/15 21:55:02 INFO Executor: Adding file:/tmp/spark-2ee20d35-73ef-4755-8d4c-50ecc6d65c19/userFiles-962e5e95-db5d-4e72-a963-e3088005ecc0/org.apache.hadoop_hadoop-aws-3.3.4.jar to class loader default
+[2026-04-15T21:55:02.127+0000] {stackoverflow_pipeline.py:192} INFO - [gold_cant_post_x_user_hist] 26/04/15 21:55:02 INFO Utils: Successfully started service 'org.apache.spark.network.netty.NettyBlockTransferService' on port 42655.
+[2026-04-15T21:55:02.128+0000] {stackoverflow_pipeline.py:192} INFO - [gold_cant_post_x_user_hist] 26/04/15 21:55:02 INFO NettyBlockTransferService: Server created on 53aa898b95b0 0.0.0.0:42655
+[2026-04-15T21:55:02.129+0000] {stackoverflow_pipeline.py:192} INFO - [gold_cant_post_x_user_hist] 26/04/15 21:55:02 INFO BlockManager: Using org.apache.spark.storage.RandomBlockReplicationPolicy for block replication policy
+[2026-04-15T21:55:02.144+0000] {stackoverflow_pipeline.py:192} INFO - [gold_cant_post_x_user_hist] 26/04/15 21:55:02 INFO BlockManagerMaster: Registering BlockManager BlockManagerId(driver, 53aa898b95b0, 42655, None)
+[2026-04-15T21:55:02.147+0000] {stackoverflow_pipeline.py:192} INFO - [gold_cant_post_x_user_hist] 26/04/15 21:55:02 INFO BlockManagerMasterEndpoint: Registering block manager 53aa898b95b0:42655 with 600.0 MiB RAM, BlockManagerId(driver, 53aa898b95b0, 42655, None)
+[2026-04-15T21:55:02.149+0000] {stackoverflow_pipeline.py:192} INFO - [gold_cant_post_x_user_hist] 26/04/15 21:55:02 INFO BlockManagerMaster: Registered BlockManager BlockManagerId(driver, 53aa898b95b0, 42655, None)
+[2026-04-15T21:55:02.151+0000] {stackoverflow_pipeline.py:192} INFO - [gold_cant_post_x_user_hist] 26/04/15 21:55:02 INFO BlockManager: Initialized BlockManager: BlockManagerId(driver, 53aa898b95b0, 42655, None)
+[2026-04-15T21:55:02.535+0000] {stackoverflow_pipeline.py:192} INFO - [gold_cant_post_x_user_hist] 2026-04-15 21:55:02,535 INFO Spark version: 3.5.5
+[2026-04-15T21:55:02.543+0000] {stackoverflow_pipeline.py:192} INFO - [gold_cant_post_x_user_hist] 26/04/15 21:55:02 INFO SharedState: Setting hive.metastore.warehouse.dir ('null') to the value of spark.sql.warehouse.dir.
+[2026-04-15T21:55:02.546+0000] {stackoverflow_pipeline.py:192} INFO - [gold_cant_post_x_user_hist] 26/04/15 21:55:02 INFO SharedState: Warehouse path is 'file:/opt/***/spark-warehouse'.
+[2026-04-15T21:55:04.068+0000] {stackoverflow_pipeline.py:192} INFO - [gold_cant_post_x_user_hist] 26/04/15 21:55:04 INFO CatalogUtil: Loading custom FileIO implementation: org.apache.iceberg.hadoop.HadoopFileIO
+[2026-04-15T21:55:05.336+0000] {stackoverflow_pipeline.py:192} INFO - [gold_cant_post_x_user_hist] 2026-04-15 21:55:05,336 INFO Namespace 'nessie.gold' listo.
+[2026-04-15T21:55:05.337+0000] {stackoverflow_pipeline.py:192} INFO - [gold_cant_post_x_user_hist] 2026-04-15 21:55:05,336 INFO
+[2026-04-15T21:55:05.341+0000] {stackoverflow_pipeline.py:192} INFO - [gold_cant_post_x_user_hist] [★] cant_post_x_user_hist
+[2026-04-15T21:55:05.568+0000] {stackoverflow_pipeline.py:192} INFO - [gold_cant_post_x_user_hist] 26/04/15 21:55:05 INFO BaseMetastoreTableOperations: Refreshing table metadata from new version: s3a://iceberg/silver/users_hist_fb9f810e-244b-48d1-aac7-acf17880ddf1/metadata/00001-d320039a-26f7-44b7-855a-9e8df3af8252.gz.metadata.json
+[2026-04-15T21:55:05.692+0000] {stackoverflow_pipeline.py:192} INFO - [gold_cant_post_x_user_hist] 26/04/15 21:55:05 WARN MetricsConfig: Cannot locate configuration: tried hadoop-metrics2-s3a-file-system.properties,hadoop-metrics2.properties
+[2026-04-15T21:55:05.701+0000] {stackoverflow_pipeline.py:192} INFO - [gold_cant_post_x_user_hist] 26/04/15 21:55:05 INFO MetricsSystemImpl: Scheduled Metric snapshot period at 10 second(s).
+[2026-04-15T21:55:05.702+0000] {stackoverflow_pipeline.py:192} INFO - [gold_cant_post_x_user_hist] 26/04/15 21:55:05 INFO MetricsSystemImpl: s3a-file-system metrics system started
+[2026-04-15T21:55:06.323+0000] {stackoverflow_pipeline.py:192} INFO - [gold_cant_post_x_user_hist] 26/04/15 21:55:06 INFO NessieUtil: loadTableMetadata for 'silver.users_hist' from location 's3a://iceberg/silver/users_hist_fb9f810e-244b-48d1-aac7-acf17880ddf1/metadata/00001-d320039a-26f7-44b7-855a-9e8df3af8252.gz.metadata.json' at 'Branch{name=main, metadata=null, hash=ba240c757640f1e1b5ec9fbf7f212ecf2f2747397f40121e8370abc64a5a6765}'
+[2026-04-15T21:55:06.328+0000] {stackoverflow_pipeline.py:192} INFO - [gold_cant_post_x_user_hist] 26/04/15 21:55:06 INFO BaseMetastoreCatalog: Table loaded by catalog: nessie.silver.users_hist
+[2026-04-15T21:55:06.474+0000] {stackoverflow_pipeline.py:192} INFO - [gold_cant_post_x_user_hist] Traceback (most recent call last):
+[2026-04-15T21:55:06.475+0000] {stackoverflow_pipeline.py:192} INFO - [gold_cant_post_x_user_hist]   File "/opt/***/scripts/gold_agg.py", line 298, in <module>
+[2026-04-15T21:55:06.478+0000] {stackoverflow_pipeline.py:192} INFO - [gold_cant_post_x_user_hist]     main()
+[2026-04-15T21:55:06.478+0000] {stackoverflow_pipeline.py:192} INFO - [gold_cant_post_x_user_hist]   File "/opt/***/scripts/gold_agg.py", line 285, in main
+[2026-04-15T21:55:06.481+0000] {stackoverflow_pipeline.py:192} INFO - [gold_cant_post_x_user_hist]     total = build_cant_post_x_user_hist(spark)
+[2026-04-15T21:55:06.482+0000] {stackoverflow_pipeline.py:192} INFO - [gold_cant_post_x_user_hist]             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[2026-04-15T21:55:06.482+0000] {stackoverflow_pipeline.py:192} INFO - [gold_cant_post_x_user_hist]   File "/opt/***/scripts/gold_agg.py", line 119, in build_cant_post_x_user_hist
+[2026-04-15T21:55:06.485+0000] {stackoverflow_pipeline.py:192} INFO - [gold_cant_post_x_user_hist]     df = spark.sql(f"""
+[2026-04-15T21:55:06.485+0000] {stackoverflow_pipeline.py:192} INFO - [gold_cant_post_x_user_hist]          ^^^^^^^^^^^^^^
+[2026-04-15T21:55:06.485+0000] {stackoverflow_pipeline.py:192} INFO - [gold_cant_post_x_user_hist]   File "/opt/spark/python/lib/pyspark.zip/pyspark/sql/session.py", line 1631, in sql
+[2026-04-15T21:55:06.486+0000] {stackoverflow_pipeline.py:192} INFO - [gold_cant_post_x_user_hist]   File "/opt/spark/python/lib/py4j-0.10.9.7-src.zip/py4j/java_gateway.py", line 1322, in __call__
+[2026-04-15T21:55:06.486+0000] {stackoverflow_pipeline.py:192} INFO - [gold_cant_post_x_user_hist]   File "/opt/spark/python/lib/pyspark.zip/pyspark/errors/exceptions/captured.py", line 185, in deco
+[2026-04-15T21:55:06.491+0000] {stackoverflow_pipeline.py:192} INFO - [gold_cant_post_x_user_hist] pyspark.errors.exceptions.captured.AnalysisException: [TABLE_OR_VIEW_NOT_FOUND] The table or view `nessie`.`silver`.`post_hist` cannot be found. Verify the spelling and correctness of the schema and catalog.
+[2026-04-15T21:55:06.492+0000] {stackoverflow_pipeline.py:192} INFO - [gold_cant_post_x_user_hist] If you did not qualify the name with a schema, verify the current_schema() output, or qualify the name with the correct schema and catalog.
+[2026-04-15T21:55:06.492+0000] {stackoverflow_pipeline.py:192} INFO - [gold_cant_post_x_user_hist] To tolerate the error on drop use DROP VIEW IF EXISTS or DROP TABLE IF EXISTS.; line 11 pos 13;
+[2026-04-15T21:55:06.492+0000] {stackoverflow_pipeline.py:192} INFO - [gold_cant_post_x_user_hist] 'Aggregate ['p.OwnerUserId, 'u.display_name, 'p.anio], ['p.OwnerUserId AS user_id#0, 'COALESCE('u.display_name, Unknown) AS display_name#1, 'p.anio AS anio#2, 'COUNT('p.Id) AS cant_posts#3, 'COALESCE('SUM('p.Score), 0) AS total_score#4, 'ROUND('AVG('p.Score), 2) AS avg_score#5, 'COALESCE('SUM('p.ViewCount), 0) AS total_views#6, cast(2026-04-15 21:54:57 as timestamp) AS fecha_cargue#7]
+[2026-04-15T21:55:06.493+0000] {stackoverflow_pipeline.py:192} INFO - [gold_cant_post_x_user_hist] +- 'Filter isnotnull('p.OwnerUserId)
+[2026-04-15T21:55:06.493+0000] {stackoverflow_pipeline.py:192} INFO - [gold_cant_post_x_user_hist]    +- 'Join LeftOuter, ('p.OwnerUserId = 'u.id)
+[2026-04-15T21:55:06.493+0000] {stackoverflow_pipeline.py:192} INFO - [gold_cant_post_x_user_hist]       :- 'SubqueryAlias p
+[2026-04-15T21:55:06.494+0000] {stackoverflow_pipeline.py:192} INFO - [gold_cant_post_x_user_hist]       :  +- 'UnresolvedRelation [nessie, silver, post_hist], [], false
+[2026-04-15T21:55:06.494+0000] {stackoverflow_pipeline.py:192} INFO - [gold_cant_post_x_user_hist]       +- SubqueryAlias u
+[2026-04-15T21:55:06.494+0000] {stackoverflow_pipeline.py:192} INFO - [gold_cant_post_x_user_hist]          +- SubqueryAlias nessie.silver.users_hist
+[2026-04-15T21:55:06.495+0000] {stackoverflow_pipeline.py:192} INFO - [gold_cant_post_x_user_hist]             +- RelationV2[id#8L, reputation#9L, creation_date#10, display_name#11, last_access_date#12, views#13L, up_votes#14L, down_votes#15L, location#16, account_id#17L, anio#18, fecha_cargue#19, fuente#20] nessie.silver.users_hist nessie.silver.users_hist
+[2026-04-15T21:55:06.495+0000] {stackoverflow_pipeline.py:192} INFO - [gold_cant_post_x_user_hist] 
+[2026-04-15T21:55:06.495+0000] {stackoverflow_pipeline.py:192} INFO - [gold_cant_post_x_user_hist] 2026-04-15 21:55:06,491 INFO Closing down clientserver connection
+[2026-04-15T21:55:06.532+0000] {stackoverflow_pipeline.py:192} INFO - [gold_cant_post_x_user_hist] 26/04/15 21:55:06 INFO SparkContext: Invoking stop() from shutdown hook
+[2026-04-15T21:55:06.533+0000] {stackoverflow_pipeline.py:192} INFO - [gold_cant_post_x_user_hist] 26/04/15 21:55:06 INFO SparkContext: SparkContext is stopping with exitCode 0.
+[2026-04-15T21:55:06.541+0000] {stackoverflow_pipeline.py:192} INFO - [gold_cant_post_x_user_hist] 26/04/15 21:55:06 INFO SparkUI: Stopped Spark web UI at http://53aa898b95b0:4040
+[2026-04-15T21:55:06.548+0000] {stackoverflow_pipeline.py:192} INFO - [gold_cant_post_x_user_hist] 26/04/15 21:55:06 INFO MapOutputTrackerMasterEndpoint: MapOutputTrackerMasterEndpoint stopped!
+[2026-04-15T21:55:06.559+0000] {stackoverflow_pipeline.py:192} INFO - [gold_cant_post_x_user_hist] 26/04/15 21:55:06 INFO MemoryStore: MemoryStore cleared
+[2026-04-15T21:55:06.560+0000] {stackoverflow_pipeline.py:192} INFO - [gold_cant_post_x_user_hist] 26/04/15 21:55:06 INFO BlockManager: BlockManager stopped
+[2026-04-15T21:55:06.563+0000] {stackoverflow_pipeline.py:192} INFO - [gold_cant_post_x_user_hist] 26/04/15 21:55:06 INFO BlockManagerMaster: BlockManagerMaster stopped
+[2026-04-15T21:55:06.566+0000] {stackoverflow_pipeline.py:192} INFO - [gold_cant_post_x_user_hist] 26/04/15 21:55:06 INFO OutputCommitCoordinator$OutputCommitCoordinatorEndpoint: OutputCommitCoordinator stopped!
+[2026-04-15T21:55:06.608+0000] {stackoverflow_pipeline.py:192} INFO - [gold_cant_post_x_user_hist] 26/04/15 21:55:06 INFO SparkContext: Successfully stopped SparkContext
+[2026-04-15T21:55:06.609+0000] {stackoverflow_pipeline.py:192} INFO - [gold_cant_post_x_user_hist] 26/04/15 21:55:06 INFO ShutdownHookManager: Shutdown hook called
+[2026-04-15T21:55:06.610+0000] {stackoverflow_pipeline.py:192} INFO - [gold_cant_post_x_user_hist] 26/04/15 21:55:06 INFO ShutdownHookManager: Deleting directory /tmp/spark-2ee20d35-73ef-4755-8d4c-50ecc6d65c19
+[2026-04-15T21:55:06.616+0000] {stackoverflow_pipeline.py:192} INFO - [gold_cant_post_x_user_hist] 26/04/15 21:55:06 INFO ShutdownHookManager: Deleting directory /tmp/spark-e61799bc-20ba-4786-b890-e6d7e35bd9e1
+[2026-04-15T21:55:06.622+0000] {stackoverflow_pipeline.py:192} INFO - [gold_cant_post_x_user_hist] 26/04/15 21:55:06 INFO ShutdownHookManager: Deleting directory /tmp/spark-2ee20d35-73ef-4755-8d4c-50ecc6d65c19/pyspark-f89c52e5-fa32-41ac-b0b1-bd8f71621a42
+[2026-04-15T21:55:06.629+0000] {stackoverflow_pipeline.py:192} INFO - [gold_cant_post_x_user_hist] 26/04/15 21:55:06 INFO MetricsSystemImpl: Stopping s3a-file-system metrics system...
+[2026-04-15T21:55:06.630+0000] {stackoverflow_pipeline.py:192} INFO - [gold_cant_post_x_user_hist] 26/04/15 21:55:06 INFO MetricsSystemImpl: s3a-file-system metrics system stopped.
+[2026-04-15T21:55:06.634+0000] {stackoverflow_pipeline.py:192} INFO - [gold_cant_post_x_user_hist] 26/04/15 21:55:06 INFO MetricsSystemImpl: s3a-file-system metrics system shutdown complete.
+[2026-04-15T21:55:06.981+0000] {taskinstance.py:3311} ERROR - Task failed with exception
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 762, in _execute_task
+    result = _execute_callable(context=context, **execute_callable_kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 733, in _execute_callable
+    return ExecutionCallableRunner(
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/utils/operator_helpers.py", line 252, in run
+    return self.func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/baseoperator.py", line 417, in wrapper
+    return func(self, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/operators/python.py", line 238, in execute
+    return_value = self.execute_callable()
+                   ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/operators/python.py", line 256, in execute_callable
+    return runner.run(*self.op_args, **self.op_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/utils/operator_helpers.py", line 252, in run
+    return self.func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/airflow/dags/stackoverflow_pipeline.py", line 262, in gold_agg_callable
+    _run_spark_submit("/opt/airflow/scripts/gold_agg.py",
+  File "/opt/airflow/dags/stackoverflow_pipeline.py", line 216, in _run_spark_submit
+    _stream_subprocess(cmd, env, name)
+  File "/opt/airflow/dags/stackoverflow_pipeline.py", line 196, in _stream_subprocess
+    raise RuntimeError(f"Spark job {name} failed with rc={rc}")
+RuntimeError: Spark job gold_cant_post_x_user_hist failed with rc=1
+[2026-04-15T21:55:07.008+0000] {taskinstance.py:1225} INFO - Marking task as UP_FOR_RETRY. dag_id=stackoverflow_pipeline, task_id=gold_agg, run_id=manual__2026-04-15T21:52:58.624333+00:00, execution_date=20260415T215258, start_date=20260415T215453, end_date=20260415T215507
+[2026-04-15T21:55:07.027+0000] {taskinstance.py:340} INFO - ::group::Post task execution logs
+[2026-04-15T21:55:07.028+0000] {standard_task_runner.py:124} ERROR - Failed to execute job 8 for task gold_agg (Spark job gold_cant_post_x_user_hist failed with rc=1; 3772)
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/task/task_runner/standard_task_runner.py", line 117, in _start_by_fork
+    ret = args.func(args, dag=self.dag)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/cli/cli_config.py", line 49, in command
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/utils/cli.py", line 116, in wrapper
+    return f(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/cli/commands/task_command.py", line 483, in task_run
+    task_return_code = _run_task_by_selected_method(args, _dag, ti)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/cli/commands/task_command.py", line 256, in _run_task_by_selected_method
+    return _run_raw_task(args, ti)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/cli/commands/task_command.py", line 341, in _run_raw_task
+    return ti._run_raw_task(
+           ^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/utils/session.py", line 97, in wrapper
+    return func(*args, session=session, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 3005, in _run_raw_task
+    return _run_raw_task(
+           ^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 273, in _run_raw_task
+    TaskInstance._execute_task_with_callbacks(
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 3159, in _execute_task_with_callbacks
+    result = self._execute_task(context, task_orig)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 3183, in _execute_task
+    return _execute_task(self, context, task_orig)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 762, in _execute_task
+    result = _execute_callable(context=context, **execute_callable_kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 733, in _execute_callable
+    return ExecutionCallableRunner(
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/utils/operator_helpers.py", line 252, in run
+    return self.func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/baseoperator.py", line 417, in wrapper
+    return func(self, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/operators/python.py", line 238, in execute
+    return_value = self.execute_callable()
+                   ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/operators/python.py", line 256, in execute_callable
+    return runner.run(*self.op_args, **self.op_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/utils/operator_helpers.py", line 252, in run
+    return self.func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/airflow/dags/stackoverflow_pipeline.py", line 262, in gold_agg_callable
+    _run_spark_submit("/opt/airflow/scripts/gold_agg.py",
+  File "/opt/airflow/dags/stackoverflow_pipeline.py", line 216, in _run_spark_submit
+    _stream_subprocess(cmd, env, name)
+  File "/opt/airflow/dags/stackoverflow_pipeline.py", line 196, in _stream_subprocess
+    raise RuntimeError(f"Spark job {name} failed with rc={rc}")
+RuntimeError: Spark job gold_cant_post_x_user_hist failed with rc=1
+[2026-04-15T21:55:07.050+0000] {local_task_job_runner.py:266} INFO - Task exited with return code 1
+[2026-04-15T21:55:07.066+0000] {taskinstance.py:3895} INFO - 0 downstream tasks scheduled from follow-on schedule check
+[2026-04-15T21:55:07.067+0000] {local_task_job_runner.py:245} INFO - ::endgroup::

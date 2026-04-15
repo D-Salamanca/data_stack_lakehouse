@@ -109,6 +109,22 @@ def users_2021_source():
             log.warning(f"No se encontraron users con CreationDate año {PIPELINE_YEAR}")
             return
         out = pd.concat(collected, ignore_index=True)
+
+        # Forzar dtypes explícitos para evitar que dlt infiera columnas como
+        # `binary` cuando pandas las trae como object/NaN-only (caso típico:
+        # `Reputation` cae a object si hay NaNs y dlt la marca como binary,
+        # luego falla al recibir bigint en la siguiente batch).
+        int_cols = ["Id", "Reputation", "Views", "UpVotes", "DownVotes", "AccountId"]
+        for c in int_cols:
+            if c in out.columns:
+                out[c] = pd.to_numeric(out[c], errors="coerce").astype("Int64")
+        for c in ("CreationDate", "LastAccessDate"):
+            if c in out.columns:
+                out[c] = pd.to_datetime(out[c], errors="coerce")
+        for c in ("DisplayName", "Location"):
+            if c in out.columns:
+                out[c] = out[c].astype("string")
+
         log.info(f"Filas descargadas users_{PIPELINE_YEAR}: {len(out):,}")
         yield out
 
@@ -127,12 +143,18 @@ def build_dlt_pipeline():
     os.environ["DESTINATION__FILESYSTEM__CREDENTIALS__ENDPOINT_URL"]          = MINIO_ENDPOINT
     os.environ["DESTINATION__FILESYSTEM__CREDENTIALS__REGION_NAME"]           = "us-east-1"
 
+    # Limpia estado previo para evitar conflictos de schema entre runs
+    # (p.ej. columna `reputation` inferida como binary en un run anterior
+    # y como bigint en el actual). Coherente con write_disposition=replace.
+    import shutil
+    shutil.rmtree("/tmp/dlt_pipelines/bronze_users_2021", ignore_errors=True)
+
     pipeline = dlt.pipeline(
         pipeline_name="bronze_users_2021",
         destination="filesystem",
         dataset_name=f"users_{PIPELINE_YEAR}",
-        # Guardar estado del pipeline en /tmp para no requerir volúmenes extra
         pipelines_dir="/tmp/dlt_pipelines",
+        dev_mode=False,
     )
 
     return pipeline
@@ -149,7 +171,9 @@ def main():
 
     # Ejecutar el pipeline dlt
     log.info("Ejecutando pipeline dlt...")
-    load_info = pipeline.run(users_2021_source())
+    # refresh="drop_sources" descarta el schema del source en cada run,
+    # complementando el rmtree y evitando coerciones binary↔bigint heredadas.
+    load_info = pipeline.run(users_2021_source(), refresh="drop_sources")
 
     log.info("-" * 60)
     log.info("Pipeline dlt completado:")

@@ -119,7 +119,7 @@ def build_cant_post_x_user_hist(spark: SparkSession):
     df = spark.sql(f"""
         SELECT
             p.OwnerUserId                           AS user_id,
-            COALESCE(u.DisplayName, 'Unknown')      AS display_name,
+            COALESCE(u.display_name, 'Unknown')     AS display_name,
             p.anio                                  AS anio,
             COUNT(p.Id)                             AS cant_posts,
             COALESCE(SUM(p.Score), 0)               AS total_score,
@@ -128,11 +128,11 @@ def build_cant_post_x_user_hist(spark: SparkSession):
             CAST('{FECHA_CARGUE}' AS TIMESTAMP)     AS fecha_cargue
         FROM nessie.{SILVER_NS}.post_hist p
         LEFT JOIN nessie.{SILVER_NS}.users_hist u
-            ON p.OwnerUserId = u.Id
+            ON p.OwnerUserId = u.id
         WHERE p.OwnerUserId IS NOT NULL
         GROUP BY
             p.OwnerUserId,
-            u.DisplayName,
+            u.display_name,
             p.anio
     """)
 
@@ -218,10 +218,10 @@ def build_user_engagement(spark: SparkSession):
 
     df = spark.sql(f"""
         SELECT
-            u.Id                                        AS user_id,
-            COALESCE(u.DisplayName, 'Unknown')          AS display_name,
-            COALESCE(u.Reputation, 0)                   AS reputation,
-            COALESCE(u.Location, '')                    AS location,
+            u.id                                        AS user_id,
+            COALESCE(u.display_name, 'Unknown')         AS display_name,
+            COALESCE(u.reputation, 0)                   AS reputation,
+            COALESCE(u.location, '')                    AS location,
             COUNT(DISTINCT p.Id)                        AS total_posts,
             SUM(CASE WHEN p.PostTypeId = 1 THEN 1 ELSE 0 END) AS total_questions,
             SUM(CASE WHEN p.PostTypeId = 2 THEN 1 ELSE 0 END) AS total_answers,
@@ -232,10 +232,10 @@ def build_user_engagement(spark: SparkSession):
             COUNT(DISTINCT b.Id)                        AS total_badges,
             CAST('{FECHA_CARGUE}' AS TIMESTAMP)         AS fecha_cargue
         FROM nessie.{SILVER_NS}.users_hist u
-        LEFT JOIN nessie.{SILVER_NS}.post_hist p ON u.Id = p.OwnerUserId
+        LEFT JOIN nessie.{SILVER_NS}.post_hist p ON u.id = p.OwnerUserId
         LEFT JOIN nessie.{SILVER_NS}.votes_hist v ON p.Id = v.PostId
-        LEFT JOIN nessie.{SILVER_NS}.badges_hist b ON u.Id = b.UserId
-        GROUP BY u.Id, u.DisplayName, u.Reputation, u.Location
+        LEFT JOIN nessie.{SILVER_NS}.badges_hist b ON u.id = b.UserId
+        GROUP BY u.id, u.display_name, u.reputation, u.location
     """)
 
     return write_gold_merge(spark, df, "user_engagement", "user_id")
@@ -248,8 +248,8 @@ def build_badges_summary(spark: SparkSession):
     df = spark.sql(f"""
         SELECT
             b.UserId                                        AS user_id,
-            COALESCE(u.DisplayName, 'Unknown')              AS display_name,
-            COALESCE(u.Reputation, 0)                       AS reputation,
+            COALESCE(u.display_name, 'Unknown')             AS display_name,
+            COALESCE(u.reputation, 0)                       AS reputation,
             COUNT(b.Id)                                     AS total_badges,
             SUM(CASE WHEN b.Class = 1 THEN 1 ELSE 0 END)   AS gold_badges,
             SUM(CASE WHEN b.Class = 2 THEN 1 ELSE 0 END)   AS silver_badges,
@@ -258,8 +258,8 @@ def build_badges_summary(spark: SparkSession):
             COUNT(DISTINCT b.Name)                          AS unique_badge_types,
             CAST('{FECHA_CARGUE}' AS TIMESTAMP)             AS fecha_cargue
         FROM nessie.{SILVER_NS}.badges_hist b
-        LEFT JOIN nessie.{SILVER_NS}.users_hist u ON b.UserId = u.Id
-        GROUP BY b.UserId, u.DisplayName, u.Reputation
+        LEFT JOIN nessie.{SILVER_NS}.users_hist u ON b.UserId = u.id
+        GROUP BY b.UserId, u.display_name, u.reputation
     """)
 
     return write_gold_merge(spark, df, "badges_summary", "user_id")

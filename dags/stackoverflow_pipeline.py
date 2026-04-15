@@ -169,45 +169,66 @@ spark-submit scripts/silver_votes_badges_manual.py
         """,
     )
 
-    # ── Task 2: Silver (PySpark + Iceberg) ────────────────────────────────────
-    def silver_transform_callable(**context):
-        """Run silver_transform using spark-submit with proper env vars."""
+    # ── Helper Spark-submit reutilizable ─────────────────────────────────────
+    def _stream_subprocess(cmd: list, env: dict, name: str):
+        """Ejecuta `cmd` haciendo streaming de stdout+stderr al log de Airflow.
+
+        Importante: NO usar subprocess.run(capture_output=True) porque acumula
+        TODO el output en memoria y bloquea el heartbeat del scheduler durante
+        spark-submit (que descarga jars + corre por minutos), causando
+        SIGTERM por 'Heartbeat time limit exceeded'."""
+        import logging
         import subprocess
-        import sys
-        
-        cmd = [
-            "/opt/spark/bin/spark-submit",
-            "--master", "spark://spark-master:7077",
-        ]
-        
-        # Add each config as separate args with proper quoting
-        for key, value in SPARK_CONF.items():
-            cmd.extend(["--conf", f"{key}={value}"])
-        
-        # Add packages
-        cmd.extend(["--packages", PACKAGES])
-        cmd.extend(["--name", "silver_users_hist"])
-        cmd.append("--verbose")
-        cmd.append("/opt/airflow/scripts/silver_transform.py")
-        
-        # Execute with env vars
+
+        log = logging.getLogger(__name__)
+        log.info(f"[{name}] Running: {' '.join(cmd)}")
+
+        proc = subprocess.Popen(
+            cmd, env=env, stdout=subprocess.PIPE, stderr=subprocess.STDOUT,
+            text=True, bufsize=1,
+        )
+        try:
+            for line in proc.stdout:
+                log.info(f"[{name}] {line.rstrip()}")
+        finally:
+            rc = proc.wait()
+        if rc != 0:
+            raise RuntimeError(f"Spark job {name} failed with rc={rc}")
+
+    def _run_spark_submit(script_path: str, name: str, master: str = "spark://spark-master:7077",
+                          extra_conf: dict | None = None, replace_conf: dict | None = None):
+        """Lanza spark-submit contra `script_path` con las configs del DAG.
+
+        - extra_conf: merge sobre SPARK_CONF (gana extra_conf).
+        - replace_conf: ignora SPARK_CONF por completo y usa solo este dict.
+        """
+        if replace_conf is not None:
+            conf = replace_conf
+        else:
+            conf = {**SPARK_CONF, **(extra_conf or {})}
+        cmd = ["/opt/spark/bin/spark-submit", "--master", master]
+        for k, v in conf.items():
+            cmd.extend(["--conf", f"{k}={v}"])
+        cmd.extend(["--packages", PACKAGES, "--name", name, script_path])
+
         env = os.environ.copy()
         env.update(SPARK_ENV_VARS)
-        
-        import logging
-        log = logging.getLogger(__name__)
-        log.info(f"Running command: {' '.join(cmd)}")
-        log.info(f"Environment vars: {', '.join(f'{k}={v}' for k, v in sorted(SPARK_ENV_VARS.items()))}")
-        
-        result = subprocess.run(cmd, env=env, capture_output=True, text=True)
-        
-        if result.stdout:
-            log.info(f"Spark stdout:\n{result.stdout}")
-        if result.stderr:
-            log.error(f"Spark stderr:\n{result.stderr}")
-        
-        if result.returncode != 0:
-            raise RuntimeError(f"Spark job failed with return code {result.returncode}")
+        _stream_subprocess(cmd, env, name)
+
+    # ── Task 2: Silver (PySpark + Iceberg) ────────────────────────────────────
+    # Nota: post_hist se construye con script manual previo
+    # (`scripts/silver_post_hist_manual.py`), tal como exige el PDF del
+    # Proyecto 2 — el DAG solo orquesta Bronze(users_2021) → Silver(users_hist)
+    # → Gold(cant_post_x_user_hist).
+    def silver_transform_callable(**context):
+        """Lanza silver_transform con streaming de output (no satura el scheduler).
+
+        Vectorización Iceberg deshabilitada: el reader vectorizado de Arrow
+        crashea con SIGSEGV (rc=134) sobre Java 17 cuando el MERGE escanea la
+        tabla destino con datos existentes. Mismo workaround que gold."""
+        _run_spark_submit("/opt/airflow/scripts/silver_transform.py",
+                          "silver_users_hist",
+                          extra_conf={"spark.sql.iceberg.vectorization.enabled": "false"})
     
     t_silver = PythonOperator(
         task_id="silver_transform",
@@ -224,55 +245,24 @@ spark-submit scripts/silver_votes_badges_manual.py
 
     # ── Task 3: Gold (PySpark + Iceberg) ─────────────────────────────────────
     def gold_agg_callable(**context):
-        """Run gold_agg using spark-submit with proper env vars."""
-        import subprocess
-        import sys
-        
-        cmd = [
-            "/opt/spark/bin/spark-submit",
-            "--master", "local[1]",
-        ]
-
-        # Override memory-related configs for local mode (driver does the work)
-        local_conf = {**SPARK_CONF, "spark.driver.memory": "1500m",
-                      "spark.driver.maxResultSize": "512m",
-                      "spark.memory.fraction": "0.5",
-                      "spark.sql.shuffle.partitions": "2",
-                      "spark.sql.iceberg.vectorization.enabled": "false",
-                      "spark.driver.extraJavaOptions": "-Xss4m"}
-        local_conf.pop("spark.executor.instances", None)
-        local_conf.pop("spark.executor.cores", None)
-        local_conf.pop("spark.executor.memory", None)
-        local_conf.pop("spark.executor.memoryOverhead", None)
-
-        for key, value in local_conf.items():
-            cmd.extend(["--conf", f"{key}={value}"])
-
-
-        # Add packages
-        cmd.extend(["--packages", PACKAGES])
-        cmd.extend(["--name", "gold_cant_post_x_user_hist"])
-        cmd.append("--verbose")
-        cmd.append("/opt/airflow/scripts/gold_agg.py")
-        
-        # Execute with env vars
-        env = os.environ.copy()
-        env.update(SPARK_ENV_VARS)
-        
-        import logging
-        log = logging.getLogger(__name__)
-        log.info(f"Running command: {' '.join(cmd)}")
-        log.info(f"Environment vars: {', '.join(f'{k}={v}' for k, v in sorted(SPARK_ENV_VARS.items()))}")
-        
-        result = subprocess.run(cmd, env=env, capture_output=True, text=True)
-        
-        if result.stdout:
-            log.info(f"Spark stdout:\n{result.stdout}")
-        if result.stderr:
-            log.error(f"Spark stderr:\n{result.stderr}")
-        
-        if result.returncode != 0:
-            raise RuntimeError(f"Spark job failed with return code {result.returncode}")
+        """Gold con master=local[1] y configs ajustadas (vectorization off por
+        SIGSEGV con Iceberg en este stack)."""
+        local_conf = {
+            "spark.driver.memory": "1500m",
+            "spark.driver.maxResultSize": "512m",
+            "spark.memory.fraction": "0.5",
+            "spark.sql.shuffle.partitions": "2",
+            "spark.sql.iceberg.vectorization.enabled": "false",
+            "spark.driver.extraJavaOptions": "-Xss4m",
+        }
+        # Quita configs de executor (irrelevantes en local mode) y usa replace_conf
+        # para evitar que SPARK_CONF las reintroduzca por merge.
+        base = {k: v for k, v in SPARK_CONF.items()
+                if not k.startswith("spark.executor.")}
+        _run_spark_submit("/opt/airflow/scripts/gold_agg.py",
+                          "gold_cant_post_x_user_hist",
+                          master="local[1]",
+                          replace_conf={**base, **local_conf})
     
     t_gold = PythonOperator(
         task_id="gold_agg",

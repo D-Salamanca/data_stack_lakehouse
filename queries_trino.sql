@@ -40,7 +40,7 @@ SELECT 'badges_hist' AS tabla, COUNT(*) AS filas FROM iceberg.silver.badges_hist
 
 SELECT
     p.OwnerUserId                               AS user_id,
-    COALESCE(u.DisplayName, 'Unknown')          AS display_name,
+    COALESCE(u.display_name, 'Unknown')         AS display_name,
     p.anio,
     p.PostTypeId                                AS post_type_id,
     CASE
@@ -55,11 +55,11 @@ SELECT
     CURRENT_TIMESTAMP                           AS fecha_cargue
 FROM iceberg.silver.post_hist p
 LEFT JOIN iceberg.silver.users_hist u
-    ON p.OwnerUserId = u.Id
+    ON p.OwnerUserId = u.id
 WHERE p.OwnerUserId IS NOT NULL
 GROUP BY
     p.OwnerUserId,
-    u.DisplayName,
+    u.display_name,
     p.anio,
     p.PostTypeId
 ORDER BY cant_posts DESC
@@ -134,10 +134,10 @@ LIMIT 50;
 -- ============================================================
 
 SELECT
-    u.Id                                                        AS user_id,
-    COALESCE(u.DisplayName, 'Unknown')                          AS display_name,
-    COALESCE(u.Reputation, 0)                                   AS reputation,
-    COALESCE(u.Location, '')                                    AS location,
+    u.id                                                        AS user_id,
+    COALESCE(u.display_name, 'Unknown')                         AS display_name,
+    COALESCE(u.reputation, 0)                                   AS reputation,
+    COALESCE(u.location, '')                                    AS location,
     COUNT(DISTINCT p.Id)                                        AS total_posts,
     SUM(CASE WHEN p.PostTypeId = 1 THEN 1 ELSE 0 END)          AS total_questions,
     SUM(CASE WHEN p.PostTypeId = 2 THEN 1 ELSE 0 END)          AS total_answers,
@@ -149,12 +149,12 @@ SELECT
     CURRENT_TIMESTAMP                                           AS fecha_cargue
 FROM iceberg.silver.users_hist u
 LEFT JOIN iceberg.silver.post_hist p
-    ON u.Id = p.OwnerUserId
+    ON u.id = p.OwnerUserId
 LEFT JOIN iceberg.silver.votes_hist v
     ON p.Id = v.PostId
 LEFT JOIN iceberg.silver.badges_hist b
-    ON u.Id = b.UserId
-GROUP BY u.Id, u.DisplayName, u.Reputation, u.Location
+    ON u.id = b.UserId
+GROUP BY u.id, u.display_name, u.reputation, u.location
 ORDER BY total_posts DESC
 LIMIT 100;
 
@@ -167,8 +167,8 @@ LIMIT 100;
 
 SELECT
     b.UserId                                                    AS user_id,
-    COALESCE(u.DisplayName, 'Unknown')                          AS display_name,
-    COALESCE(u.Reputation, 0)                                   AS reputation,
+    COALESCE(u.display_name, 'Unknown')                         AS display_name,
+    COALESCE(u.reputation, 0)                                   AS reputation,
     COUNT(b.Id)                                                 AS total_badges,
     SUM(CASE WHEN b.Class = 1 THEN 1 ELSE 0 END)               AS gold_badges,
     SUM(CASE WHEN b.Class = 2 THEN 1 ELSE 0 END)               AS silver_badges,
@@ -178,8 +178,8 @@ SELECT
     CURRENT_TIMESTAMP                                           AS fecha_cargue
 FROM iceberg.silver.badges_hist b
 LEFT JOIN iceberg.silver.users_hist u
-    ON b.UserId = u.Id
-GROUP BY b.UserId, u.DisplayName, u.Reputation
+    ON b.UserId = u.id
+GROUP BY b.UserId, u.display_name, u.reputation
 ORDER BY total_badges DESC
 LIMIT 100;
 
@@ -208,14 +208,14 @@ FROM (
 
 -- Top 10 usuarios más activos desde Silver
 SELECT
-    u.DisplayName,
+    u.display_name,
     COUNT(DISTINCT p.Id)    AS total_posts,
     SUM(p.Score)            AS total_score,
     COUNT(DISTINCT b.Id)    AS total_badges
 FROM iceberg.silver.users_hist u
-LEFT JOIN iceberg.silver.post_hist p ON u.Id = p.OwnerUserId
-LEFT JOIN iceberg.silver.badges_hist b ON u.Id = b.UserId
-GROUP BY u.DisplayName
+LEFT JOIN iceberg.silver.post_hist p ON u.id = p.OwnerUserId
+LEFT JOIN iceberg.silver.badges_hist b ON u.id = b.UserId
+GROUP BY u.display_name
 ORDER BY total_posts DESC
 LIMIT 10;
 

@@ -68,17 +68,19 @@ proyecto2-lakehouse/
 
 ## Servicios y puertos
 
-| Servicio | URL | Credenciales |
-|---|---|---|
-| Airflow UI | http://localhost:8080 | airflow / airflow |
-| Spark Master UI | http://localhost:8081 | — |
-| Spark Worker UI | http://localhost:8082 | — |
-| MinIO Console | http://localhost:9001 | minioadmin / minioadmin123 |
-| MinIO S3 API | http://localhost:9000 | — |
-| Nessie API | http://localhost:19120 | — |
-| Trino UI | http://localhost:8090 | trino (sin contraseña) |
-| Dremio UI | http://localhost:9047 | admin / (se configura al primer inicio) |
-| Jupyter Notebook | http://localhost:8888 | token: fhbd |
+| Servicio | URL | Credenciales | Profile |
+|---|---|---|---|
+| Airflow UI | http://localhost:8080 | airflow / airflow | base |
+| Spark Master UI | http://localhost:8081 | — | base |
+| Spark Worker UI | http://localhost:8082 | — | base |
+| MinIO Console | http://localhost:9001 | minioadmin / minioadmin123 | base |
+| MinIO S3 API | http://localhost:9000 | — | base |
+| Nessie API | http://localhost:19120 | — | base |
+| Trino UI | http://localhost:8090 | trino (sin contraseña) | base |
+| Dremio UI | http://localhost:9047 | admin / Admin1234! | `--profile bi` |
+| Jupyter Notebook | http://localhost:8888 | token: fhbd | `--profile dev` |
+
+> **Profiles**: el stack base (orquestación + lakehouse + Trino) sube con `docker compose up -d`. Dremio y Jupyter no arrancan por defecto para ahorrar ~6 GB de RAM. Levántalos cuando los necesites con `--profile bi` / `--profile dev` (o `--profile all` para ambos).
 
 ---
 
@@ -102,10 +104,22 @@ echo "AIRFLOW_UID=$(id -u)" >> .env
 
 ```bash
 docker compose build --no-cache
+
+# Stack base (orquestación + lakehouse + Trino) — recomendado para empezar
 docker compose up -d
+
+# Cuando vayas a consultar Gold desde Dremio:
+docker compose --profile bi up -d dremio
+
+# Cuando necesites Jupyter (notebooks de respaldo / exploración):
+docker compose --profile dev up -d jupyter
+
+# O todo de una:
+docker compose --profile all up -d
 ```
 
 > ⏳ Esperar ~3 minutos a que `airflow-init` termine antes de abrir la UI.
+> ⏳ Dremio tarda ~1 minuto adicional en estar listo en http://localhost:9047.
 
 ### 4. Verificar que todos los servicios están corriendo
 
@@ -154,11 +168,17 @@ Ir a **Admin → Connections → (+)**:
 ### Paso 1 — Carga manual Bronze (ejecutar una sola vez)
 
 ```bash
-# Desde el contenedor de Airflow o directamente si tienes las dependencias locales
-docker exec -it proyecto2-airflow-worker bash
+# El proyecto usa LocalExecutor: el scheduler corre los tasks, no hay worker dedicado.
+docker exec -it proyecto2-airflow-scheduler bash
 cd /opt/airflow
 python scripts/bronze_manual_load.py
 ```
+
+> Los datos vienen del **dataset público real** de StackOverflow publicado por
+> ClickHouse en S3 (`datasets-documentation.s3.eu-west-3.amazonaws.com`). El
+> script hace streaming por HTTP range-reads, así que solo descarga ~10-30 MB
+> por archivo aunque cada parquet origen pese 1-14 GB. El cap por defecto es
+> `MAX_ROWS=50000` por tabla/año; subirlo en `.env` carga más volumen.
 
 Esto carga en MinIO:
 ```
@@ -249,8 +269,14 @@ SELECT * FROM nessie.gold.badges_summary ORDER BY total_badges DESC LIMIT 20;
 
 ## Ejecución manual (respaldo si Airflow falla)
 
-Si algún task del DAG falla, ejecutar el notebook correspondiente en Jupyter
-(http://localhost:8888, token: `fhbd`):
+Levanta Jupyter con el profile correspondiente:
+
+```bash
+docker compose --profile dev up -d jupyter
+```
+
+Luego abre http://localhost:8888 (token `fhbd`) y corre el notebook que
+corresponda al task que falló:
 
 | Task fallido | Notebook de respaldo |
 |---|---|
@@ -286,7 +312,17 @@ docker compose up -d
 | Project Nessie | latest | Catálogo Iceberg con versionado Git-like |
 | MinIO | latest | Object storage S3-compatible (Data Lake) |
 | Trino | 438 | Motor SQL para consultar Silver |
-| Dremio OSS | latest | Motor SQL para consultar Gold |
+| Dremio OSS | latest | Motor SQL para consultar Gold (`--profile bi`) |
 | PostgreSQL | 13 | Metadata DB de Airflow |
-| Redis | 7.2 | Broker Celery para Airflow |
-| Jupyter | base-notebook | Notebooks de respaldo |
+| Jupyter | base-notebook | Notebooks de respaldo (`--profile dev`) |
+
+> Airflow corre con `LocalExecutor` (no Celery), por lo que no hay servicios
+> Redis, airflow-worker, airflow-triggerer ni Flower. El scheduler ejecuta
+> los tasks directamente y tiene `mem_limit: 3.5g` para alojar el driver de
+> Spark en client mode.
+
+---
+
+## Diagrama de arquitectura
+
+Ver `docs/architecture.svg` (también en `.png` y fuente Mermaid en `.mmd`).

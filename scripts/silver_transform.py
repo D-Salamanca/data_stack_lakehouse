@@ -19,7 +19,7 @@ import logging
 from datetime import datetime
 from pyspark.sql import SparkSession
 from pyspark.sql import functions as F
-from pyspark.sql.types import TimestampType
+from pyspark.sql.types import TimestampType, BinaryType
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(message)s")
 log = logging.getLogger(__name__)
@@ -63,19 +63,82 @@ def build_spark_session() -> SparkSession:
     )
 
 
+CANONICAL_USER_COLS = {
+    # variantes posibles → nombre canónico (snake_case)
+    "id": "id", "Id": "id",
+    "reputation": "reputation", "Reputation": "reputation",
+    "creationdate": "creation_date", "CreationDate": "creation_date",
+    "creation_date": "creation_date",
+    "displayname": "display_name", "DisplayName": "display_name",
+    "display_name": "display_name",
+    "lastaccessdate": "last_access_date", "LastAccessDate": "last_access_date",
+    "last_access_date": "last_access_date",
+    "views": "views", "Views": "views",
+    "upvotes": "up_votes", "UpVotes": "up_votes", "up_votes": "up_votes",
+    "downvotes": "down_votes", "DownVotes": "down_votes", "down_votes": "down_votes",
+    "location": "location", "Location": "location",
+    "accountid": "account_id", "AccountId": "account_id", "account_id": "account_id",
+    "websiteurl": "website_url", "WebsiteUrl": "website_url", "website_url": "website_url",
+    "aboutme": "about_me", "AboutMe": "about_me", "about_me": "about_me",
+}
+
+REQUIRED_USER_COLS = [
+    "id", "reputation", "creation_date", "display_name", "last_access_date",
+    "views", "up_votes", "down_votes", "location", "account_id",
+]
+
+
+CANONICAL_USER_TYPES = {
+    "id": "long",
+    "reputation": "long",
+    "creation_date": "timestamp",
+    "display_name": "string",
+    "last_access_date": "timestamp",
+    "views": "long",
+    "up_votes": "long",
+    "down_votes": "long",
+    "location": "string",
+    "account_id": "long",
+}
+
+
+def normalize_user_columns(df):
+    """Renombra columnas de un DF de users al schema canónico snake_case y
+    castea cada columna a su tipo canónico para que el unionByName no falle
+    por tipos heterogéneos entre años. Maneja columnas BINARY (caso de
+    bronze_manual_load.py para 2019/2020 que escribió strings/ints como bytes
+    raw) decodificándolas como UTF-8 antes del cast final."""
+    rename_map = {c: CANONICAL_USER_COLS[c] for c in df.columns if c in CANONICAL_USER_COLS}
+    df = df.select([F.col(c).alias(rename_map[c]) for c in rename_map])
+    for c, t in CANONICAL_USER_TYPES.items():
+        if c not in df.columns:
+            df = df.withColumn(c, F.lit(None).cast(t))
+            continue
+        if isinstance(df.schema[c].dataType, BinaryType):
+            decoded = F.decode(F.col(c), "utf-8")
+            df = df.withColumn(c, decoded if t == "string" else decoded.cast(t))
+        else:
+            df = df.withColumn(c, F.col(c).cast(t))
+    return df.select(*CANONICAL_USER_TYPES.keys())
+
+
 def read_users_bronze(spark: SparkSession):
-    """Lee los 3 años de users desde Bronze y los une en un solo DataFrame."""
+    """Lee los 3 años de users desde Bronze, normaliza schema y los une."""
     dfs = []
     for year in YEARS:
         path = f"s3a://{BRONZE_BUCKET}/users/{year}/users_{year}.parquet"
         log.info(f"Leyendo Bronze: {path}")
         try:
             df = spark.read.parquet(path)
-            df = df.withColumn("anio", F.lit(year))
+            df = normalize_user_columns(df)
+            df = df.withColumn("anio", F.lit(year).cast("int"))
+            n = df.count()
+            log.info(f"  → {n:,} filas del año {year}")
             dfs.append(df)
-            log.info(f"  → {df.count():,} filas del año {year}")
         except Exception as e:
-            log.warning(f"  ⚠️  No se pudo leer {path}: {e}")
+            # No silenciar: si un año falla queremos saberlo y abortar.
+            log.error(f"  ✘ Falló lectura de {path}: {e}", exc_info=True)
+            raise
 
     if not dfs:
         raise RuntimeError("No se encontraron archivos de users en Bronze.")
@@ -88,33 +151,36 @@ def read_users_bronze(spark: SparkSession):
 
 
 def add_metadata(df):
-    """Agrega columnas de control requeridas por Silver."""
-    # Normalizar nombres de columnas a camelCase esperado
-    df_normalized = (
-        df
-        .withColumnRenamed("up_votes", "UpVotes")
-        .withColumnRenamed("down_votes", "DownVotes")
-        .withColumnRenamed("views", "Views")
-        .withColumnRenamed("reputation", "Reputation")
-        .withColumnRenamed("display_name", "DisplayName")
-        .withColumnRenamed("last_access_date", "LastAccessDate")
-        .withColumnRenamed("account_id", "AccountId")
-    )
-    
+    """Tipa columnas, agrega metadata Silver y limpia nulls."""
     return (
-        df_normalized
-        .withColumn("fecha_cargue", F.lit(datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S"))
-                    .cast(TimestampType()))
-        .withColumn("fuente", F.lit("clickhouse_stackoverflow"))
-        # Normalizar tipos
-        .withColumn("Id",         F.col("Id").cast("long"))
-        .withColumn("Reputation", F.col("Reputation").cast("long"))
-        .withColumn("Views",      F.col("Views").cast("long"))
-        .withColumn("UpVotes",    F.col("UpVotes").cast("long"))
-        .withColumn("DownVotes",  F.col("DownVotes").cast("long"))
-        .withColumn("AccountId",  F.col("AccountId").cast("long"))
-        # Limpiar nulls en strings
-        .fillna({"DisplayName": "Unknown", "Location": "", "AccountId": -1})
+        df
+        .withColumn("id",                F.col("id").cast("long"))
+        .withColumn("reputation",        F.col("reputation").cast("long"))
+        .withColumn("creation_date",     F.col("creation_date").cast(TimestampType()))
+        .withColumn("last_access_date",  F.col("last_access_date").cast(TimestampType()))
+        .withColumn("views",             F.col("views").cast("long"))
+        .withColumn("up_votes",          F.col("up_votes").cast("long"))
+        .withColumn("down_votes",        F.col("down_votes").cast("long"))
+        .withColumn("account_id",        F.col("account_id").cast("long"))
+        .withColumn("display_name",      F.col("display_name").cast("string"))
+        .withColumn("location",          F.col("location").cast("string"))
+        .withColumn("fecha_cargue",      F.current_timestamp())
+        .withColumn("fuente",            F.lit("clickhouse_stackoverflow"))
+        .fillna({"display_name": "Unknown", "location": "", "account_id": -1})
+    )
+
+
+def collapse_to_latest_year(df):
+    """Conserva una sola fila por id quedándose con la del anio más reciente.
+    Necesario porque MERGE en Spark falla si el source tiene varias filas que
+    matchean la misma key del target."""
+    from pyspark.sql.window import Window
+    w = Window.partitionBy("id").orderBy(F.col("anio").desc(),
+                                         F.col("last_access_date").desc_nulls_last())
+    return (
+        df.withColumn("_rn", F.row_number().over(w))
+          .filter(F.col("_rn") == 1)
+          .drop("_rn")
     )
 
 
@@ -160,19 +226,21 @@ def merge_users_hist(spark: SparkSession, df_new, namespace: str):
     merge_sql = f"""
         MERGE INTO {full_table} AS target
         USING users_updates AS source
-        ON target.Id = source.Id
+        ON target.id = source.id
         WHEN MATCHED THEN
             UPDATE SET
-                target.Reputation    = source.Reputation,
-                target.LastAccessDate = source.LastAccessDate,
-                target.DisplayName   = source.DisplayName,
-                target.Views         = source.Views,
-                target.UpVotes       = source.UpVotes,
-                target.DownVotes     = source.DownVotes,
-                target.Location      = source.Location,
-                target.anio          = source.anio,
-                target.fecha_cargue  = source.fecha_cargue,
-                target.fuente        = source.fuente
+                target.reputation       = source.reputation,
+                target.creation_date    = source.creation_date,
+                target.last_access_date = source.last_access_date,
+                target.display_name     = source.display_name,
+                target.views            = source.views,
+                target.up_votes         = source.up_votes,
+                target.down_votes       = source.down_votes,
+                target.location         = source.location,
+                target.account_id       = source.account_id,
+                target.anio             = source.anio,
+                target.fecha_cargue     = source.fecha_cargue,
+                target.fuente           = source.fuente
         WHEN NOT MATCHED THEN
             INSERT *
     """
@@ -195,8 +263,9 @@ def main():
     total_bronze = df_bronze.count()
     log.info(f"Total filas Bronze (3 años): {total_bronze:,}")
 
-    # 2. Agregar metadata Silver
-    df_silver = add_metadata(df_bronze)
+    # 2. Agregar metadata Silver y dejar una sola fila por id (último año gana)
+    df_silver = collapse_to_latest_year(add_metadata(df_bronze))
+    log.info(f"Filas Silver tras dedupe por id: {df_silver.count():,}")
 
     # 3. Crear namespace si no existe
     ensure_namespace(spark, SILVER_NS)
